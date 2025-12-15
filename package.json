@@ -1,0 +1,14 @@
+{
+  "name": "deskboard2-website",
+  "private": true,
+  "version": "0.1.0",
+  "description": "DeskBoard2 website static site + gh-pages deploy",
+  "type": "module",
+  "scripts": {
+    "start": "node scripts/serve.mjs",
+    "deploy": "gh-pages -d public -b gh-pages"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.1.1"
+  }
+}
