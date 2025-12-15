@@ -1,0 +1,4 @@
+<svg width="320" height="180" xmlns="http://www.w3.org/2000/svg">
+  <rect width="320" height="180" rx="18" fill="#232b36"/>
+  <text x="50%" y="50%" text-anchor="middle" fill="#9da7b3" font-size="24" font-family="sans-serif" dy=".3em">Screenshot Placeholder</text>
+</svg>
