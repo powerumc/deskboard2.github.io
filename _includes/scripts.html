@@ -1,0 +1,16 @@
+<script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            navbar.classList.add('glass', 'border-b', 'border-white/10', 'py-4');
+            navbar.classList.remove('py-6');
+        } else {
+            navbar.classList.remove('glass', 'border-b', 'border-white/10', 'py-4');
+            navbar.classList.add('py-6');
+        }
+    });
+</script>
