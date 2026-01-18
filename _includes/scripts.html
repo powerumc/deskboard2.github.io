@@ -1,6 +1,10 @@
 <script>
     // Initialize Lucide icons
-    lucide.createIcons();
+    document.addEventListener("DOMContentLoaded", () => {
+        if (window.lucide) {
+            lucide.createIcons();
+        }
+    });
 
     // Navbar scroll effect
     const navbar = document.getElementById('navbar');
@@ -14,3 +18,4 @@
         }
     });
 </script>
+<script src="/js/video-loader.js"></script>

@@ -32,15 +32,13 @@
 
 <!-- Main Product Video Placeholder -->
 <div class="container mx-auto px-6 -mt-24 md:-mt-48 relative z-10 mb-32">
-    <div class="video-placeholder aspect-video shadow-2xl shadow-blue-500/10">
-        <div class="grid-pattern absolute inset-0 opacity-20 pointer-events-none"></div>
-        <div class="z-10 text-center">
-            <div
-                class="w-20 h-20 rounded-full bg-white/10 border border-white/20 flex items-center justify-center mx-auto mb-4 hover:scale-110 transition-transform">
-                <i data-lucide="play" class="w-8 h-8 text-white fill-current"></i>
-            </div>
-            <p class="text-xl font-bold">Main Product Demo</p>
-            <p class="text-zinc-500 text-sm mt-2">Place your 16:9 MP4 or GIF here</p>
-        </div>
+    <div class="video-placeholder aspect-video shadow-2xl shadow-blue-500/10 relative">
+        <video loop muted playsinline preload="none" poster="/images/hero-poster.jpg"
+            data-poster-mobile="/images/hero-poster-m.jpg"
+            class="lazy-video absolute inset-0 w-full h-full object-cover rounded-2xl">
+            <source data-src="/images/hero-m.mp4?v={{ site.time | date: '%s' }}" media="(max-width: 720px)"
+                type="video/mp4">
+            <source data-src="/images/hero.mp4?v={{ site.time | date: '%s' }}" type="video/mp4">
+        </video>
     </div>
 </div>

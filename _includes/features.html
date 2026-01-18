@@ -18,25 +18,34 @@
                                 <div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
                             </div>
                             Pen Brush, Thin Pen, Highlighter
+                            <span class="ml-2 badge-free">Free</span>
                         </li>
                         <li class="flex items-center gap-3 text-zinc-300">
                             <div class="w-5 h-5 rounded-full bg-blue-500/20 flex items-center justify-center">
                                 <div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
                             </div>
                             Line, Rectangle, Circle, Arrow, Text, Marker
+                            <span class="ml-2 badge-free">Free</span>
                         </li>
                         <li class="flex items-center gap-3 text-zinc-300">
                             <div class="w-5 h-5 rounded-full bg-blue-500/20 flex items-center justify-center">
                                 <div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
                             </div>
                             Edit Mode, Thickness, Line Patterns, and more
+                            <span class="ml-2 badge-free">Free</span>
                         </li>
                     </ul>
                 </div>
                 <div class="flex-1 w-full">
                     <div class="video-placeholder aspect-[4/3] relative">
-                        <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover">
-                            <source src="/images/deskboard2-feature1.mp4" type="video/mp4">
+                        <video loop muted playsinline preload="none" poster="/images/feature1-poster.jpg"
+                            data-poster="/images/feature1-poster.jpg"
+                            data-poster-mobile="/images/feature1-poster-m.jpg"
+                            class="lazy-video absolute inset-0 w-full h-full object-cover">
+                            <source data-src="/images/feature1-m.mp4?v={{ site.time | date: '%s' }}" media="(max-width: 720px)"
+                                type="video/mp4">
+                            <source data-src="/images/feature1.mp4?v={{ site.time | date: '%s' }}"
+                                type="video/mp4">
                         </video>
                     </div>
                 </div>
@@ -80,8 +89,14 @@
                 </div>
                 <div class="flex-1 w-full">
                     <div class="video-placeholder aspect-[4/3] relative">
-                        <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover">
-                            <source src="/images/deskboard2-feature2.mp4" type="video/mp4">
+                        <video loop muted playsinline preload="none" poster="/images/feature2-poster.jpg"
+                            data-poster="/images/feature2-poster.jpg"
+                            data-poster-mobile="/images/feature2-poster-m.jpg"
+                            class="lazy-video absolute inset-0 w-full h-full object-cover">
+                            <source data-src="/images/feature2-m.mp4?v={{ site.time | date: '%s' }}" media="(max-width: 720px)"
+                                type="video/mp4">
+                            <source data-src="/images/feature2.mp4?v={{ site.time | date: '%s' }}"
+                                type="video/mp4">
                         </video>
                     </div>
                 </div>
@@ -106,27 +121,27 @@
                             <div class="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center">
                                 <div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
                             </div>
-                            Click Reactions <span class="text-zinc-500 text-sm ml-1">(Ripple, Spark,
-                                Lightning, ...)</span>
+                            Click Effects
+                            <span class="ml-2 badge-free">Free with limitations</span>
                         </li>
                         <li class="flex items-center gap-3 text-zinc-300">
                             <div class="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center">
                                 <div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
                             </div>
-                            Particle Themes <span class="text-zinc-500 text-sm ml-1">(Confetti, Fire, Smoke, ...)</span>
-                        </li>
-                        <li class="flex items-center gap-3 text-zinc-300">
-                            <div class="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                                <div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
-                            </div>
-                            Motion Trails
+                            Cursor Trails
                         </li>
                     </ul>
                 </div>
                 <div class="flex-1 w-full">
                     <div class="video-placeholder aspect-[4/3] relative">
-                        <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover">
-                            <source src="/images/deskboard2-feature3.mp4" type="video/mp4">
+                        <video loop muted playsinline preload="none" poster="/images/feature3-poster.jpg"
+                            data-poster="/images/feature3-poster.jpg"
+                            data-poster-mobile="/images/feature3-poster-m.jpg"
+                            class="lazy-video absolute inset-0 w-full h-full object-cover">
+                            <source data-src="/images/feature3-m.mp4?v={{ site.time | date: '%s' }}" media="(max-width: 720px)"
+                                type="video/mp4">
+                            <source data-src="/images/feature3.mp4?v={{ site.time | date: '%s' }}"
+                                type="video/mp4">
                         </video>
                     </div>
                 </div>
@@ -150,13 +165,14 @@
                             <div class="w-5 h-5 rounded-full bg-sky-500/20 flex items-center justify-center">
                                 <div class="w-1.5 h-1.5 rounded-full bg-sky-500"></div>
                             </div>
-                            Multi-monitor Support
+                            Single-monitor & single-space support
+                            <span class="ml-2 badge-free">Free</span>
                         </li>
                         <li class="flex items-center gap-3 text-zinc-300">
                             <div class="w-5 h-5 rounded-full bg-sky-500/20 flex items-center justify-center">
                                 <div class="w-1.5 h-1.5 rounded-full bg-sky-500"></div>
                             </div>
-                            Multi-space Support
+                            Multi-monitor & Multi-space Support
                         </li>
                         <li class="flex items-center gap-3 text-zinc-300">
                             <div class="w-5 h-5 rounded-full bg-sky-500/20 flex items-center justify-center">
@@ -168,8 +184,14 @@
                 </div>
                 <div class="flex-1 w-full">
                     <div class="video-placeholder aspect-[4/3] relative">
-                        <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover">
-                            <source src="/images/deskboard2-feature4.mp4" type="video/mp4">
+                        <video loop muted playsinline preload="none" poster="/images/feature4-poster.jpg"
+                            data-poster="/images/feature4-poster.jpg"
+                            data-poster-mobile="/images/feature4-poster-m.jpg"
+                            class="lazy-video absolute inset-0 w-full h-full object-cover">
+                            <source data-src="/images/feature4-m.mp4?v={{ site.time | date: '%s' }}" media="(max-width: 720px)"
+                                type="video/mp4">
+                            <source data-src="/images/feature4.mp4?v={{ site.time | date: '%s' }}"
+                                type="video/mp4">
                         </video>
                     </div>
                 </div>
