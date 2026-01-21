@@ -1,0 +1,41 @@
+<section class="changelog-shell">
+  <div class="container mx-auto px-6">
+    <div class="changelog-layout">
+      <header class="page-intro">
+        <p class="page-kicker">{{ site.data.changelog.page.kicker }}</p>
+        <h1 class="page-title">{{ site.data.changelog.page.title }}</h1>
+        <p class="page-summary">{{ site.data.changelog.page.summary }}</p>
+      </header>
+
+      <section class="timeline-list" aria-label="Release timeline">
+        {% for release in site.data.changelog.releases %}
+        <article class="timeline-item{% if forloop.first %} is-latest{% endif %}">
+          <div class="timeline-meta">
+            <span class="timeline-version">{{ release.version }}</span>
+            <time class="timeline-date" datetime="{{ release.date_iso }}">{{ release.date_display }}</time>
+          </div>
+
+          <div class="timeline-rail" aria-hidden="true">
+            <span class="timeline-dot"></span>
+          </div>
+
+          <div class="timeline-body">
+            {% if release.label %}
+            <p class="timeline-label">{{ release.label }}</p>
+            {% endif %}
+            <p class="timeline-description">{{ release.description }}</p>
+
+            {% if release.changes %}
+            <ul class="change-list">
+              {% for change in release.changes %}
+              <li class="change-item">{{ change }}</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </div>
+        </article>
+        {% endfor %}
+      </section>
+    </div>
+  </div>
+</section>

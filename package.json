@@ -1,0 +1,30 @@
+{
+  "name": "deskboard2.github.io",
+  "version": "1.0.0",
+  "description": "Marketing site template for Jekyll. Browse through a [live demo](https://proud-alligator.cloudvent.net/). Increase the web presence of your brand with this configurable theme.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run build:css",
+    "build:css": "vite build",
+    "build:css:watch": "vite build --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/powerumc/deskboard2.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/powerumc/deskboard2.github.io/issues"
+  },
+  "homepage": "https://github.com/powerumc/deskboard2.github.io#readme",
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.18",
+    "tailwindcss": "^4.1.18",
+    "vite": "^6.0.0"
+  }
+}

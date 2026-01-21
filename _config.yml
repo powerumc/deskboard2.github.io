@@ -3,9 +3,10 @@
 
 title: DeskBoard2
 baseurl:
-google_analytics_key:
+google_analytics: G-PZ0NPT7HRE
 google_maps_javascript_api_key:
 disqus_shortname:
+app_store_url: https://apps.apple.com/us/app/deskboard2/id6758047889
 
 # Values for the jekyll-seo-tag gem (https://github.com/jekyll/jekyll-seo-tag)
 social:

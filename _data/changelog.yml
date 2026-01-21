@@ -1,0 +1,99 @@
+page:
+  kicker: Product updates
+  title: Changelog
+  summary: Every DeskBoard2 release, organized for fast scanning with clear version, date, and change detail.
+
+releases:
+  - version: v1.8
+    date_iso: 2026-04-29
+    date_display: 2026.04.29
+    label: Latest release
+    description: Screen recording has been added, along with many usability improvements.
+    changes:
+      - Added screen recording, playback, and editing features
+      - Added cursor trail effect
+      - 7-day free trial available for everyone
+      - Advanced settings for Quick Access position and layout
+      - Advanced settings for each click effect
+      - Various bug fixes and usability improvements
+  - version: v1.7.1
+    date_iso: 2026-04-09
+    date_display: 2026.04.09
+    description: DeskBoard2 1.7.1 adds small but handy clipboard shortcuts.
+    changes:
+      - Copy to clipboard instantly with Cmd+C after selecting a capture area
+      - Cmd+C is now available in capture image editing and pinned windows
+  - version: v1.7
+    date_iso: 2026-04-02
+    date_display: 2026.04.02
+    description: DeskBoard2 1.7 introduces direct capture workflows and expands editing tools for captured images.
+    changes:
+      - Capture support
+      - Pin and edit captured images
+      - Automatic tagging for captured images
+      - Added a new arrow tool
+      - Added blur and pixelate tools
+      - Selection mode when hovering over shapes
+      - Auto-select after adding shapes
+      - Added tool items to the tray menu
+      - "Permissions Notice: The capture feature requires macOS Screen Recording permission."
+      - "Path: System Settings > Privacy & Security > Screen & System Audio Recording"
+      - Once granted, you can use capture and text recognition.
+  - version: v1.6
+    date_iso: 2026-03-17
+    date_display: 2026.03.17
+    description: DeskBoard2 1.6 has added a convenient toolbar function and light theme.
+    changes:
+      - Added Light and Dark themes for the app
+      - Added toolbar features and toolbar customization
+      - Press Tab to switch between Drawing and Selection modes
+      - Added “Cat Paw” click effect
+      - Minor bug fixes
+  - version: v1.5
+    date_iso: 2026-03-06
+    date_display: 2026.03.06
+    description: DeskBoard2 1.5 expands Select Mode workflows, improves update visibility, and refines editing and layering controls.
+    changes:
+      - Added a toolbar in Select Mode for actions like locking and changing colors.
+      - Made marker numbering editable in Select Mode.
+      - Changed Undo and Redo to a linear history pattern.
+      - Added a shortcut setting for Send to Back.
+      - Added a "New Update" indicator when a new app version is available.
+      - Added app information to the Preferences > Info tab.
+  - version: v1.4
+    date_iso: 2026-02-27
+    date_display: 2026.02.27
+    description: DeskBoard2 1.4 adds core editing actions in Select Mode and expands workflow controls in Preferences.
+    changes:
+      - Added Undo and Redo support.
+      - Added Copy, Cut, Paste, and Duplicate in Select Mode.
+      - Added range selection in Select Mode.
+      - Added a Focus Effects tab to Preferences.
+      - Included other minor bug fixes and improvements.
+  - version: v1.3
+    date_iso: 2026-02-20
+    date_display: 2026.02.20
+    description: DeskBoard2 1.3 improves settings usability and adds better control over drawing and shape editing.
+    changes:
+      - Improved the Preferences UI and UX.
+      - Added a cursor effects preview.
+      - Added individual delete icons when selecting lines or shapes.
+      - Added straight-line drawing with axis locking by holding Shift.
+  - version: v1.2
+    date_iso: 2026-02-09
+    date_display: 2026.02.09
+    description: DeskBoard2 1.2 focuses on stability fixes for older macOS versions and smoother drawing behavior.
+    changes:
+      - Fixed an issue where the toolbox could not be clicked on older macOS versions.
+      - Fixed an issue where drawing could be interrupted during auto erase.
+  - version: v1.1
+    date_iso: 2026-02-05
+    date_display: 2026.02.05
+    description: DeskBoard2 1.1 introduces monetization and adds canvas zoom support.
+    changes:
+      - Added a Pro in-app purchase that unlocks all features.
+      - Added zoom support.
+  - version: v1.0
+    date_iso: 2026-02-03
+    date_display: 2026.02.03
+    description: Initial release.

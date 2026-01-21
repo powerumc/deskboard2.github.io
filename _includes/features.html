@@ -3,9 +3,9 @@
     <!-- Feature 1 -->
     <section class="py-24 border-t border-white/5">
         <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row items-center gap-16">
+            <div class="flex flex-col md:flex-row items-center gap-16 group">
                 <div class="flex-1 space-y-6">
-                    <div class="w-12 h-12 rounded-2xl glass flex items-center justify-center text-blue-400">
+                    <div class="w-14 h-14 rounded-2xl bg-blue-500/10 border border-blue-500/20 shadow-[0_0_20px_rgba(59,130,246,0.15)] flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform duration-500">
                         <i data-lucide="pencil"></i>
                     </div>
                     <h2 class="text-3xl md:text-5xl font-bold tracking-tight">Drawing Tools</h2>
@@ -36,17 +36,16 @@
                         </li>
                     </ul>
                 </div>
-                <div class="flex-1 w-full">
-                    <div class="video-placeholder aspect-[4/3] relative">
-                        <video loop muted playsinline preload="none" poster="/images/feature1-poster.jpg"
-                            data-poster="/images/feature1-poster.jpg"
-                            data-poster-mobile="/images/feature1-poster-m.jpg"
-                            class="lazy-video absolute inset-0 w-full h-full object-cover">
-                            <source data-src="/images/feature1-m.mp4?v={{ site.time | date: '%s' }}" media="(max-width: 720px)"
-                                type="video/mp4">
-                            <source data-src="/images/feature1.mp4?v={{ site.time | date: '%s' }}"
-                                type="video/mp4">
-                        </video>
+                <div class="flex-1 w-full relative">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-blue-500/20 to-transparent rounded-3xl blur opacity-30 group-hover:opacity-60 transition duration-1000"></div>
+                    <div class="relative rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.5)]">
+                        <div style="padding:75.34% 0 0 0;position:relative;">
+                            <iframe style="position:absolute;top:0;left:0;width:100%;height:100%;"
+                                src="https://www.youtube.com/embed/jWvQemEGn14?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=jWvQemEGn14"
+                                title="DeskBoard2 Feature1" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -56,12 +55,12 @@
     <!-- Feature 2 -->
     <section class="py-24 border-t border-white/5">
         <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row-reverse items-center gap-16">
+            <div class="flex flex-col md:flex-row-reverse items-center gap-16 group">
                 <div class="flex-1 space-y-6">
-                    <div class="w-12 h-12 rounded-2xl glass flex items-center justify-center text-purple-400">
+                    <div class="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/20 shadow-[0_0_20px_rgba(168,85,247,0.15)] flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform duration-500">
                         <i data-lucide="sparkles"></i>
                     </div>
-                    <h2 class="text-3xl md:text-5xl font-bold tracking-tight">Visual Screen Effects</h2>
+                    <h2 class="text-3xl md:text-5xl font-bold tracking-tight">Screen Effects</h2>
                     <p class="text-zinc-400 text-lg leading-relaxed">
                         Capture attention and focus your audience with professional visual effects.
                     </p>
@@ -87,17 +86,16 @@
                         </li>
                     </ul>
                 </div>
-                <div class="flex-1 w-full">
-                    <div class="video-placeholder aspect-[4/3] relative">
-                        <video loop muted playsinline preload="none" poster="/images/feature2-poster.jpg"
-                            data-poster="/images/feature2-poster.jpg"
-                            data-poster-mobile="/images/feature2-poster-m.jpg"
-                            class="lazy-video absolute inset-0 w-full h-full object-cover">
-                            <source data-src="/images/feature2-m.mp4?v={{ site.time | date: '%s' }}" media="(max-width: 720px)"
-                                type="video/mp4">
-                            <source data-src="/images/feature2.mp4?v={{ site.time | date: '%s' }}"
-                                type="video/mp4">
-                        </video>
+                <div class="flex-1 w-full relative">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-transparent to-purple-500/20 rounded-3xl blur opacity-30 group-hover:opacity-60 transition duration-1000"></div>
+                    <div class="relative rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.5)]">
+                        <div style="padding:75.34% 0 0 0;position:relative;">
+                            <iframe style="position:absolute;top:0;left:0;width:100%;height:100%;"
+                                src="https://www.youtube.com/embed/_P2_cNx4snE?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=_P2_cNx4snE"
+                                title="DeskBoard2 Feature2" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -107,9 +105,9 @@
     <!-- Feature 3 -->
     <section class="py-24 border-t border-white/5">
         <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row items-center gap-16">
+            <div class="flex flex-col md:flex-row items-center gap-16 group">
                 <div class="flex-1 space-y-6">
-                    <div class="w-12 h-12 rounded-2xl glass flex items-center justify-center text-emerald-400">
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 shadow-[0_0_20px_rgba(16,185,129,0.15)] flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform duration-500">
                         <i data-lucide="mouse-pointer-2"></i>
                     </div>
                     <h2 class="text-3xl md:text-5xl font-bold tracking-tight">Cursor Effects</h2>
@@ -132,17 +130,16 @@
                         </li>
                     </ul>
                 </div>
-                <div class="flex-1 w-full">
-                    <div class="video-placeholder aspect-[4/3] relative">
-                        <video loop muted playsinline preload="none" poster="/images/feature3-poster.jpg"
-                            data-poster="/images/feature3-poster.jpg"
-                            data-poster-mobile="/images/feature3-poster-m.jpg"
-                            class="lazy-video absolute inset-0 w-full h-full object-cover">
-                            <source data-src="/images/feature3-m.mp4?v={{ site.time | date: '%s' }}" media="(max-width: 720px)"
-                                type="video/mp4">
-                            <source data-src="/images/feature3.mp4?v={{ site.time | date: '%s' }}"
-                                type="video/mp4">
-                        </video>
+                <div class="flex-1 w-full relative">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-emerald-500/20 to-transparent rounded-3xl blur opacity-30 group-hover:opacity-60 transition duration-1000"></div>
+                    <div class="relative rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.5)]">
+                        <div style="padding:75.34% 0 0 0;position:relative;">
+                            <iframe style="position:absolute;top:0;left:0;width:100%;height:100%;"
+                                src="https://www.youtube.com/embed/FPfj8pMeEAc?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=FPfj8pMeEAc"
+                                title="DeskBoard2 Feature3" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -151,9 +148,9 @@
     <!-- Feature 4 -->
     <section class="py-24 border-t border-white/5">
         <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row-reverse items-center gap-16">
+            <div class="flex flex-col md:flex-row-reverse items-center gap-16 group">
                 <div class="flex-1 space-y-6">
-                    <div class="w-12 h-12 rounded-2xl glass flex items-center justify-center text-sky-400">
+                    <div class="w-14 h-14 rounded-2xl bg-sky-500/10 border border-sky-500/20 shadow-[0_0_20px_rgba(14,165,233,0.15)] flex items-center justify-center text-sky-400 group-hover:scale-110 transition-transform duration-500">
                         <i data-lucide="monitor"></i>
                     </div>
                     <h2 class="text-3xl md:text-5xl font-bold tracking-tight">macOS Integration</h2>
@@ -182,17 +179,16 @@
                         </li>
                     </ul>
                 </div>
-                <div class="flex-1 w-full">
-                    <div class="video-placeholder aspect-[4/3] relative">
-                        <video loop muted playsinline preload="none" poster="/images/feature4-poster.jpg"
-                            data-poster="/images/feature4-poster.jpg"
-                            data-poster-mobile="/images/feature4-poster-m.jpg"
-                            class="lazy-video absolute inset-0 w-full h-full object-cover">
-                            <source data-src="/images/feature4-m.mp4?v={{ site.time | date: '%s' }}" media="(max-width: 720px)"
-                                type="video/mp4">
-                            <source data-src="/images/feature4.mp4?v={{ site.time | date: '%s' }}"
-                                type="video/mp4">
-                        </video>
+                <div class="flex-1 w-full relative">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-transparent to-sky-500/20 rounded-3xl blur opacity-30 group-hover:opacity-60 transition duration-1000"></div>
+                    <div class="relative rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.5)]">
+                        <div style="padding:76.03% 0 0 0;position:relative;">
+                            <iframe style="position:absolute;top:0;left:0;width:100%;height:100%;"
+                                src="https://www.youtube.com/embed/E9ZK5TWOXNA?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=E9ZK5TWOXNA"
+                                title="DeskBoard2 Feature4" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
                     </div>
                 </div>
             </div>
