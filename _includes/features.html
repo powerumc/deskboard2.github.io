@@ -1,197 +1,224 @@
 <!-- Features Section -->
-<div id="features" class="py-12">
-    <!-- Feature 1 -->
-    <section class="py-24 border-t border-white/5">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row items-center gap-16 group">
-                <div class="flex-1 space-y-6">
-                    <div class="w-14 h-14 rounded-2xl bg-blue-500/10 border border-blue-500/20 shadow-[0_0_20px_rgba(59,130,246,0.15)] flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform duration-500">
-                        <i data-lucide="pencil"></i>
-                    </div>
-                    <h2 class="text-3xl md:text-5xl font-bold tracking-tight">Drawing Tools</h2>
-                    <p class="text-zinc-400 text-lg leading-relaxed">
-                        Sketch and annotate directly on your desktop with a variety of pens and shapes.
-                    </p>
-                    <ul class="space-y-4 pt-4">
-                        <li class="flex items-center gap-3 text-zinc-300">
-                            <div class="w-5 h-5 rounded-full bg-blue-500/20 flex items-center justify-center">
-                                <div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
-                            </div>
-                            Pen Brush, Thin Pen, Highlighter
-                            <span class="ml-2 badge-free">Free</span>
-                        </li>
-                        <li class="flex items-center gap-3 text-zinc-300">
-                            <div class="w-5 h-5 rounded-full bg-blue-500/20 flex items-center justify-center">
-                                <div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
-                            </div>
-                            Line, Rectangle, Circle, Arrow, Text, Marker
-                            <span class="ml-2 badge-free">Free</span>
-                        </li>
-                        <li class="flex items-center gap-3 text-zinc-300">
-                            <div class="w-5 h-5 rounded-full bg-blue-500/20 flex items-center justify-center">
-                                <div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
-                            </div>
-                            Edit Mode, Thickness, Line Patterns, and more
-                            <span class="ml-2 badge-free">Free</span>
-                        </li>
-                    </ul>
+<main id="features" class="features-shell">
+    <section class="tool-system landing-container" aria-labelledby="tool-system-title">
+        <div class="section-heading">
+            <p class="eyebrow">All-in-One Presentation Toolkit</p>
+            <h2 id="tool-system-title">A complete screen communication system.</h2>
+            <p>
+                DeskBoard2 keeps the tools you need close to the screen, so you can explain, capture, record, and present without breaking flow.
+            </p>
+        </div>
+
+        <div class="tool-strip" aria-label="DeskBoard2 feature pillars">
+            <a href="#annotate" class="tool-chip"><i data-lucide="pen-line" aria-hidden="true"></i><span>Annotate</span></a>
+            <a href="#capture" class="tool-chip"><i data-lucide="scan" aria-hidden="true"></i><span>Capture</span></a>
+            <a href="#record" class="tool-chip"><i data-lucide="video" aria-hidden="true"></i><span>Record</span></a>
+            <a href="#effects" class="tool-chip"><i data-lucide="mouse-pointer-click" aria-hidden="true"></i><span>Effects</span></a>
+            <a href="#camera" class="tool-chip"><i data-lucide="camera" aria-hidden="true"></i><span>Camera</span></a>
+        </div>
+    </section>
+
+    <section id="annotate" class="feature-section feature-section--annotate">
+        <div class="landing-container feature-layout">
+            <div class="feature-copy">
+                <p class="eyebrow">Annotate</p>
+                <h2>Draw directly where the explanation happens.</h2>
+                <p>
+                    Turn your screen into a temporary canvas with pens, shapes, text, markers, blur tools, and precise editing controls.
+                </p>
+                <div class="feature-tags">
+                    <span>Pen, brush, thin pen, highlighter</span>
+                    <span>Line, rectangle, circle, arrow</span>
+                    <span>Text, marker, blur, pixelate</span>
+                    <span>Undo, redo, duplicate, clipboard</span>
                 </div>
-                <div class="flex-1 w-full relative">
-                    <div class="absolute -inset-1 bg-gradient-to-r from-blue-500/20 to-transparent rounded-3xl blur opacity-30 group-hover:opacity-60 transition duration-1000"></div>
-                    <div class="relative rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.5)]">
-                        <div style="padding:75.34% 0 0 0;position:relative;">
-                            <iframe style="position:absolute;top:0;left:0;width:100%;height:100%;"
-                                src="https://www.youtube.com/embed/jWvQemEGn14?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=jWvQemEGn14"
-                                title="DeskBoard2 Feature1" frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                        </div>
+            </div>
+
+            <div class="feature-mockup annotation-mockup" aria-label="Drawing feature mockup">
+                <div class="mock-screen">
+                    <div class="edge-handle"></div>
+                    <div class="mini-toolbar">
+                        <span class="active"><i data-lucide="pen-line"></i></span>
+                        <span><i data-lucide="circle"></i></span>
+                        <span><i data-lucide="arrow-up-right"></i></span>
+                        <span><i data-lucide="type"></i></span>
+                    </div>
+                    <div class="draw-card draw-card--one"></div>
+                    <div class="draw-card draw-card--two"></div>
+                    <div class="draw-stroke draw-stroke--cyan"></div>
+                    <div class="draw-stroke draw-stroke--coral"></div>
+                    <div class="draw-label">Focus here</div>
+                    <div class="style-popover">
+                        <span></span><span></span><span></span>
+                        <strong>12 px</strong>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Feature 2 -->
-    <section class="py-24 border-t border-white/5">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row-reverse items-center gap-16 group">
-                <div class="flex-1 space-y-6">
-                    <div class="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/20 shadow-[0_0_20px_rgba(168,85,247,0.15)] flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform duration-500">
-                        <i data-lucide="sparkles"></i>
-                    </div>
-                    <h2 class="text-3xl md:text-5xl font-bold tracking-tight">Screen Effects</h2>
-                    <p class="text-zinc-400 text-lg leading-relaxed">
-                        Capture attention and focus your audience with professional visual effects.
-                    </p>
-
-                    <ul class="space-y-4 pt-4">
-                        <li class="flex items-center gap-3 text-zinc-300">
-                            <div class="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center">
-                                <div class="w-1.5 h-1.5 rounded-full bg-purple-500"></div>
-                            </div>
-                            Screen Overlay Effects
-                        </li>
-                        <li class="flex items-center gap-3 text-zinc-300">
-                            <div class="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center">
-                                <div class="w-1.5 h-1.5 rounded-full bg-purple-500"></div>
-                            </div>
-                            Screen Blur Effects
-                        </li>
-                        <li class="flex items-center gap-3 text-zinc-300">
-                            <div class="w-5 h-5 rounded-full bg-purple-500/20 flex items-center justify-center">
-                                <div class="w-1.5 h-1.5 rounded-full bg-purple-500"></div>
-                            </div>
-                            Spotlight & Focus Effects
-                        </li>
-                    </ul>
-                </div>
-                <div class="flex-1 w-full relative">
-                    <div class="absolute -inset-1 bg-gradient-to-r from-transparent to-purple-500/20 rounded-3xl blur opacity-30 group-hover:opacity-60 transition duration-1000"></div>
-                    <div class="relative rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.5)]">
-                        <div style="padding:75.34% 0 0 0;position:relative;">
-                            <iframe style="position:absolute;top:0;left:0;width:100%;height:100%;"
-                                src="https://www.youtube.com/embed/_P2_cNx4snE?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=_P2_cNx4snE"
-                                title="DeskBoard2 Feature2" frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                        </div>
-                    </div>
+    <section id="capture" class="feature-section feature-section--capture">
+        <div class="landing-container feature-layout feature-layout--reverse">
+            <div class="feature-copy">
+                <p class="eyebrow">Capture</p>
+                <h2>Capture now, keep the context visible.</h2>
+                <p>
+                    Select a region or window, save the shot, pin a preview, open the editor, and extract text into Markdown when the screen contains useful copy.
+                </p>
+                <div class="feature-tags">
+                    <span>Region and window HUD</span>
+                    <span>Capture editor</span>
+                    <span>Pinned preview windows</span>
+                    <span>OCR and Markdown editing</span>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Feature 3 -->
-    <section class="py-24 border-t border-white/5">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row items-center gap-16 group">
-                <div class="flex-1 space-y-6">
-                    <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 shadow-[0_0_20px_rgba(16,185,129,0.15)] flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform duration-500">
+            <div class="feature-mockup capture-mockup" aria-label="Capture feature mockup">
+                <div class="capture-stage">
+                    <div class="capture-context capture-context--main">
+                        <span></span>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <div class="capture-context capture-context--side">
+                        <span></span>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    <div class="capture-selection">
+                        <span></span><span></span><span></span><span></span>
+                        <strong>1240 x 760</strong>
+                    </div>
+                    <div class="capture-hud">
+                        <span>Region HUD</span>
+                        <button type="button">
+                            <i data-lucide="camera"></i>
+                            <strong>Capture</strong>
+                        </button>
+                    </div>
+                    <div class="capture-click-ring"></div>
+                    <div class="capture-cursor">
                         <i data-lucide="mouse-pointer-2"></i>
                     </div>
-                    <h2 class="text-3xl md:text-5xl font-bold tracking-tight">Cursor Effects</h2>
-                    <p class="text-zinc-400 text-lg leading-relaxed">
-                        Captivate your audience with interactive cursor animations that add flair to every click.
-                    </p>
-                    <ul class="space-y-4 pt-4">
-                        <li class="flex items-center gap-3 text-zinc-300">
-                            <div class="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                                <div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
-                            </div>
-                            Click Effects
-                            <span class="ml-2 badge-free">Free with limitations</span>
-                        </li>
-                        <li class="flex items-center gap-3 text-zinc-300">
-                            <div class="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                                <div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
-                            </div>
-                            Cursor Trails
-                        </li>
-                    </ul>
                 </div>
-                <div class="flex-1 w-full relative">
-                    <div class="absolute -inset-1 bg-gradient-to-r from-emerald-500/20 to-transparent rounded-3xl blur opacity-30 group-hover:opacity-60 transition duration-1000"></div>
-                    <div class="relative rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.5)]">
-                        <div style="padding:75.34% 0 0 0;position:relative;">
-                            <iframe style="position:absolute;top:0;left:0;width:100%;height:100%;"
-                                src="https://www.youtube.com/embed/FPfj8pMeEAc?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=FPfj8pMeEAc"
-                                title="DeskBoard2 Feature3" frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                        </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="record" class="feature-section feature-section--record">
+        <div class="landing-container feature-layout">
+            <div class="feature-copy">
+                <p class="eyebrow">Record</p>
+                <h2>Record now, keep the workflow visible.</h2>
+                <p>
+                    Choose a recording area, monitor microphone levels, control system audio, then trim, combine, finalize, and reuse the output.
+                </p>
+                <div class="feature-tags">
+                    <span>Area selection HUD</span>
+                    <span>Mic and system audio controls</span>
+                    <span>Floating recording bar</span>
+                    <span>Trim editor and thumbnails</span>
+                </div>
+            </div>
+
+            <div class="feature-mockup record-mockup" aria-label="Recording feature mockup">
+                <div class="record-stage">
+                    <div class="record-region"></div>
+                    <div class="record-bar">
+                        <span class="record-dot"></span>
+                        <strong>01:42</strong>
+                        <i data-lucide="pause"></i>
+                        <i data-lucide="square"></i>
+                    </div>
+                    <div class="audio-panel">
+                        <p>Mic</p>
+                        <div><span style="height: 38%"></span><span style="height: 72%"></span><span style="height: 55%"></span><span style="height: 86%"></span><span style="height: 44%"></span></div>
+                        <p>System</p>
+                        <div><span style="height: 64%"></span><span style="height: 48%"></span><span style="height: 80%"></span><span style="height: 35%"></span><span style="height: 62%"></span></div>
+                    </div>
+                    <div class="trim-timeline">
+                        <span></span><span></span><span></span><span></span>
+                        <strong></strong>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- Feature 4 -->
-    <section class="py-24 border-t border-white/5">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row-reverse items-center gap-16 group">
-                <div class="flex-1 space-y-6">
-                    <div class="w-14 h-14 rounded-2xl bg-sky-500/10 border border-sky-500/20 shadow-[0_0_20px_rgba(14,165,233,0.15)] flex items-center justify-center text-sky-400 group-hover:scale-110 transition-transform duration-500">
-                        <i data-lucide="monitor"></i>
-                    </div>
-                    <h2 class="text-3xl md:text-5xl font-bold tracking-tight">macOS Integration</h2>
-                    <p class="text-zinc-400 text-lg leading-relaxed">
-                        Perfectly integrated with the macOS ecosystem for a seamless experience.
-                    </p>
-                    <ul class="space-y-4 pt-4">
-                        <li class="flex items-center gap-3 text-zinc-300">
-                            <div class="w-5 h-5 rounded-full bg-sky-500/20 flex items-center justify-center">
-                                <div class="w-1.5 h-1.5 rounded-full bg-sky-500"></div>
-                            </div>
-                            Single-monitor & single-space support
-                            <span class="ml-2 badge-free">Free</span>
-                        </li>
-                        <li class="flex items-center gap-3 text-zinc-300">
-                            <div class="w-5 h-5 rounded-full bg-sky-500/20 flex items-center justify-center">
-                                <div class="w-1.5 h-1.5 rounded-full bg-sky-500"></div>
-                            </div>
-                            Multi-monitor & Multi-space Support
-                        </li>
-                        <li class="flex items-center gap-3 text-zinc-300">
-                            <div class="w-5 h-5 rounded-full bg-sky-500/20 flex items-center justify-center">
-                                <div class="w-1.5 h-1.5 rounded-full bg-sky-500"></div>
-                            </div>
-                            Full-screen Support
-                        </li>
-                    </ul>
+
+    <section id="effects" class="feature-section feature-section--effects">
+        <div class="landing-container feature-layout feature-layout--reverse">
+            <div class="feature-copy">
+                <p class="eyebrow">Cursor and screen effects</p>
+                <h2>Guide attention without saying “look here.”</h2>
+                <p>
+                    Add focus effects, click feedback, screen treatments, and cursor trails that make demos and tutorials easier to follow.
+                </p>
+                <div class="feature-tags">
+                    <span>Spotlight and focus effects</span>
+                    <span>Screen overlays</span>
+                    <span>Click rings</span>
+                    <span>Cursor trail effects</span>
                 </div>
-                <div class="flex-1 w-full relative">
-                    <div class="absolute -inset-1 bg-gradient-to-r from-transparent to-sky-500/20 rounded-3xl blur opacity-30 group-hover:opacity-60 transition duration-1000"></div>
-                    <div class="relative rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.5)]">
-                        <div style="padding:76.03% 0 0 0;position:relative;">
-                            <iframe style="position:absolute;top:0;left:0;width:100%;height:100%;"
-                                src="https://www.youtube.com/embed/E9ZK5TWOXNA?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=E9ZK5TWOXNA"
-                                title="DeskBoard2 Feature4" frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+
+            <div class="feature-mockup effects-mockup" aria-label="Cursor and screen effects mockup">
+                <div class="effects-stage">
+                    <div class="spotlight"></div>
+                    <div class="effect-row"><span></span><span></span><span></span></div>
+                    <div class="effect-row effect-row--short"><span></span><span></span></div>
+                    <div class="trail trail--one"></div>
+                    <div class="trail trail--two"></div>
+                    <div class="trail trail--three"></div>
+                    <div class="click-ring"></div>
+                    <div class="effect-cursor"><i data-lucide="mouse-pointer-2"></i></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="camera" class="feature-section feature-section--camera">
+        <div class="landing-container feature-layout">
+            <div class="feature-copy">
+                <p class="eyebrow">Camera overlay</p>
+                <h2>Stay present while the screen stays primary.</h2>
+                <p>
+                    Add a camera overlay with subject masking and background effects, then position it as part of the working canvas.
+                </p>
+                <div class="feature-tags">
+                    <span>Camera capture and frame processing</span>
+                    <span>Subject mask generation</span>
+                    <span>Blur, solid, pixel, transparent, monotone</span>
+                    <span>Overlay window controls</span>
+                </div>
+            </div>
+
+            <div class="feature-mockup camera-mockup" aria-label="Camera overlay feature mockup">
+                <div class="camera-stage">
+                    <div class="camera-overlay">
+                        <div class="avatar-scene">
+                            <div class="western-avatar">
+                                <span class="avatar-hair"></span>
+                                <span class="avatar-face"></span>
+                                <span class="avatar-neck"></span>
+                                <span class="avatar-body"></span>
+                            </div>
                         </div>
+                    </div>
+                    <div class="background-panel">
+                        <button>None</button>
+                        <button class="active">Blur</button>
+                        <button>Pixel</button>
+                        <button>Mono</button>
+                    </div>
+                    <div class="camera-controls">
+                        <i data-lucide="move"></i>
+                        <i data-lucide="maximize-2"></i>
+                        <i data-lucide="sliders-horizontal"></i>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-</div>
+
+</main>

@@ -4,10 +4,40 @@ page:
   summary: Every DeskBoard2 release, organized for fast scanning with clear version, date, and change detail.
 
 releases:
+  - version: v2.2
+    date_iso: 2026-06-01
+    date_display: 2026.06.01
+    label: Latest release
+    description: DeskBoard2 2.2 adds more flexible click effects and keycap overlay controls.
+    changes:
+      - Custom emoji and text can now be used for Click Effects - Emoji
+      - Keycap overlay can now be moved and resized
+      - Removed the 7-day free trial feature
+  - version: v2.1
+    date_iso: 2026-05-15
+    date_display: 2026.05.15
+    description: Improved stability for new features.
+    changes:
+      - Removed delayed capture when copying the capture area to the clipboard with Cmd+C, fixing an issue where timing differences could affect the captured image
+      - Improved keystroke overlay keycap display session handling for more accurate behavior
+  - version: v2.0
+    date_iso: 2026-05-14
+    date_display: 2026.05.14
+    description: DeskBoard2 2.0 improves Key Stroke visibility and fixes screen recording and Preferences polish issues.
+    changes:
+      - Shows keyboard shortcuts in the Key Stroke overlay
+      - Fixed a bug that could cause screen recording files to fail to save
+      - Fixed some text alignment issues in Preferences
+  - version: v1.9
+    date_iso: 2026-05-05
+    date_display: 2026.05.05
+    description: DeskBoard2 1.9 introduces Camera Overlay and more flexible free license behavior.
+    changes:
+      - Show yourself on screen with the Camera Overlay feature
+      - Free license can now disable auto-clear for tools
   - version: v1.8
     date_iso: 2026-04-29
     date_display: 2026.04.29
-    label: Latest release
     description: Screen recording has been added, along with many usability improvements.
     changes:
       - Added screen recording, playback, and editing features

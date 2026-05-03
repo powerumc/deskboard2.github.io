@@ -1,29 +1,20 @@
 <!-- Navbar -->
-<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 bg-zinc-950/70 backdrop-blur-xl border-b border-white/5">
-    <div class="container mx-auto px-6 flex items-center justify-between">
-        
-        <div class="flex md:flex-1">
-            <a href="/" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                <img src="/images/logo.png" alt="DeskBoard2 Logo" class="w-8 h-8 rounded-lg shadow-lg shadow-blue-500/20">
-                <span class="text-xl font-bold tracking-tight">DeskBoard2</span>
-            </a>
+<nav id="navbar" class="site-header">
+    <div class="site-header__inner">
+        <a href="/" class="brand-link" aria-label="DeskBoard2 home">
+            <img src="/images/logo.png" alt="" class="brand-link__mark">
+            <span class="brand-link__name">DeskBoard2</span>
+        </a>
+
+        <div class="site-nav" aria-label="Primary navigation">
+            <a href="/#features">Features</a>
+            <a href="/#workflow">Workflow</a>
+            <a href="/changelog">Changelog</a>
         </div>
 
-        <div class="flex items-center gap-4 md:gap-14 text-sm font-medium text-zinc-400 md:text-white">
-            <a href="/#features" class="hover:text-white md:hover:text-zinc-300 transition-colors">Features</a>
-            <a href="/changelog" class="hover:text-white md:hover:text-zinc-300 transition-colors">Changelog</a>
-        </div>
-
-        <div class="hidden md:flex md:flex-1"></div>
-
-        <!-- <div class="flex items-center gap-4">
-            <a href="/changelog"
-                class="hidden sm:block text-base font-semibold hover:text-white transition-colors text-zinc-200">Changelog</a>
-            <button
-                class="bg-white text-black px-5 py-2 rounded-full text-sm font-bold hover:bg-zinc-200 transition-all flex items-center gap-2">
-                <i data-lucide="download" class="w-4 h-4"></i>
-                Download
-            </button>
-        </div> -->
+        <a href="{{ site.app_store_url }}" class="header-download">
+            <i data-lucide="download" aria-hidden="true"></i>
+            <span>Download</span>
+        </a>
     </div>
 </nav>
