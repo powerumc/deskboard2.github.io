@@ -207,6 +207,12 @@ svg {
   text-align: center;
 }
 
+.hero-copy .eyebrow {
+  margin-bottom: 18px;
+  font-size: clamp(1rem, 1.35vw, 1.28rem);
+  line-height: 1.25;
+}
+
 .eyebrow {
   margin: 0 0 14px;
   color: #28777d;
@@ -693,7 +699,7 @@ svg {
 
 .tool-strip {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 10px;
   margin-top: 34px;
 }
@@ -729,6 +735,7 @@ svg {
 .tool-chip:nth-child(4) svg { color: var(--amber); }
 .tool-chip:nth-child(5) svg { color: #6f8bf3; }
 .tool-chip:nth-child(6) svg { color: #2d8d72; }
+.tool-chip:nth-child(7) svg { color: var(--cyan); }
 
 .feature-section {
   padding: 84px 0;
@@ -782,6 +789,41 @@ svg {
   min-height: 430px;
   overflow: hidden;
   border-radius: var(--radius-lg);
+}
+
+.feature-video {
+  position: relative;
+  min-height: 0;
+  aspect-ratio: 16 / 9;
+  background: #13201d;
+}
+
+.feature-mockup.feature-video {
+  min-height: 0;
+}
+
+.feature-video iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.feature-image {
+  min-height: 0;
+  aspect-ratio: 16 / 9;
+  background: #13201d;
+}
+
+.feature-mockup.feature-image {
+  min-height: 0;
+}
+
+.feature-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .mock-screen,

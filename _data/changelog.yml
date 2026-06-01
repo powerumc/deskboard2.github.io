@@ -4,10 +4,38 @@ page:
   summary: Every DeskBoard2 release, organized for fast scanning with clear version, date, and change detail.
 
 releases:
+  - version: v2.6
+    date_iso: 2026-08-17
+    date_display: 2026.08.17
+    label: Latest release
+    description: Focus Effect has been completely redesigned with more visual effects.
+    changes:
+      - Finely customize the Focus Effect shape, size, border, glow, colors, and animations
+      - Control the Focus Effect magnifier and its behavior
+  - version: v2.5
+    date_iso: 2026-08-07
+    date_display: 2026.08.07
+    description: Many features are now available in Full Screen mode.
+    changes:
+      - Focus Effect, Keystroke Overlay, Click Effects, and Cursor Trails now work in Full Screen mode
+      - Fixed various minor bugs
+  - version: v2.4
+    date_iso: 2026-06-28
+    date_display: 2026.06.28
+    description: Live Capture Translation is now available.
+    changes:
+      - Translate the selected capture area in real time
+      - Extract text from the selected capture area and translate it
+  - version: v2.3
+    date_iso: 2026-06-15
+    date_display: 2026.06.15
+    description: DeskBoard2 2.3 adds user activity statistics and personalized guidance.
+    changes:
+      - Added user activity statistics
+      - Added personalized recommendations for workload, fatigue, and rest
   - version: v2.2
     date_iso: 2026-06-01
     date_display: 2026.06.01
-    label: Latest release
     description: DeskBoard2 2.2 adds more flexible click effects and keycap overlay controls.
     changes:
       - Custom emoji and text can now be used for Click Effects - Emoji
