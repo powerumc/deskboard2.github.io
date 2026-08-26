@@ -159,6 +159,7 @@ releases:
     changes:
       - Fixed an issue where the toolbox could not be clicked on older macOS versions.
       - Fixed an issue where drawing could be interrupted during auto erase.
+      - Changed the toolbar background to a darker color.
   - version: v1.1
     date_iso: 2026-02-05
     date_display: 2026.02.05
