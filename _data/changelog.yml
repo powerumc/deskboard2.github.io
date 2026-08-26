@@ -4,10 +4,25 @@ page:
   summary: Every DeskBoard2 release, organized for fast scanning with clear version, date, and change detail.
 
 releases:
+  - version: v2.7.1
+    date_iso: 2026-08-25
+    date_display: 2026.08.25
+    label: Latest release
+    description: Improved Japanese and Chinese localization completeness.
+    changes:
+      - Added missing strings for Japanese, Simplified Chinese, and Traditional Chinese
+      - Improved localization validation to help prevent missing strings across languages
+  - version: v2.7
+    date_iso: 2026-08-24
+    date_display: 2026.08.24
+    description: Focus Effect click animations are now more natural and customizable.
+    changes:
+      - Added an option to play press and release animations fully, even for quick clicks
+      - Added a slider for adjusting click perspective
+      - 50% matches the previous effect, while values up to 100% provide a more pronounced perspective
   - version: v2.6
     date_iso: 2026-08-17
     date_display: 2026.08.17
-    label: Latest release
     description: Focus Effect has been completely redesigned with more visual effects.
     changes:
       - Finely customize the Focus Effect shape, size, border, glow, colors, and animations
