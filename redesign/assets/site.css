@@ -317,6 +317,36 @@ html[lang="ko"] .hero h1 { line-height: 1.12; letter-spacing: -0.035em; }
 .hero-facts li { display: inline-flex; align-items: center; gap: 8px; }
 .hero-facts li::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--mint); }
 
+
+/* ---------------------------------------------------------- hero layouts */
+/* stack: one left-aligned column that shares the desktop's left edge */
+.hero[data-layout="stack"] .hero-top { grid-template-columns: minmax(0, 1fr); gap: 22px; align-items: start; }
+.hero[data-layout="stack"] .hero-copy { gap: 16px; }
+.hero[data-layout="stack"] .hero-side { padding-bottom: 0; gap: 22px; }
+.hero[data-layout="stack"] .lede { max-width: 60ch; }
+.hero[data-layout="stack"] .hero-side { grid-template-columns: auto minmax(0, 1fr); align-items: center; column-gap: 28px; }
+.hero[data-layout="stack"] .lede { grid-column: 1 / -1; }
+.hero[data-layout="stack"] .hero-facts { flex-direction: column; gap: 4px; }
+
+/* center: a centered column, the classic product-launch arrangement */
+.hero[data-layout="center"] .hero-top { grid-template-columns: minmax(0, 1fr); justify-items: center; text-align: center; gap: 22px; }
+.hero[data-layout="center"] .hero-copy { justify-items: center; }
+.hero[data-layout="center"] .hero h1, .hero[data-layout="center"] h1 { max-width: 18ch; }
+.hero[data-layout="center"] .hero-side { justify-items: center; padding-bottom: 0; }
+.hero[data-layout="center"] .lede { max-width: 58ch; }
+.hero[data-layout="center"] .hero-cta, .hero[data-layout="center"] .hero-facts { justify-content: center; }
+.hero[data-layout="center"] .try-cue { justify-content: center; text-align: left; }
+
+/* split: two columns that start on the same line */
+.hero[data-layout="split"] .hero-top { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: start; }
+.hero[data-layout="split"] .hero-side { padding-top: calc(0.6875rem * 1.3 + 18px); padding-bottom: 0; }
+
+@media (max-width: 860px) {
+  .hero[data-layout] .hero-top { grid-template-columns: minmax(0, 1fr); }
+  .hero[data-layout="stack"] .hero-side { grid-template-columns: minmax(0, 1fr); }
+  .hero[data-layout="split"] .hero-side { padding-top: 0; }
+}
+
 /* ------------------------------------------------------------ try cue */
 .try-cue {
   margin-top: clamp(32px, 4.5vw, 56px);
