@@ -64,6 +64,12 @@
       'desk.plan': 'Plan', 'desk.seats': 'Seats', 'desk.price': 'Price',
       'desk.starter': 'Starter', 'desk.team': 'Team', 'desk.business': 'Business',
       'desk.fine': 'Prices in USD, billed monthly. Annual plans save 20%.',
+      'cue.title': 'Click the desktop below.',
+      'cue.sub': 'It works like a real Mac screen. Move, click, and right-click, then pick other effects on the right.',
+      'cue.done': 'That is DeskBoard2. Try another effect on the right.',
+      'cue.title.touch': 'Tap the desktop below.',
+      'cue.sub.touch': 'It works like a real Mac screen. Tap or drag, then pick other effects below.',
+      'cue.done.touch': 'That is DeskBoard2. Try another effect below.',
       'bar.demo': 'Auto demo',
       'bar.live': 'Your turn',
       'bar.replay': 'Replay demo',
@@ -181,6 +187,12 @@
       'desk.plan': '요금제', 'desk.seats': '좌석', 'desk.price': '가격',
       'desk.starter': '스타터', 'desk.team': '팀', 'desk.business': '비즈니스',
       'desk.fine': '가격은 USD 기준이며 매월 청구됩니다. 연간 요금제는 20% 저렴합니다.',
+      'cue.title': '아래 바탕화면을 클릭해 보세요.',
+      'cue.sub': '실제 Mac 화면처럼 움직이고, 클릭하고, 우클릭해 보세요. 오른쪽에서 다른 효과도 고를 수 있습니다.',
+      'cue.done': '이게 DeskBoard2입니다. 오른쪽에서 다른 효과도 골라 보세요.',
+      'cue.title.touch': '아래 바탕화면을 탭해 보세요.',
+      'cue.sub.touch': '실제 Mac 화면처럼 탭하거나 드래그해 보세요. 아래에서 다른 효과도 고를 수 있습니다.',
+      'cue.done.touch': '이게 DeskBoard2입니다. 아래에서 다른 효과도 골라 보세요.',
       'bar.demo': '자동 데모',
       'bar.live': '직접 체험 중',
       'bar.replay': '데모 다시 보기',
@@ -471,6 +483,7 @@
     else input.move(point);
     input.down(event.button === 2 ? 'right' : 'left');
     if (document.activeElement !== stage) stage.focus({ preventScroll: true });
+    markTried();
   });
 
   window.addEventListener('pointerup', (event) => input.up(event.button === 2 ? 'right' : 'left'));
@@ -479,6 +492,26 @@
 
   /* ========================================================== status bar */
   let barMode = 'demo';
+
+  // The big prompt above the desktop changes once the visitor has clicked it.
+  const cue = $('#try-cue');
+  let tried = false;
+  function updateCue() {
+    const touch = coarsePointer.matches;
+    const suffix = touch ? '.touch' : '';
+    const title = $('.try-title > span:first-child', cue);
+    title.dataset.i18n = (tried ? 'cue.done' : 'cue.title') + suffix;
+    title.textContent = t(title.dataset.i18n);
+    const sub = $('#try-sub');
+    sub.dataset.i18n = 'cue.sub' + suffix;
+    sub.textContent = t(sub.dataset.i18n);
+  }
+  function markTried() {
+    if (tried) return;
+    tried = true;
+    cue.classList.add('is-done');
+    updateCue();
+  }
 
   function setBar(mode) {
     barMode = mode;
@@ -1069,7 +1102,7 @@
   if ('ResizeObserver' in window) new ResizeObserver(() => layout()).observe(stage);
   else window.addEventListener('resize', layout);
 
-  coarsePointer.addEventListener?.('change', updateHint);
+  coarsePointer.addEventListener?.('change', () => { updateHint(); updateCue(); });
 
   // Boot
   applyCopy();
@@ -1079,6 +1112,7 @@
   updateClock();
   setInterval(updateClock, 20000);
   updateHint();
+  updateCue();
   syncHeader();
 
   const start = target('peak', 0.5, 0.22);
