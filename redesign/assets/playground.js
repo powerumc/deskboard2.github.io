@@ -652,7 +652,7 @@
   };
 
   function placeGhost(point) {
-    ghost.style.transform = `translate(${(point.x - 2.2).toFixed(1)}px, ${(point.y - 2.2).toFixed(1)}px)`;
+    ghost.style.transform = `translate(${(point.x - 3).toFixed(1)}px, ${(point.y - 3).toFixed(1)}px)`;
   }
 
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -744,7 +744,7 @@
     if (tour.running || paused) return;
     tour.gen++;
     tour.running = true;
-    ghost.hidden = false;
+    ghost.toggleAttribute('hidden', false);
     placeGhost(input.pos);
     input.enter(input.pos);
     setBar('demo');
@@ -759,7 +759,7 @@
       tour.motion.resolve();
       tour.motion = null;
     }
-    ghost.hidden = true;
+    ghost.toggleAttribute('hidden', true);
     keycap.hidden = true;
     input.leave();
   }
@@ -1222,7 +1222,7 @@
   const start = target('peak', 0.5, 0.22);
   input.pos = start;
   placeGhost(start);
-  ghost.hidden = false;
+  ghost.toggleAttribute('hidden', false);
   focus.setActive(true, now());
   focus.setConfig(focusConfig(), now());
   focus.pointer(start.x, start.y, true, now());
