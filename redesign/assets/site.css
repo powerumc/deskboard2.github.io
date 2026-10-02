@@ -67,10 +67,10 @@
   --wp-wave-3: rgba(6, 30, 96, 0.42);
 
   /* Type */
-  --font-display: "Archivo", "Noto Sans KR", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-body: "Instrument Sans", "Noto Sans KR", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-mono: "Martian Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  --font-ui: -apple-system, BlinkMacSystemFont, "Instrument Sans", "Noto Sans KR", system-ui, "Segoe UI", sans-serif;
+  --font-display: "Inter Tight", "Pretendard Variable", "Pretendard", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: "Pretendard Variable", "Pretendard", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --font-ui: -apple-system, BlinkMacSystemFont, "Pretendard Variable", "Pretendard", system-ui, "Segoe UI", sans-serif;
   --fs-hero: clamp(2.4rem, 1.2rem + 3.4vw, 4.1rem);
   --fs-h2: clamp(1.75rem, 1.25rem + 1.9vw, 2.85rem);
   --fs-lede: clamp(1.03rem, 0.97rem + 0.3vw, 1.18rem);
@@ -254,7 +254,7 @@ html[lang="ko"] body { word-break: keep-all; }
 }
 .site-header.is-scrolled { border-bottom-color: var(--line); }
 .header-inner { display: flex; align-items: center; gap: 24px; min-height: 64px; }
-.brand { display: inline-flex; align-items: center; gap: 10px; font: 800 1.0625rem/1 var(--font-display); font-stretch: 108%; text-decoration: none; letter-spacing: -0.01em; }
+.brand { display: inline-flex; align-items: center; gap: 10px; font: 800 1.0625rem/1 var(--font-display); text-decoration: none; letter-spacing: -0.01em; }
 .brand img { width: 30px; height: 30px; }
 .site-nav { display: flex; gap: 4px; margin-left: 8px; }
 .site-nav a {
@@ -284,8 +284,7 @@ html[lang="ko"] body { word-break: keep-all; }
 .hero h1 {
   margin: 0;
   font: 800 var(--fs-hero)/0.96 var(--font-display);
-  font-stretch: 116%;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.028em;
   text-wrap: balance;
 }
 html[lang="ko"] .hero h1 { line-height: 1.12; letter-spacing: -0.035em; }
@@ -397,7 +396,7 @@ html[lang="ko"] .hero h1 { line-height: 1.12; letter-spacing: -0.035em; }
 .pane-fallback { margin: 0; color: var(--ink-2); font-size: 0.875rem; }
 
 .pane-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 14px; align-items: start; }
-.pane-head h2 { margin: 0; display: flex; align-items: center; gap: 8px; font: 750 1.05rem/1.25 var(--font-display); font-stretch: 106%; }
+.pane-head h2 { margin: 0; display: flex; align-items: center; gap: 8px; font: 750 1.05rem/1.25 var(--font-display); }
 .pane-head p { grid-column: 1 / -1; margin: 0; font-size: 0.84rem; line-height: 1.5; color: var(--ink-2); }
 
 .badge {
@@ -779,7 +778,7 @@ input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px 
 /* ------------------------------------------------------------- features */
 .features { padding-block: clamp(64px, 9vw, 120px); border-top: 1px solid var(--line); }
 .section-head { display: grid; gap: 14px; max-width: 780px; margin-bottom: clamp(32px, 5vw, 56px); }
-.section-head h2 { margin: 0; font: 800 var(--fs-h2)/1.04 var(--font-display); font-stretch: 112%; letter-spacing: -0.02em; text-wrap: balance; }
+.section-head h2 { margin: 0; font: 800 var(--fs-h2)/1.04 var(--font-display); letter-spacing: -0.02em; text-wrap: balance; }
 html[lang="ko"] .section-head h2 { line-height: 1.2; letter-spacing: -0.03em; }
 .section-head > p:not(.eyebrow) { margin: 0; max-width: 62ch; font-size: var(--fs-lede); color: var(--ink-2); }
 .section-head-row { max-width: none; display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px; }
@@ -851,7 +850,7 @@ html[lang="ko"] .section-head h2 { line-height: 1.2; letter-spacing: -0.03em; }
 }
 .cta-icon { width: 88px; height: 88px; }
 .cta-copy { display: grid; gap: 8px; min-width: 0; }
-.cta-copy h2 { margin: 0; font: 800 clamp(1.6rem, 1.2rem + 1.4vw, 2.3rem)/1.05 var(--font-display); font-stretch: 112%; letter-spacing: -0.02em; }
+.cta-copy h2 { margin: 0; font: 800 clamp(1.6rem, 1.2rem + 1.4vw, 2.3rem)/1.05 var(--font-display); letter-spacing: -0.02em; }
 .cta-copy p { margin: 0; color: var(--cta-ink-2); max-width: 52ch; }
 .cta-actions { display: grid; justify-items: start; gap: 10px; }
 .cta-req { font: 500 0.6875rem/1.4 var(--font-mono); color: var(--cta-ink-2); }
