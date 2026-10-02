@@ -109,7 +109,6 @@
       'enable.trail': 'Use cursor trail',
       'enable.focus': 'Use focus effect',
       'group.effect': 'Effect',
-      'group.type': 'Trail effect',
       'group.magnifier': 'Magnifier',
       'fx.pulse': 'Pulse', 'fx.ripple': 'Ripple', 'fx.radar': 'Radar Wave', 'fx.spark': 'Spark Burst',
       'fx.check': 'Check Mark', 'fx.catPaw': 'Cat Paw', 'fx.emoji': 'Emoji', 'fx.lightning': 'Lightning',
@@ -128,21 +127,8 @@
       'f.confetti.paletteCount': 'Palette count', 'f.confetti.density': 'Confetti density',
       'f.confettiBlast.particleCount': 'Blast particle count', 'f.confettiBlast.speedScale': 'Blast speed scale',
       'f.fire.intensity': 'Fire intensity', 'f.fire.turbulence': 'Fire turbulence chance',
-      'trail.line': 'Line', 'trail.snow': 'Snow',
-      'f.line.duration': 'Line duration', 'f.line.width': 'Line width', 'f.line.opacity': 'Line opacity',
-      'f.snow.spacing': 'Snow spacing', 'f.snow.lifetime': 'Snow lifetime', 'f.snow.color': 'Snow color',
-      'focus.shape': 'Shape', 'focus.size': 'Size', 'focus.borderWeight': 'Border weight', 'focus.borderStyle': 'Border style',
-      'focus.glow': 'Glow', 'focus.accent': 'Accent color', 'focus.animateClicks': 'Animate clicks',
-      'focus.completeShort': 'Play animation fully', 'focus.perspective': 'Click perspective',
-      'focus.left': 'Left-click color', 'focus.right': 'Right-click color',
-      'focus.magnifier': 'Enable magnifier', 'focus.zoom': 'Zoom factor', 'focus.key': 'Magnifying key',
-      'focus.autoHide': 'Automatically hide', 'focus.attract': 'Beg for attention', 'focus.delay': 'Delay',
       'focus.hold': 'Hold to magnify',
       'focus.holdNote': 'Or hold {key} while pointing at the desktop.',
-      'opt.circle': 'Circle', 'opt.rhombus': 'Rhombus', 'opt.squircle': 'Rounded Rectangle', 'opt.rectangle': 'Rectangle',
-      'opt.small': 'Small', 'opt.regular': 'Regular', 'opt.large': 'Large', 'opt.extraLarge': 'Extra large',
-      'opt.light': 'Light', 'opt.bold': 'Bold', 'opt.heavy': 'Heavy',
-      'opt.solid': 'Solid', 'opt.dashed': 'Dashed', 'opt.hidden': 'Hidden', 'opt.soft': 'Soft', 'opt.shiny': 'Shiny',
       'opt.meta': 'Command', 'opt.alt': 'Option', 'opt.ctrl': 'Control', 'opt.shift': 'Shift',
       'unit.seconds': '{n} s',
       'swatch.rainbow': 'Rainbow', 'swatch.cherry': 'Cherry', 'swatch.russet': 'Russet', 'swatch.lemon': 'Lemon',
@@ -235,7 +221,6 @@
       'enable.trail': '커서 잔상 사용',
       'enable.focus': '집중 효과 사용',
       'group.effect': '효과',
-      'group.type': '잔상 효과',
       'group.magnifier': '확대경',
       'fx.pulse': '펄스', 'fx.ripple': '립플', 'fx.radar': '레이더 파형', 'fx.spark': '스파크',
       'fx.check': '체크 표시', 'fx.catPaw': '고양이 발자국', 'fx.emoji': '이모지', 'fx.lightning': '번개',
@@ -254,21 +239,8 @@
       'f.confetti.paletteCount': '팔레트 개수', 'f.confetti.density': '색종이 밀도',
       'f.confettiBlast.particleCount': '폭발 입자 수', 'f.confettiBlast.speedScale': '폭발 속도 배율',
       'f.fire.intensity': '불꽃 세기', 'f.fire.turbulence': '불꽃 난류 확률',
-      'trail.line': '선', 'trail.snow': '눈',
-      'f.line.duration': '선 지속 시간', 'f.line.width': '선 두께', 'f.line.opacity': '선 투명도',
-      'f.snow.spacing': '눈 간격', 'f.snow.lifetime': '눈 지속 시간', 'f.snow.color': '눈 색상',
-      'focus.shape': '도형', 'focus.size': '크기', 'focus.borderWeight': '테두리 굵기', 'focus.borderStyle': '테두리 스타일',
-      'focus.glow': '글로우', 'focus.accent': '강조 색상', 'focus.animateClicks': '클릭 애니메이션',
-      'focus.completeShort': '애니메이션 끝까지 재생', 'focus.perspective': '클릭 원근감',
-      'focus.left': '좌클릭 색상', 'focus.right': '우클릭 색상',
-      'focus.magnifier': '확대경 사용', 'focus.zoom': '확대 배율', 'focus.key': '확대 키',
-      'focus.autoHide': '자동 숨김', 'focus.attract': '주의 끌기', 'focus.delay': '대기시간',
       'focus.hold': '눌러서 확대',
       'focus.holdNote': '또는 데스크톱을 가리킨 채 {key} 키를 누르고 있으세요.',
-      'opt.circle': '원', 'opt.rhombus': '마름모', 'opt.squircle': '둥근 사각형', 'opt.rectangle': '사각형',
-      'opt.small': '작게', 'opt.regular': '보통', 'opt.large': '크게', 'opt.extraLarge': '매우 크게',
-      'opt.light': '얇게', 'opt.bold': '굵게', 'opt.heavy': '매우 굵게',
-      'opt.solid': '실선', 'opt.dashed': '점선', 'opt.hidden': '없음', 'opt.soft': '부드럽게', 'opt.shiny': '선명하게',
       'opt.meta': 'Command', 'opt.alt': 'Option', 'opt.ctrl': 'Control', 'opt.shift': 'Shift',
       'unit.seconds': '{n}초',
       'swatch.rainbow': '무지개', 'swatch.cherry': '체리', 'swatch.russet': '적갈색', 'swatch.lemon': '레몬',
@@ -821,44 +793,6 @@
     return el;
   }
 
-  function segmentedField({ id, label, options, value, onChange, readout }) {
-    const labelId = `${id}-label`;
-    const group = h('div', { class: 'seg', role: 'radiogroup', 'aria-labelledby': labelId, id });
-    const readoutEl = readout ? h('span', { class: 'value', text: readout(value) }) : null;
-    const buttons = options.map((option) => {
-      const selected = option.value === value;
-      const button = h('button', {
-        type: 'button', role: 'radio', id: `${id}-${option.value}`,
-        'aria-checked': String(selected), tabindex: selected ? '0' : '-1',
-        'aria-label': option.aria || null, title: option.aria || null,
-      });
-      if (option.icon) button.innerHTML = option.icon;
-      if (option.text) button.append(option.text);
-      button.addEventListener('click', () => select(option.value, false));
-      group.append(button);
-      return button;
-    });
-    function select(next, moveFocus) {
-      value = next;
-      buttons.forEach((button, i) => {
-        const on = options[i].value === next;
-        button.setAttribute('aria-checked', String(on));
-        button.tabIndex = on ? 0 : -1;
-        if (on && moveFocus) button.focus();
-      });
-      if (readoutEl) readoutEl.textContent = readout(next);
-      onChange(next);
-    }
-    group.addEventListener('keydown', (event) => {
-      const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[event.key];
-      if (!step) return;
-      event.preventDefault();
-      const index = options.findIndex((o) => o.value === value);
-      select(options[(index + step + options.length) % options.length].value, true);
-    });
-    return h('div', { class: 'field' }, h('div', { class: 'field-row' }, h('span', { class: 'field-label', id: labelId, text: label }), readoutEl), group);
-  }
-
   function switchButton({ id, checked, labelledby, label, onChange, small = true }) {
     const button = h('button', {
       type: 'button', role: 'switch', id, class: small ? 'switch is-small' : 'switch',
@@ -894,12 +828,6 @@
     fire: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.2c-3.6 0-6.1-2.4-6.1-5.7 0-3.6 2.8-5.3 3.7-8.6 1.9 1.3 2.7 3 2.7 4.7 1-.6 1.7-1.9 1.8-3.1 2.4 1.8 4 4.3 4 7 0 3.3-2.5 5.7-6.1 5.7z"/></svg>',
   };
 
-  const SHAPE_ICONS = {
-    circle: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7.5"/></svg>',
-    rhombus: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${FX.focusShapePath('rhombus', 4, 4, 16, 16)}"/></svg>`,
-    squircle: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${FX.focusShapePath('squircle', 4.5, 4.5, 15, 15)}"/></svg>`,
-    rectangle: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="4.5" width="15" height="15"/></svg>',
-  };
 
   /* ---------------------------------------------------------- click pane */
   const paneClick = $('#pane-click');
@@ -976,21 +904,6 @@
         resetContinuity();
         updateTabDots();
       }),
-      h('div', { class: 'group' },
-        segmentedField({
-          id: 'trail-type', label: t('group.type'), value: tr.type,
-          options: [{ value: 'line', text: t('trail.line') }, { value: 'snow', text: t('trail.snow') }],
-          onChange: (type) => {
-            tr.type = type;
-            resetContinuity();
-            if (!tr.enabled) {
-              tr.enabled = true;
-              const toggle = $('#trail-enabled');
-              if (toggle) toggle.setAttribute('aria-checked', 'true');
-              updateTabDots();
-            }
-          },
-        })),
     );
   }
 
@@ -1028,13 +941,6 @@
 
     paneFocus.replaceChildren(
       paneHead('focus', f.enabled, (on) => setFocusEnabled(on)),
-      h('div', { class: 'group' },
-        segmentedField({
-          id: 'focus-shape', label: t('focus.shape'), value: f.shape,
-          readout: (v) => t(`opt.${v}`),
-          options: ['circle', 'rhombus', 'squircle', 'rectangle'].map((s) => ({ value: s, icon: SHAPE_ICONS[s], aria: t(`opt.${s}`) })),
-          onChange: (v) => updateFocus({ shape: v }),
-        })),
       h('div', { class: 'group' },
         h('p', { class: 'group-label', text: t('group.magnifier') }),
         holdButton,
