@@ -109,21 +109,8 @@
       'enable.trail': 'Use cursor trail',
       'enable.focus': 'Use focus effect',
       'group.effect': 'Effect',
-      'group.options': 'Options',
-      'group.color': 'Drawing color',
       'group.type': 'Trail effect',
-      'group.appearance': 'Appearance',
-      'group.clicks': 'Clicks',
       'group.magnifier': 'Magnifier',
-      'group.behavior': 'Behavior',
-      'color.note': 'Click effects and line trails use the current drawing color, as in the app. Rainbow shifts a little with every click and stroke.',
-      'fixed.duration': 'Confetti effects play for a fixed time.',
-      'reset': 'Reset',
-      'pro.click': 'Pulse is free. The other click effects are part of DeskBoard2 Pro.',
-      'pro.trail': 'Cursor trails are part of DeskBoard2 Pro.',
-      'pro.focus': 'The focus effect is part of DeskBoard2 Pro. On a Mac, the magnifier needs Screen Recording permission.',
-      'badge.pro': 'PRO',
-      'badge.free': 'FREE',
       'fx.pulse': 'Pulse', 'fx.ripple': 'Ripple', 'fx.radar': 'Radar Wave', 'fx.spark': 'Spark Burst',
       'fx.check': 'Check Mark', 'fx.catPaw': 'Cat Paw', 'fx.emoji': 'Emoji', 'fx.lightning': 'Lightning',
       'fx.confetti': 'Confetti', 'fx.confettiBlast': 'Confetti Blast', 'fx.fire': 'Fire',
@@ -152,7 +139,6 @@
       'focus.autoHide': 'Automatically hide', 'focus.attract': 'Beg for attention', 'focus.delay': 'Delay',
       'focus.hold': 'Hold to magnify',
       'focus.holdNote': 'Or hold {key} while pointing at the desktop.',
-      'focus.idleNote': 'Stop moving for the delay to see these.',
       'opt.circle': 'Circle', 'opt.rhombus': 'Rhombus', 'opt.squircle': 'Rounded Rectangle', 'opt.rectangle': 'Rectangle',
       'opt.small': 'Small', 'opt.regular': 'Regular', 'opt.large': 'Large', 'opt.extraLarge': 'Extra large',
       'opt.light': 'Light', 'opt.bold': 'Bold', 'opt.heavy': 'Heavy',
@@ -249,21 +235,8 @@
       'enable.trail': '커서 잔상 사용',
       'enable.focus': '집중 효과 사용',
       'group.effect': '효과',
-      'group.options': '옵션',
-      'group.color': '그리기 색상',
       'group.type': '잔상 효과',
-      'group.appearance': '외형',
-      'group.clicks': '클릭',
       'group.magnifier': '확대경',
-      'group.behavior': '동작',
-      'color.note': '앱과 마찬가지로 클릭 효과와 선 잔상은 현재 그리기 색상을 사용합니다. 무지개는 클릭하고 움직일 때마다 색이 조금씩 바뀝니다.',
-      'fixed.duration': '색종이 효과는 재생 시간이 고정되어 있습니다.',
-      'reset': '초기화',
-      'pro.click': '펄스는 무료입니다. 나머지 클릭 효과는 DeskBoard2 Pro 기능입니다.',
-      'pro.trail': '커서 잔상은 DeskBoard2 Pro 기능입니다.',
-      'pro.focus': '집중 효과는 DeskBoard2 Pro 기능입니다. Mac에서 확대경을 쓰려면 화면 녹화 권한이 필요합니다.',
-      'badge.pro': 'PRO',
-      'badge.free': 'FREE',
       'fx.pulse': '펄스', 'fx.ripple': '립플', 'fx.radar': '레이더 파형', 'fx.spark': '스파크',
       'fx.check': '체크 표시', 'fx.catPaw': '고양이 발자국', 'fx.emoji': '이모지', 'fx.lightning': '번개',
       'fx.confetti': '색종이 날림', 'fx.confettiBlast': '색종이 폭발', 'fx.fire': '불꽃',
@@ -292,7 +265,6 @@
       'focus.autoHide': '자동 숨김', 'focus.attract': '주의 끌기', 'focus.delay': '대기시간',
       'focus.hold': '눌러서 확대',
       'focus.holdNote': '또는 데스크톱을 가리킨 채 {key} 키를 누르고 있으세요.',
-      'focus.idleNote': '대기시간 동안 움직이지 않으면 확인할 수 있습니다.',
       'opt.circle': '원', 'opt.rhombus': '마름모', 'opt.squircle': '둥근 사각형', 'opt.rectangle': '사각형',
       'opt.small': '작게', 'opt.regular': '보통', 'opt.large': '크게', 'opt.extraLarge': '매우 크게',
       'opt.light': '얇게', 'opt.bold': '굵게', 'opt.heavy': '매우 굵게',
@@ -610,7 +582,7 @@
       holding = true;
       button.classList.add('is-pressed');
       if (!state.focus.enabled) setFocusEnabled(true);
-      if (!state.focus.magnifier) updateFocus({ magnifier: true }, true);
+      if (!state.focus.magnifier) updateFocus({ magnifier: true });
       input.setMagnifier('hold', true);
     };
     const end = () => {
@@ -849,36 +821,6 @@
     return el;
   }
 
-  const decimals = (step) => {
-    const s = String(step);
-    return s.includes('.') ? s.split('.')[1].length : 0;
-  };
-
-  function formatValue(value, unit, step) {
-    if (unit === '%') return `${Math.round(value * 100)}%`;
-    const n = Number(value).toFixed(decimals(step));
-    if (!unit) return n;
-    if (unit === '°' || unit === '×') return `${n}${unit}`;
-    return `${n} ${unit}`;
-  }
-
-  function sliderField({ id, label, value, min, max, step, unit, onInput, onCommit }) {
-    const input = h('input', { type: 'range', id, min, max, step, value });
-    const output = h('output', { for: id });
-    const sync = () => {
-      const v = Number(input.value);
-      output.textContent = formatValue(v, unit, step);
-      input.style.setProperty('--fill', `${((v - min) / (max - min)) * 100}%`);
-    };
-    input.addEventListener('input', () => {
-      sync();
-      onInput(Number(input.value));
-    });
-    if (onCommit) input.addEventListener('change', () => onCommit(Number(input.value)));
-    sync();
-    return h('div', { class: 'field' }, h('div', { class: 'field-row' }, h('label', { for: id, text: label }), output), input);
-  }
-
   function segmentedField({ id, label, options, value, onChange, readout }) {
     const labelId = `${id}-label`;
     const group = h('div', { class: 'seg', role: 'radiogroup', 'aria-labelledby': labelId, id });
@@ -930,40 +872,10 @@
     return button;
   }
 
-  function switchField({ id, label, checked, onChange }) {
-    const labelId = `${id}-label`;
-    return h('div', { class: 'field is-inline' },
-      h('span', { class: 'field-label', id: labelId, text: label }),
-      switchButton({ id, checked, labelledby: labelId, onChange }));
-  }
-
-  function colorField({ id, label, value, enabled, onColor, onToggle }) {
-    const labelId = `${id}-label`;
-    const picker = h('input', { type: 'color', id, value, 'aria-labelledby': labelId });
-    picker.disabled = enabled === false;
-    picker.addEventListener('input', () => onColor(picker.value));
-    picker.addEventListener('change', () => onColor(picker.value, true));
-    const controls = h('div', { class: 'color-field' }, picker);
-    if (onToggle) {
-      controls.append(switchButton({
-        id: `${id}-on`, checked: enabled !== false, label,
-        onChange: (on) => {
-          picker.disabled = !on;
-          onToggle(on);
-        },
-      }));
-    }
-    return h('div', { class: 'field is-inline' }, h('span', { class: 'field-label', id: labelId, text: label }), controls);
-  }
-
-  function badge(pro) {
-    return h('span', { class: pro ? 'badge' : 'badge is-free', text: t(pro ? 'badge.pro' : 'badge.free') });
-  }
-
-  function paneHead(kind, enabled, pro, onToggle) {
+  function paneHead(kind, enabled, onToggle) {
     const titleId = `pane-${kind}-title`;
     return h('div', { class: 'pane-head' },
-      h('h2', { id: titleId }, t(`tab.${kind}`), pro === null ? null : badge(pro)),
+      h('h2', { id: titleId, text: t(`tab.${kind}`) }),
       switchButton({ id: `${kind}-enabled`, checked: enabled, label: t(`enable.${kind}`), small: false, onChange: onToggle }),
       h('p', { text: t(`pane.${kind}.desc`) }));
   }
@@ -989,50 +901,6 @@
     rectangle: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="4.5" width="15" height="15"/></svg>',
   };
 
-  function swatchGroup(prefix) {
-    const labelId = `${prefix}-color-label`;
-    const group = h('div', { class: 'swatches', role: 'radiogroup', 'aria-labelledby': labelId });
-    FX.SWATCHES.forEach((swatch) => {
-      const selected = state.color === swatch.id;
-      const button = h('button', {
-        type: 'button', role: 'radio', id: `${prefix}-swatch-${swatch.id}`,
-        class: swatch.gradient ? 'swatch is-rainbow' : 'swatch',
-        'aria-checked': String(selected), tabindex: selected ? '0' : '-1',
-        'aria-label': t(`swatch.${swatch.id}`), title: t(`swatch.${swatch.id}`),
-        'data-swatch': swatch.id,
-      });
-      if (!swatch.gradient) button.style.background = FX.color.css(swatch.color);
-      button.addEventListener('click', () => setColor(swatch.id));
-      group.append(button);
-    });
-    group.addEventListener('keydown', (event) => {
-      const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[event.key];
-      if (!step) return;
-      event.preventDefault();
-      const index = FX.SWATCHES.findIndex((s) => s.id === state.color);
-      const next = FX.SWATCHES[(index + step + FX.SWATCHES.length) % FX.SWATCHES.length].id;
-      setColor(next);
-      const button = $(`#${prefix}-swatch-${next}`);
-      if (button) button.focus();
-    });
-    return h('div', { class: 'group' },
-      h('p', { class: 'group-label', id: labelId, text: t('group.color') }),
-      group,
-      h('p', { class: 'field-note', text: t('color.note') }));
-  }
-
-  function setColor(id) {
-    state.color = id;
-    const swatch = FX.SWATCHES.find((s) => s.id === id);
-    if (!swatch || swatch.gradient) stroke.setRainbow();
-    else stroke.setSolid(swatch.color);
-    $$('[data-swatch]').forEach((button) => {
-      const on = button.dataset.swatch === id;
-      button.setAttribute('aria-checked', String(on));
-      button.tabIndex = on ? 0 : -1;
-    });
-  }
-
   /* ---------------------------------------------------------- click pane */
   const paneClick = $('#pane-click');
   const paneTrail = $('#pane-trail');
@@ -1049,7 +917,7 @@
         'aria-checked': String(selected), tabindex: selected ? '0' : '-1', 'data-effect': def.id,
       });
       chip.innerHTML = GLYPHS[def.id] || '';
-      chip.append(h('span', { text: t(`fx.${def.id}`) }), badge(def.pro));
+      chip.append(h('span', { text: t(`fx.${def.id}`) }));
       chip.addEventListener('click', () => selectClick(def.id));
       grid.append(chip);
     });
@@ -1066,55 +934,12 @@
     });
 
     paneClick.replaceChildren(
-      paneHead('click', c.enabled, null, (on) => {
+      paneHead('click', c.enabled, (on) => {
         c.enabled = on;
         updateTabDots();
         setBar(barMode);
       }),
       h('div', { class: 'group' }, h('p', { class: 'group-label', id: 'click-effect-label', text: t('group.effect') }), grid),
-      h('div', { class: 'group', id: 'click-options' }),
-      swatchGroup('click'),
-      h('div', { class: 'pane-foot' },
-        h('button', { type: 'button', class: 'reset-btn', id: 'click-reset', text: t('reset'), onclick: () => {
-          const def = FX.CLICK_BY_ID[c.type];
-          c.configs[c.type] = clone(def.defaults);
-          renderClickOptions();
-          previewClick();
-        } }),
-        h('p', { text: t('pro.click') })),
-    );
-    renderClickOptions();
-  }
-
-  function renderClickOptions() {
-    const box = $('#click-options');
-    if (!box) return;
-    const c = state.click;
-    const def = FX.CLICK_BY_ID[c.type];
-    const cfg = c.configs[c.type];
-    const fields = def.fields.filter((f) => !(def.fixedDuration && f.key === 'duration')).map((field) => {
-      const id = `click-${def.id}-${field.key}`;
-      if (field.type === 'text') {
-        const text = h('input', { type: 'text', class: 'text-input', id, value: cfg[field.key], placeholder: field.placeholder, maxlength: '12', autocomplete: 'off' });
-        text.addEventListener('input', () => { cfg[field.key] = text.value; });
-        text.addEventListener('change', previewClick);
-        const presets = h('div', { class: 'presets' }, field.presets.map((value) => h('button', {
-          type: 'button', text: value, 'aria-label': value,
-          onclick: () => { text.value = value; cfg[field.key] = value; previewClick(); },
-        })));
-        return h('div', { class: 'field' }, h('div', { class: 'field-row' }, h('label', { for: id, text: t(`f.${field.label}`) })), text, presets);
-      }
-      return sliderField({
-        id, label: t(`f.${field.label}`), value: cfg[field.key],
-        min: field.min, max: field.max, step: field.step, unit: field.unit,
-        onInput: (v) => { cfg[field.key] = v; },
-        onCommit: previewClick,
-      });
-    });
-    box.replaceChildren(
-      h('p', { class: 'group-label', text: `${t('group.options')} · ${t(`fx.${def.id}`)}` }),
-      ...fields,
-      def.fixedDuration ? h('p', { class: 'field-note', text: t('fixed.duration') }) : null,
     );
   }
 
@@ -1133,7 +958,6 @@
       chip.setAttribute('aria-checked', String(on));
       chip.tabIndex = on ? 0 : -1;
     });
-    renderClickOptions();
     setBar(barMode);
     previewClick();
   }
@@ -1147,7 +971,7 @@
   function renderTrailPane() {
     const tr = state.trail;
     paneTrail.replaceChildren(
-      paneHead('trail', tr.enabled, true, (on) => {
+      paneHead('trail', tr.enabled, (on) => {
         tr.enabled = on;
         resetContinuity();
         updateTabDots();
@@ -1165,50 +989,15 @@
               if (toggle) toggle.setAttribute('aria-checked', 'true');
               updateTabDots();
             }
-            renderTrailOptions();
           },
         })),
-      h('div', { class: 'group', id: 'trail-options' }),
-      h('div', { id: 'trail-colors' }),
-      h('div', { class: 'pane-foot' },
-        h('button', { type: 'button', class: 'reset-btn', id: 'trail-reset', text: t('reset'), onclick: () => {
-          tr[tr.type] = clone(TRAIL_DEFAULTS[tr.type]);
-          renderTrailOptions();
-        } }),
-        h('p', { text: t('pro.trail') })),
     );
-    renderTrailOptions();
-  }
-
-  function renderTrailOptions() {
-    const tr = state.trail;
-    const box = $('#trail-options');
-    const colors = $('#trail-colors');
-    if (!box || !colors) return;
-    const label = h('p', { class: 'group-label', text: `${t('group.options')} · ${t(`trail.${tr.type}`)}` });
-    if (tr.type === 'line') {
-      const cfg = tr.line;
-      box.replaceChildren(label,
-        sliderField({ id: 'trail-line-duration', label: t('f.line.duration'), value: cfg.duration, min: 0.05, max: 1, step: 0.05, unit: 's', onInput: (v) => { cfg.duration = v; } }),
-        sliderField({ id: 'trail-line-width', label: t('f.line.width'), value: cfg.lineWidth, min: 1, max: 16, step: 0.5, unit: 'pt', onInput: (v) => { cfg.lineWidth = v; } }),
-        sliderField({ id: 'trail-line-opacity', label: t('f.line.opacity'), value: cfg.opacity, min: 0.1, max: 1, step: 0.05, unit: '%', onInput: (v) => { cfg.opacity = v; } }));
-      colors.replaceChildren(swatchGroup('trail'));
-    } else {
-      const cfg = tr.snow;
-      box.replaceChildren(label,
-        sliderField({ id: 'trail-snow-spacing', label: t('f.snow.spacing'), value: cfg.spacing, min: 8, max: 40, step: 1, unit: 'pt', onInput: (v) => { cfg.spacing = v; } }),
-        sliderField({ id: 'trail-snow-lifetime', label: t('f.snow.lifetime'), value: cfg.lifetime, min: 0.2, max: 2.5, step: 0.05, unit: 's', onInput: (v) => { cfg.lifetime = v; } }),
-        colorField({ id: 'trail-snow-color', label: t('f.snow.color'), value: cfg.color, onColor: (v) => { cfg.color = v; } }));
-      colors.replaceChildren();
-    }
   }
 
   /* ---------------------------------------------------------- focus pane */
-  function updateFocus(patch, rerender = false) {
+  function updateFocus(patch) {
     Object.assign(state.focus, patch);
     focus.setConfig(focusConfig(), now());
-    if ('key' in patch) updateHint();
-    if (rerender) renderFocusPane();
     kick();
   }
 
@@ -1231,124 +1020,25 @@
     kick();
   }
 
-  function previewFocusClick(button) {
-    if (!state.focus.enabled || input.buttons.size) return;
-    const time = now();
-    focus.button(button, true, time);
-    setTimeout(() => {
-      focus.button(button, false, now());
-      kick();
-    }, 70);
-    kick();
-  }
-
   function renderFocusPane() {
     const f = state.focus;
-    const option = (key) => ({ value: key, text: t(`opt.${key}`) });
     const holdButton = h('button', { type: 'button', class: 'hold-btn', id: 'focus-hold' },
       h('kbd', { text: KEYS[f.key].symbol }), t('focus.hold'));
     bindHold(holdButton);
 
     paneFocus.replaceChildren(
-      paneHead('focus', f.enabled, true, (on) => setFocusEnabled(on)),
+      paneHead('focus', f.enabled, (on) => setFocusEnabled(on)),
       h('div', { class: 'group' },
-        h('p', { class: 'group-label', text: t('group.appearance') }),
         segmentedField({
           id: 'focus-shape', label: t('focus.shape'), value: f.shape,
           readout: (v) => t(`opt.${v}`),
           options: ['circle', 'rhombus', 'squircle', 'rectangle'].map((s) => ({ value: s, icon: SHAPE_ICONS[s], aria: t(`opt.${s}`) })),
           onChange: (v) => updateFocus({ shape: v }),
-        }),
-        segmentedField({
-          id: 'focus-size', label: t('focus.size'), value: f.size,
-          readout: (v) => `${FX.FOCUS.sizes[v]} pt`,
-          options: ['small', 'regular', 'large', 'extraLarge'].map(option),
-          onChange: (v) => updateFocus({ size: v }),
-        }),
-        segmentedField({
-          id: 'focus-weight', label: t('focus.borderWeight'), value: f.borderWeight,
-          readout: (v) => `${FX.FOCUS.weights[v]} pt`,
-          options: ['light', 'regular', 'bold', 'heavy'].map(option),
-          onChange: (v) => updateFocus({ borderWeight: v }),
-        }),
-        segmentedField({
-          id: 'focus-style', label: t('focus.borderStyle'), value: f.borderStyle,
-          options: ['solid', 'dashed'].map(option),
-          onChange: (v) => updateFocus({ borderStyle: v }),
-        }),
-        segmentedField({
-          id: 'focus-glow', label: t('focus.glow'), value: f.glow,
-          options: ['hidden', 'soft', 'shiny'].map(option),
-          onChange: (v) => updateFocus({ glow: v }),
-        }),
-        colorField({
-          id: 'focus-accent', label: t('focus.accent'), value: f.accent, enabled: f.usesAccent,
-          onColor: (v) => updateFocus({ accent: v }),
-          onToggle: (on) => updateFocus({ usesAccent: on }),
-        })),
-      h('div', { class: 'group' },
-        h('p', { class: 'group-label', text: t('group.clicks') }),
-        switchField({ id: 'focus-animate', label: t('focus.animateClicks'), checked: f.clickAnimation, onChange: (on) => { updateFocus({ clickAnimation: on }); previewFocusClick('left'); } }),
-        switchField({ id: 'focus-complete', label: t('focus.completeShort'), checked: f.completeShortClick, onChange: (on) => updateFocus({ completeShortClick: on }) }),
-        sliderField({
-          id: 'focus-perspective', label: t('focus.perspective'), value: f.perspective,
-          min: 0, max: 1, step: 0.05, unit: '%',
-          onInput: (v) => updateFocus({ perspective: v }),
-          onCommit: () => previewFocusClick('left'),
-        }),
-        colorField({
-          id: 'focus-left', label: t('focus.left'), value: f.left, enabled: f.usesLeft,
-          onColor: (v, done) => { updateFocus({ left: v }); if (done) previewFocusClick('left'); },
-          onToggle: (on) => { updateFocus({ usesLeft: on }); previewFocusClick('left'); },
-        }),
-        colorField({
-          id: 'focus-right', label: t('focus.right'), value: f.right, enabled: f.usesRight,
-          onColor: (v, done) => { updateFocus({ right: v }); if (done) previewFocusClick('right'); },
-          onToggle: (on) => { updateFocus({ usesRight: on }); previewFocusClick('right'); },
         })),
       h('div', { class: 'group' },
         h('p', { class: 'group-label', text: t('group.magnifier') }),
-        switchField({ id: 'focus-magnifier', label: t('focus.magnifier'), checked: f.magnifier, onChange: (on) => updateFocus({ magnifier: on }) }),
-        segmentedField({
-          id: 'focus-zoom', label: t('focus.zoom'), value: f.zoom,
-          options: FX.FOCUS.zooms.map((z) => ({ value: z, text: `${z}×` })),
-          onChange: (v) => updateFocus({ zoom: v }),
-        }),
-        segmentedField({
-          id: 'focus-key', label: t('focus.key'), value: f.key,
-          readout: (v) => t(`opt.${v}`),
-          options: Object.keys(KEYS).map((k) => ({ value: k, text: KEYS[k].symbol, aria: t(`opt.${k}`) })),
-          onChange: (v) => {
-            input.setMagnifier('key', false);
-            updateFocus({ key: v });
-            const kbd = $('#focus-hold kbd');
-            if (kbd) kbd.textContent = KEYS[v].symbol;
-            const note = $('#focus-hold-note');
-            if (note) note.textContent = t('focus.holdNote', { key: keyLabel() });
-          },
-        }),
         holdButton,
-        h('p', { class: 'field-note', id: 'focus-hold-note', text: t('focus.holdNote', { key: keyLabel() }) })),
-      h('div', { class: 'group' },
-        h('p', { class: 'group-label', text: t('group.behavior') }),
-        switchField({ id: 'focus-autohide', label: t('focus.autoHide'), checked: f.autoHide, onChange: (on) => updateFocus({ autoHide: on }) }),
-        switchField({ id: 'focus-attract', label: t('focus.attract'), checked: f.attract, onChange: (on) => updateFocus({ attract: on }) }),
-        segmentedField({
-          id: 'focus-delay', label: t('focus.delay'), value: f.delay,
-          options: FX.FOCUS.delays.map((d) => ({ value: d, text: t('unit.seconds', { n: d }) })),
-          onChange: (v) => updateFocus({ delay: v }),
-        }),
-        h('p', { class: 'field-note', text: t('focus.idleNote') })),
-      h('div', { class: 'pane-foot' },
-        h('button', { type: 'button', class: 'reset-btn', id: 'focus-reset', text: t('reset'), onclick: () => {
-          input.setMagnifier('key', false);
-          Object.assign(state.focus, focusDefaults());
-          focus.setConfig(focusConfig(), now());
-          updateHint();
-          renderFocusPane();
-          kick();
-        } }),
-        h('p', { text: t('pro.focus') })),
+        h('p', { class: 'field-note', text: t('focus.holdNote', { key: keyLabel() }) })),
     );
   }
 
