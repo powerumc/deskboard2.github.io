@@ -441,7 +441,8 @@ html[lang="ko"] .hero h1 { line-height: 1.12; letter-spacing: -0.035em; }
   font: 600 0.71rem/1.15 var(--font-body); color: var(--ink-2); text-align: center;
   transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
 }
-.fx-chip:hover { border-color: var(--line-2); color: var(--ink); }
+.fx-chip:hover:not(:disabled) { border-color: var(--line-2); color: var(--ink); }
+.fx-chip:disabled { opacity: 0.38; cursor: not-allowed; }
 .fx-chip[aria-checked="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--ink); box-shadow: inset 0 0 0 1px var(--accent); }
 .fx-chip svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .fx-chip .badge { position: absolute; top: 5px; right: 5px; padding: 2px 3px; font-size: 0.5rem; }

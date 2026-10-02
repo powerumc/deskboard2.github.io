@@ -620,7 +620,9 @@
   }
 
   /* ================================================================ tour */
-  const SHOWCASE = ['ripple', 'spark', 'check', 'lightning', 'confetti', 'catPaw', 'fire', 'radar', 'emoji', 'confettiBlast', 'pulse'];
+  // Only these click effects are open in the web preview; the rest are shown as unavailable.
+  const PREVIEW_EFFECTS = ['pulse', 'spark', 'check', 'catPaw'];
+  const SHOWCASE = ['spark', 'check', 'catPaw', 'pulse'];
   const easeMove = FX.cubicBezier(0.45, 0, 0.25, 1);
   let resumeTimer = 0;
 
@@ -922,9 +924,11 @@
     FX.CLICK_EFFECTS.forEach((def) => {
       if (def.separator) grid.append(h('span', { class: 'fx-sep', 'aria-hidden': 'true' }));
       const selected = c.type === def.id;
+      const available = PREVIEW_EFFECTS.includes(def.id);
       const chip = h('button', {
         type: 'button', role: 'radio', class: 'fx-chip', id: `fx-${def.id}`,
         'aria-checked': String(selected), tabindex: selected ? '0' : '-1', 'data-effect': def.id,
+        disabled: !available,
       });
       chip.innerHTML = GLYPHS[def.id] || '';
       chip.append(h('span', { text: t(`fx.${def.id}`) }));
@@ -935,7 +939,7 @@
       const step = { ArrowRight: 1, ArrowDown: 3, ArrowLeft: -1, ArrowUp: -3 }[event.key];
       if (!step) return;
       event.preventDefault();
-      const list = FX.CLICK_EFFECTS;
+      const list = FX.CLICK_EFFECTS.filter((e) => PREVIEW_EFFECTS.includes(e.id));
       const index = list.findIndex((e) => e.id === c.type);
       const next = list[(index + step + list.length) % list.length].id;
       selectClick(next);
