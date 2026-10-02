@@ -4,7 +4,7 @@ title: 隱私權政策
 permalink: /privacy-policy/zh-tw/
 ---
 
-<div class="container mx-auto px-4 py-8 prose prose-slate max-w-4xl" style="padding-top: 150px;">
+<div class="wrap prose">
   <h1 class="text-3xl font-bold mb-6">隱私權政策</h1>
 
   <p class="mb-4">

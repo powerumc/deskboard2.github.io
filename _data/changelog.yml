@@ -2,13 +2,18 @@ page:
   kicker: Product updates
   title: Changelog
   summary: Every DeskBoard2 release, organized for fast scanning with clear version, date, and change detail.
+  kicker_ko: 제품 업데이트
+  title_ko: 업데이트 내역
+  summary_ko: DeskBoard2의 모든 릴리즈를 버전, 날짜, 변경 사항별로 정리했습니다.
 
 releases:
   - version: v2.7.1
     date_iso: 2026-08-25
     date_display: 2026.08.25
     label: Latest release
+    label_ko: 최신 릴리즈
     description: Improved Japanese and Chinese localization completeness.
+    description_ko: 일본어, 중국어 간체와 번체에서 빠진 문구를 채웠습니다.
     changes:
       - Added missing strings for Japanese, Simplified Chinese, and Traditional Chinese
       - Improved localization validation to help prevent missing strings across languages
@@ -16,6 +21,7 @@ releases:
     date_iso: 2026-08-24
     date_display: 2026.08.24
     description: Focus Effect click animations are now more natural and customizable.
+    description_ko: 집중 효과의 클릭 애니메이션이 더 자연스러워지고 세밀하게 조정할 수 있습니다.
     changes:
       - Added an option to play press and release animations fully, even for quick clicks
       - Added a slider for adjusting click perspective
@@ -24,6 +30,7 @@ releases:
     date_iso: 2026-08-17
     date_display: 2026.08.17
     description: Focus Effect has been completely redesigned with more visual effects.
+    description_ko: 집중 효과를 새로 디자인하고 시각 효과를 더했습니다.
     changes:
       - Finely customize the Focus Effect shape, size, border, glow, colors, and animations
       - Control the Focus Effect magnifier and its behavior
@@ -31,6 +38,7 @@ releases:
     date_iso: 2026-08-07
     date_display: 2026.08.07
     description: Many features are now available in Full Screen mode.
+    description_ko: 여러 기능을 전체 화면 모드에서도 쓸 수 있습니다.
     changes:
       - Focus Effect, Keystroke Overlay, Click Effects, and Cursor Trails now work in Full Screen mode
       - Fixed various minor bugs

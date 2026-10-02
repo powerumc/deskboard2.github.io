@@ -1,24 +1,17 @@
-<!-- Footer -->
 <footer class="site-footer">
-    <div class="landing-container footer-layout">
-        <div>
-            <a href="/" class="footer-brand" aria-label="DeskBoard2 home">
-                <img src="/images/logo.png" alt="" class="footer-brand__mark">
-                <span>DeskBoard2</span>
-            </a>
-            <p>Desktop explanation tools for Mac.</p>
-        </div>
-
-        <nav class="footer-links" aria-label="Footer navigation">
-            <a href="/#features">Features</a>
-            <a href="/changelog">Changelog</a>
-            <a href="/privacy-policy/">Privacy Policy</a>
-            <a href="mailto:contact@rivonlabs.com">Contact</a>
-        </nav>
-
-        <div class="footer-meta">
-            <p>© 2026 Rivon Labs. All rights reserved.</p>
-            <p>contact@rivonlabs.com</p>
-        </div>
+  <div class="wrap footer-inner">
+    <div class="footer-brand">
+      <a class="brand" href="/"><img src="/assets/icon.png" alt="" width="26" height="26"><span>DeskBoard2</span></a>
+      <p data-i18n="footer.tag">Screen explanation tools for Mac.</p>
     </div>
+    <nav class="footer-links" aria-label="Footer" data-i18n-attr="aria-label:footer.label">
+      <a href="/#features" data-i18n="nav.features">Features</a>
+      <a href="/changelog/" data-i18n="footer.changelog">Changelog</a>
+      <a href="/privacy-policy/" data-i18n="footer.privacy">Privacy Policy</a>
+    </nav>
+    <div class="footer-meta">
+      <p><span data-i18n="footer.contact">Contact</span> <a href="mailto:contact@rivonlabs.com">contact@rivonlabs.com</a></p>
+      <p>© {{ site.time | date: "%Y" }} Rivon Labs</p>
+    </div>
+  </div>
 </footer>

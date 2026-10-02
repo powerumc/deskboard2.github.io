@@ -2,6 +2,7 @@
 # Site
 
 title: DeskBoard2
+description: Click effects, cursor trails, and a focus highlight for your Mac screen, so your audience never loses the pointer.
 baseurl:
 google_analytics: G-PZ0NPT7HRE
 google_maps_javascript_api_key:
@@ -38,3 +39,5 @@ exclude:
   - Gemfile.lock
   - README.md
   - LICENSE
+  - vendor
+  - .bundle

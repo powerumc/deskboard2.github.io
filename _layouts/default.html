@@ -1,16 +1,17 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 {% include head.html %}
+<body{% if page.body_class %} class="{{ page.body_class }}"{% endif %}>
+  <a class="skip-link" href="{% if page.playground %}#playground{% else %}#main{% endif %}" data-i18n="{% if page.playground %}nav.skip{% else %}nav.skipContent{% endif %}">{% if page.playground %}Skip to the live demo{% else %}Skip to content{% endif %}</a>
 
-<body class="selection:bg-cyan-500/20 {{ page.body_class }}">
+  {% include header.html %}
 
-    {% include header.html %}
-
+  <main id="main">
     {{ content }}
+  </main>
 
-    {% include footer.html %}
+  {% include footer.html %}
 
-    {% include scripts.html %}
+  {% include scripts.html %}
 </body>
-
 </html>

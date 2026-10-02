@@ -4,7 +4,7 @@ title: 개인정보 처리방침
 permalink: /privacy-policy/ko/
 ---
 
-<div class="container mx-auto px-4 py-8 prose prose-slate max-w-4xl" style="padding-top: 150px;">
+<div class="wrap prose">
   <h1 class="text-3xl font-bold mb-6">개인정보 처리방침</h1>
 
   <p class="mb-4">

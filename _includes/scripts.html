@@ -1,17 +1,5 @@
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        if (window.lucide) {
-            lucide.createIcons();
-        }
-    });
-
-    const navbar = document.getElementById("navbar");
-    const syncNavbar = () => {
-        if (!navbar) return;
-        navbar.classList.toggle("is-scrolled", window.scrollY > 24);
-    };
-
-    syncNavbar();
-    window.addEventListener("scroll", syncNavbar, { passive: true });
-</script>
-<script src="/js/video-loader.js"></script>
+<script src="/assets/site.js" defer></script>
+{%- if page.playground %}
+<script src="/assets/effects.js" defer></script>
+<script src="/assets/playground.js" defer></script>
+{%- endif %}

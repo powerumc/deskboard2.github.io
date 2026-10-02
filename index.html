@@ -1,11 +1,384 @@
 ---
 layout: default
-title: DeskBoard2 — Explain anything on your Mac screen
-body_class: landing-page
+title: Point once. Everyone follows.
+description: Click effects, cursor trails, and a focus highlight for your Mac screen, so your audience never loses the pointer. Try them live in your browser.
+playground: true
 ---
+<section class="hero" id="playground" aria-labelledby="hero-title">
+  <div class="wrap">
+    <div class="hero-top">
+      <div class="hero-copy">
+        <p class="eyebrow" data-i18n="hero.eyebrow">For everyone who works by showing a screen</p>
+        <h1 id="hero-title" data-i18n-html="hero.title">Point once. <em class="ink">Everyone</em> follows.</h1>
+      </div>
+      <p class="lede" data-i18n="hero.lede">The moment your audience hunts for the cursor, they stop listening.</p>
+      <ul class="hero-for" aria-label="Made for" data-i18n-attr="aria-label:hero.forLabel">
+        <li data-i18n="hero.for1">Teachers</li>
+        <li data-i18n="hero.for2">Developers</li>
+        <li data-i18n="hero.for3">Sales &amp; demos</li>
+        <li data-i18n="hero.for4">YouTubers</li>
+        <li data-i18n="hero.for5">Designers</li>
+        <li data-i18n="hero.for6">Customer support</li>
+      </ul>
+      <div class="hero-cta">
+        <a class="appstore" href="{{ site.app_store_url }}" target="_blank" rel="noopener">
+          <img src="/assets/app-store-badge.svg" alt="Download on the Mac App Store" width="156" height="40" data-i18n-attr="alt:cta.badge">
+        </a>
+        <a class="btn btn-quiet video-link" href="https://www.youtube.com/watch?v=aTOYWNTiey8" data-video="aTOYWNTiey8" target="_blank" rel="noopener">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 5.5v9l7.5-4.5z" /></svg>
+          <span data-i18n="hero.watch">Watch the product video</span>
+        </a>
+      </div>
+    </div>
 
-{% include hero.html %}
+    <div class="try-cue" id="try-cue">
+      <span class="try-icon" aria-hidden="true"><i></i><svg viewBox="0 0 20 28"><path d="M2 2v19.2l4.6-4.4 3.1 7 3.3-1.4-3-6.9h6.5z" /></svg></span>
+      <p class="try-title"><span data-i18n="cue.title">Click the desktop below.</span><span class="try-arrow" aria-hidden="true">↓</span></p>
+      <p class="try-sub" id="try-sub" data-i18n="cue.sub">Move, click, and right-click. Pick other effects on the right.</p>
+    </div>
 
-{% include features.html %}
+    <div class="playground">
+      <div class="stage-col">
+        <div class="screen-frame">
+          <div class="stage" id="stage" tabindex="0" role="application" aria-roledescription="demo" aria-label="Interactive desktop. Move the pointer and click to try the effects." data-i18n-attr="aria-label:stage.label">
+            <div class="desktop" id="desktop">
+              <div class="desk-content" id="desk-content">
+                <div class="wallpaper" aria-hidden="true">
+                  <svg viewBox="0 0 1280 800" preserveAspectRatio="none">
+                    <path class="wp-wave wp-wave-1" d="M0 520C210 430 420 600 650 540S1060 380 1280 450V800H0Z" />
+                    <path class="wp-wave wp-wave-2" d="M0 620C260 560 470 700 720 650S1090 540 1280 600V800H0Z" />
+                    <path class="wp-wave wp-wave-3" d="M0 710C300 670 520 760 800 735S1120 680 1280 700V800H0Z" />
+                  </svg>
+                </div>
 
-{% include tech_grid.html %}
+                <div class="menubar">
+                  <div class="mb-left">
+                    <span class="mb-app" data-i18n="desk.app">Slides</span>
+                    <span data-i18n="desk.file">File</span>
+                    <span data-i18n="desk.edit">Edit</span>
+                    <span class="mb-wide" data-i18n="desk.insert">Insert</span>
+                    <span class="mb-wide" data-i18n="desk.format">Format</span>
+                    <span data-i18n="desk.view">View</span>
+                    <span class="mb-wide" data-i18n="desk.play">Play</span>
+                    <span class="mb-wide" data-i18n="desk.window">Window</span>
+                    <span data-i18n="desk.help">Help</span>
+                  </div>
+                  <div class="mb-right">
+                    <span class="mb-tray" title="DeskBoard2">
+                      <svg viewBox="0 0 18 18" aria-hidden="true"><rect x="2.5" y="2.5" width="13" height="13" rx="4" /><path d="M6.6 5.6h2.2a3.4 3.4 0 0 1 0 6.8H6.6z" /></svg>
+                    </span>
+                    <svg class="mb-glyph" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 8.2a10 10 0 0 1 14 0M5.5 10.8a6.4 6.4 0 0 1 9 0M8 13.4a2.8 2.8 0 0 1 4 0" /><circle cx="10" cy="15.6" r="0.9" /></svg>
+                    <svg class="mb-glyph mb-battery" viewBox="0 0 28 20" aria-hidden="true"><rect x="2" y="5.5" width="21" height="9" rx="2.6" /><rect class="fill" x="3.6" y="7.1" width="14" height="5.8" rx="1.4" /><path d="M24.6 8.6v2.8" /></svg>
+                    <svg class="mb-glyph mb-wide" viewBox="0 0 20 20" aria-hidden="true"><rect x="3" y="4.5" width="14" height="4.4" rx="2.2" /><rect x="3" y="11.1" width="14" height="4.4" rx="2.2" /><circle cx="13.6" cy="6.7" r="1.2" /><circle cx="6.4" cy="13.3" r="1.2" /></svg>
+                    <span class="mb-clock" id="mb-clock">Thu Oct 2 9:41 AM</span>
+                  </div>
+                </div>
+
+                <div class="desk-icons">
+                  <figure class="desk-icon">
+                    <span class="doc doc-mov" aria-hidden="true"><b>MOV</b></span>
+                    <figcaption>launch-demo.mov</figcaption>
+                  </figure>
+                  <figure class="desk-icon">
+                    <span class="doc doc-png" aria-hidden="true"><b>PNG</b></span>
+                    <figcaption data-i18n="desk.screenshot">Screenshot 2026-10-02 at 9.41.12 AM.png</figcaption>
+                  </figure>
+                </div>
+
+                <section class="win win-slides" aria-hidden="true">
+                  <header class="win-bar">
+                    <span class="lights"><i></i><i></i><i></i></span>
+                    <span class="win-title" data-i18n="desk.slidesTitle">Q3 Launch Review</span>
+                  </header>
+                  <div class="slides-body">
+                    <div class="slides-rail">
+                      <span class="thumb"><i></i><i></i></span>
+                      <span class="thumb is-active"><i></i><i></i></span>
+                      <span class="thumb"><i></i><i></i></span>
+                      <span class="thumb"><i></i><i></i></span>
+                    </div>
+                    <div class="slide">
+                      <p class="slide-kicker" data-i18n="desk.kicker">Launch week</p>
+                      <h3 class="slide-title" data-tour="title" data-i18n="desk.chartTitle">Daily active users</h3>
+                      <div class="chart">
+                        <div class="chart-grid">
+                          <span><b>8k</b></span><span><b>6k</b></span><span><b>4k</b></span><span><b>2k</b></span><span><b>0</b></span>
+                        </div>
+                        <div class="bars">
+                          <div class="bar" style="--v: 3.1"><em>3.1k</em><span data-i18n="desk.mon" data-tour="mon">Mon</span></div>
+                          <div class="bar" style="--v: 3.2"><em>3.2k</em><span data-i18n="desk.tue">Tue</span></div>
+                          <div class="bar" style="--v: 3.3"><em>3.3k</em><span data-i18n="desk.wed">Wed</span></div>
+                          <div class="bar is-peak" style="--v: 7.2" data-tour="peak"><em>7.2k</em><span data-i18n="desk.thu">Thu</span></div>
+                          <div class="bar" style="--v: 6.4"><em>6.4k</em><span data-i18n="desk.fri">Fri</span></div>
+                          <div class="bar" style="--v: 5.1"><em>5.1k</em><span data-i18n="desk.sat">Sat</span></div>
+                          <div class="bar" style="--v: 5.6"><em>5.6k</em><span data-i18n="desk.sun">Sun</span></div>
+                        </div>
+                        <p class="callout" data-tour="callout" data-i18n-html="desk.callout"><strong>+118%</strong> on launch day</p>
+                      </div>
+                      <p class="slide-foot" data-i18n="desk.source">Source: product analytics, week of Sep 22</p>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="win win-notes" aria-hidden="true">
+                  <header class="win-bar">
+                    <span class="lights"><i></i><i></i><i></i></span>
+                    <span class="win-title" data-i18n="desk.notesTitle">Demo script</span>
+                  </header>
+                  <div class="notes-body">
+                    <ul class="checklist">
+                      <li class="is-done" data-tour="done"><span class="cb"></span><span data-i18n="desk.item1">Open the new onboarding flow</span></li>
+                      <li class="is-done"><span class="cb"></span><span><span data-i18n="desk.item2">Show the shortcut</span> <kbd>⌘</kbd><kbd>⇧</kbd><kbd>D</kbd></span></li>
+                      <li><span class="cb"></span><span data-i18n="desk.item3">Zoom into the pricing table</span></li>
+                      <li><span class="cb"></span><span data-i18n="desk.item4">Record a 30-second clip</span></li>
+                    </ul>
+                    <table class="price-table" data-tour="pricing">
+                      <thead><tr><th data-i18n="desk.plan">Plan</th><th data-i18n="desk.seats">Seats</th><th data-i18n="desk.price">Price</th></tr></thead>
+                      <tbody>
+                        <tr><td data-i18n="desk.starter">Starter</td><td>1</td><td>$9/mo</td></tr>
+                        <tr><td data-i18n="desk.team">Team</td><td>10</td><td>$29/mo</td></tr>
+                        <tr><td data-i18n="desk.business">Business</td><td>50</td><td>$79/mo</td></tr>
+                      </tbody>
+                    </table>
+                    <p class="fine-print" data-i18n="desk.fine">Prices in USD, billed monthly. Annual plans save 20%.</p>
+                  </div>
+                </section>
+
+                <nav class="dock" aria-hidden="true">
+                  <span class="app app-files"><svg viewBox="0 0 32 32"><path d="M6 10.5a2 2 0 0 1 2-2h5l2.2 2.4H24a2 2 0 0 1 2 2V22a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2z" /></svg></span>
+                  <span class="app app-browser"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="9" /><path class="needle" d="m19.8 12.2-2.4 5.2-5.2 2.4 2.4-5.2z" /></svg></span>
+                  <span class="app app-slides is-running"><svg viewBox="0 0 32 32"><path d="M8 24V14m5.3 10V9.5M18.7 24v-7.5M24 24V12" /></svg></span>
+                  <span class="app app-notes is-running"><svg viewBox="0 0 32 32"><path d="M10 11h12M10 16h12M10 21h7" /></svg></span>
+                  <span class="app app-terminal"><svg viewBox="0 0 32 32"><path d="m9.5 12 4 4-4 4M16 21h6.5" /></svg></span>
+                  <span class="app app-deskboard is-running" data-tour="dock"><img src="/assets/icon.png" alt=""></span>
+                  <span class="dock-sep"></span>
+                  <span class="app app-trash"><svg viewBox="0 0 32 32"><path d="M10 11.5h12l-1 12.5H11zM8.5 11.5h15M13.5 11.5V9h5v2.5" /></svg></span>
+                </nav>
+              </div>
+
+              <canvas class="fx-canvas" id="fx" aria-hidden="true"></canvas>
+              <div class="focus" id="focus" hidden></div>
+              <svg class="ghost" id="ghost" viewBox="0 0 20 28" aria-hidden="true" hidden>
+                <path d="M2 2v19.2l4.6-4.4 3.1 7 3.3-1.4-3-6.9h6.5z" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="stage-bar" aria-live="polite">
+          <span class="sb-state"><i class="sb-dot" aria-hidden="true"></i><span id="sb-state" data-i18n="bar.demo">Auto demo</span><span class="sb-effect" id="sb-effect"></span></span>
+          <span class="sb-hint" id="sb-hint">Click or right-click on the desktop</span>
+          <span class="sb-coords" id="sb-coords" aria-hidden="true">x 640 · y 400 pt</span>
+          <button type="button" class="sb-btn" id="sb-replay" data-i18n="bar.replay">Replay demo</button>
+        </div>
+      </div>
+
+      <aside class="inspector" aria-label="Effect settings" data-i18n-attr="aria-label:insp.label">
+        <div class="inspector-inner">
+          <div class="insp-tabs" role="tablist" aria-label="Effects" data-i18n-attr="aria-label:insp.tabs">
+            <button type="button" role="tab" class="insp-tab" id="tab-click" aria-controls="pane-click" aria-selected="true"><i class="tab-dot" aria-hidden="true"></i><span data-i18n="tab.click">Click Effect</span></button>
+            <button type="button" role="tab" class="insp-tab" id="tab-trail" aria-controls="pane-trail" aria-selected="false" tabindex="-1"><i class="tab-dot" aria-hidden="true"></i><span data-i18n="tab.trail">Cursor Trail</span></button>
+            <button type="button" role="tab" class="insp-tab" id="tab-focus" aria-controls="pane-focus" aria-selected="false" tabindex="-1"><i class="tab-dot" aria-hidden="true"></i><span data-i18n="tab.focus">Focus Effect</span></button>
+          </div>
+          <div class="insp-pane" id="pane-click" role="tabpanel" aria-labelledby="tab-click">
+            <p class="pane-fallback">Click anywhere on the desktop to play the Pulse click effect.</p>
+          </div>
+          <div class="insp-pane" id="pane-trail" role="tabpanel" aria-labelledby="tab-trail" hidden></div>
+          <div class="insp-pane" id="pane-focus" role="tabpanel" aria-labelledby="tab-focus" hidden></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="features" id="features" aria-labelledby="features-title">
+  <div class="wrap">
+    <header class="section-head">
+      <p class="eyebrow" data-i18n="features.eyebrow">The rest of the toolkit</p>
+      <h2 id="features-title" data-i18n="features.title">Draw, capture, record, and show every shortcut.</h2>
+      <p data-i18n="features.lede">Every tool lives in one light layer above your apps. Open it from the menu bar or the screen edge, explain, and get back to work.</p>
+    </header>
+
+    <div class="feature-grid">
+      <article class="feature">
+        <div class="vignette" aria-hidden="true">
+          <svg viewBox="0 0 320 200">
+            <rect class="v-win" x="34" y="30" width="252" height="150" rx="10" />
+            <rect class="v-line" x="56" y="58" width="120" height="9" rx="4.5" />
+            <rect class="v-line" x="56" y="80" width="190" height="7" rx="3.5" />
+            <rect class="v-line" x="56" y="96" width="160" height="7" rx="3.5" />
+            <rect class="v-line" x="56" y="112" width="176" height="7" rx="3.5" />
+            <rect class="v-mark" x="54" y="129" width="106" height="14" rx="3" />
+            <rect class="v-line" x="56" y="132" width="100" height="7" rx="3.5" />
+            <ellipse class="v-pen v-pen-red" cx="213" cy="99" rx="46" ry="21" transform="rotate(-6 213 99)" />
+            <path class="v-pen v-pen-blue" d="M262 160c-12-14-22-20-36-22m0 0 8-6m-8 6 6 8" />
+          </svg>
+        </div>
+        <h3 data-i18n="f1.title">Drawing</h3>
+        <p data-i18n="f1.body">Pens, shapes, text, markers, and blur, drawn right where the explanation happens. Undo, select, and duplicate like any editor.</p>
+        <a class="video-link" href="https://www.youtube.com/watch?v=syPy5QKi8wo" data-video="syPy5QKi8wo" target="_blank" rel="noopener"><span data-i18n="watch">Watch video</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9M9 4.5 12.5 8 9 11.5" /></svg></a>
+      </article>
+
+      <article class="feature">
+        <div class="vignette" aria-hidden="true">
+          <svg viewBox="0 0 320 200">
+            <rect class="v-win" x="70" y="30" width="220" height="150" rx="10" />
+            <rect class="v-line" x="92" y="56" width="110" height="9" rx="4.5" />
+            <rect class="v-line" x="92" y="78" width="170" height="7" rx="3.5" />
+            <rect class="v-line" x="92" y="94" width="140" height="7" rx="3.5" />
+            <rect class="v-bar" x="22" y="32" width="34" height="146" rx="17" />
+            <circle class="v-tool is-on" cx="39" cy="54" r="9" />
+            <circle class="v-tool" cx="39" cy="80" r="6" />
+            <circle class="v-tool" cx="39" cy="102" r="6" />
+            <circle class="v-tool" cx="39" cy="124" r="6" />
+            <circle class="v-tool" cx="39" cy="146" r="6" />
+            <rect class="v-handle" x="8" y="88" width="5" height="24" rx="2.5" />
+          </svg>
+        </div>
+        <h3 data-i18n="f2.title">Edge Toolbar</h3>
+        <p data-i18n="f2.body">Pull the toolbar from the screen edge, switch between drawing and pointing, and tuck it away without covering your content.</p>
+        <a class="video-link" href="https://www.youtube.com/watch?v=RNmAZj8UbIM" data-video="RNmAZj8UbIM" target="_blank" rel="noopener"><span data-i18n="watch">Watch video</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9M9 4.5 12.5 8 9 11.5" /></svg></a>
+      </article>
+
+      <article class="feature">
+        <div class="vignette" aria-hidden="true">
+          <svg viewBox="0 0 320 200">
+            <rect class="v-win" x="30" y="26" width="260" height="156" rx="10" />
+            <rect class="v-line" x="50" y="48" width="96" height="8" rx="4" />
+            <rect class="v-line" x="50" y="66" width="200" height="6" rx="3" />
+            <rect class="v-line" x="50" y="80" width="170" height="6" rx="3" />
+            <rect class="v-shade" x="30" y="26" width="260" height="156" rx="10" />
+            <rect class="v-select" x="92" y="64" width="150" height="86" />
+            <rect class="v-select-fill" x="92" y="64" width="150" height="86" />
+            <circle class="v-knob" cx="92" cy="64" r="4" /><circle class="v-knob" cx="242" cy="64" r="4" />
+            <circle class="v-knob" cx="92" cy="150" r="4" /><circle class="v-knob" cx="242" cy="150" r="4" />
+            <rect class="v-chip" x="168" y="156" width="74" height="18" rx="5" />
+            <text class="v-chip-text" x="205" y="168.5" text-anchor="middle">640 × 360</text>
+          </svg>
+        </div>
+        <h3 data-i18n="f3.title">Capture</h3>
+        <p data-i18n="f3.body">Grab a region or a window, pin it, edit it, turn the text into Markdown, or translate it live.</p>
+        <a class="video-link" href="https://www.youtube.com/watch?v=VJekbJDKQDw" data-video="VJekbJDKQDw" target="_blank" rel="noopener"><span data-i18n="watch">Watch video</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9M9 4.5 12.5 8 9 11.5" /></svg></a>
+      </article>
+
+      <article class="feature">
+        <div class="vignette" aria-hidden="true">
+          <svg viewBox="0 0 320 200">
+            <rect class="v-win" x="30" y="26" width="260" height="120" rx="10" />
+            <rect class="v-line" x="50" y="48" width="110" height="8" rx="4" />
+            <rect class="v-line" x="50" y="66" width="190" height="6" rx="3" />
+            <rect class="v-line" x="50" y="80" width="160" height="6" rx="3" />
+            <rect class="v-pill" x="62" y="138" width="196" height="40" rx="20" />
+            <circle class="v-rec" cx="86" cy="158" r="7" />
+            <text class="v-time" x="102" y="162.5">00:42</text>
+            <path class="v-wave" d="M160 158h2m4-6v12m4-8v4m4-9v14m4-10v6m4-4v2m4-7v12m4-5v-1" />
+            <rect class="v-stop" x="232" y="151" width="14" height="14" rx="3" />
+          </svg>
+        </div>
+        <h3 data-i18n="f4.title">Recording</h3>
+        <p data-i18n="f4.body">Record an area with microphone and system audio, control it from a floating bar, then trim the clip and reuse it.</p>
+        <a class="video-link" href="https://www.youtube.com/watch?v=7UGQiFBMvbY" data-video="7UGQiFBMvbY" target="_blank" rel="noopener"><span data-i18n="watch">Watch video</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9M9 4.5 12.5 8 9 11.5" /></svg></a>
+      </article>
+
+      <article class="feature">
+        <div class="vignette" aria-hidden="true">
+          <svg viewBox="0 0 320 200">
+            <g class="v-key"><rect x="58" y="68" width="62" height="62" rx="14" /><text x="89" y="108" text-anchor="middle">⌘</text></g>
+            <g class="v-key"><rect x="129" y="68" width="62" height="62" rx="14" /><text x="160" y="108" text-anchor="middle">⇧</text></g>
+            <g class="v-key v-key-accent"><rect x="200" y="68" width="62" height="62" rx="14" /><text x="231" y="108" text-anchor="middle">5</text></g>
+          </svg>
+        </div>
+        <h3 data-i18n="f5.title">Key Stroke</h3>
+        <p data-i18n="f5.body">Show shortcuts as keycaps while you work. Pick the shape, size, and position, and block patterns you never want on screen.</p>
+        <a class="video-link" href="https://www.youtube.com/watch?v=6INi7xQqp2k" data-video="6INi7xQqp2k" target="_blank" rel="noopener"><span data-i18n="watch">Watch video</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9M9 4.5 12.5 8 9 11.5" /></svg></a>
+      </article>
+
+      <article class="feature">
+        <div class="vignette" aria-hidden="true">
+          <svg viewBox="0 0 320 200">
+            <rect class="v-win" x="30" y="26" width="260" height="156" rx="10" />
+            <rect class="v-line" x="50" y="48" width="110" height="8" rx="4" />
+            <rect class="v-line" x="50" y="66" width="150" height="6" rx="3" />
+            <rect class="v-line" x="50" y="80" width="130" height="6" rx="3" />
+            <defs>
+              <clipPath id="cam-clip"><circle cx="228" cy="128" r="40" /></clipPath>
+              <filter id="cam-blur" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.2" /></filter>
+              <linearGradient id="cam-hair" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3d58e" /><stop offset="1" stop-color="#c99a4c" /></linearGradient>
+              <linearGradient id="cam-skin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6d3bd" /><stop offset="1" stop-color="#e8b79b" /></linearGradient>
+            </defs>
+            <circle class="v-cam-shadow" cx="228" cy="128" r="40" />
+            <g clip-path="url(#cam-clip)">
+              <rect x="186" y="86" width="84" height="84" fill="#dfe3e6" />
+              <g filter="url(#cam-blur)">
+                <rect x="236" y="86" width="40" height="84" fill="#c9b9a3" />
+                <rect x="240" y="96" width="6" height="18" fill="#b8473f" /><rect x="248" y="98" width="5" height="16" fill="#3e6aa8" /><rect x="255" y="95" width="6" height="19" fill="#e5e0d4" /><rect x="263" y="99" width="5" height="15" fill="#c2833a" />
+                <rect x="240" y="120" width="5" height="17" fill="#2f4f6f" /><rect x="247" y="118" width="7" height="19" fill="#c94b48" /><rect x="256" y="121" width="5" height="16" fill="#efe9dc" />
+                <rect x="186" y="86" width="22" height="84" fill="#eef0f1" />
+              </g>
+              <path d="M206 116c-3 14-2 28 3 40h38c5-12 6-26 3-40-3-13-12-21-22-21s-19 8-22 21z" fill="url(#cam-hair)" />
+              <path d="M190 172c2-17 14-25 38-25s36 8 38 25z" fill="#f8f8f6" />
+              <path d="M217 148l11 13 11-13c-4-2-7-2.6-11-2.6s-7 .6-11 2.6z" fill="#e8b79b" />
+              <path d="M190 172c2-15 9-22 21-24l12 24zM266 172c-2-15-9-22-21-24l-12 24z" fill="#ffffff" stroke="#d9dad6" stroke-width=".7" />
+              <rect x="223" y="136" width="10" height="12" rx="4" fill="#e8b79b" />
+              <ellipse cx="228" cy="124" rx="12.5" ry="15" fill="url(#cam-skin)" />
+              <path d="M214 122c0-12 7-19 15-19 9 0 15 7 14 17-5-3-9-8-11-13-4 7-10 12-18 15z" fill="url(#cam-hair)" />
+              <path d="M215 119c-3 9-3 20 1 30-5-3-8-12-7-21 1-4 3-7 6-9zM241 119c3 9 3 20-1 30 5-3 8-12 7-21-1-4-3-7-6-9z" fill="#e6c27a" />
+              <ellipse cx="223" cy="125" rx="1.3" ry="1.5" fill="#3b2f2a" /><ellipse cx="233" cy="125" rx="1.3" ry="1.5" fill="#3b2f2a" />
+              <path d="M220.6 121.6q2.4-1.2 4.8 0M230.6 121.6q2.4-1.2 4.8 0" fill="none" stroke="#9b7a4f" stroke-width=".8" stroke-linecap="round" />
+              <path d="M224.5 132q3.5 2.6 7 0" fill="none" stroke="#c46a6a" stroke-width="1.2" stroke-linecap="round" />
+              <circle cx="220" cy="129.5" r="2" fill="#f2a6a0" opacity=".35" /><circle cx="236" cy="129.5" r="2" fill="#f2a6a0" opacity=".35" />
+            </g>
+            <circle class="v-cam-ring" cx="228" cy="128" r="40" />
+          </svg>
+        </div>
+        <h3 data-i18n="f6.title">Camera Overlay</h3>
+        <p data-i18n="f6.body">Stay on screen with subject masking and a blurred, solid, pixelated, or transparent background.</p>
+        <span class="video-link is-muted" data-i18n="f6.note">Video coming soon</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="whats-new" id="whats-new" aria-labelledby="new-title">
+  <div class="wrap">
+    <header class="section-head section-head-row">
+      <div>
+        <p class="eyebrow" data-i18n="new.eyebrow">Changelog</p>
+        <h2 id="new-title" data-i18n="new.title">Recent releases</h2>
+      </div>
+      <a class="text-link" href="/changelog/"><span data-i18n="new.all">Full changelog</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9M9 4.5 12.5 8 9 11.5" /></svg></a>
+    </header>
+    <ol class="releases">
+      {%- for release in site.data.changelog.releases limit: 4 %}
+      <li>
+        <p class="rel-meta"><span class="rel-ver">{{ release.version }}</span><time datetime="{{ release.date_iso }}">{{ release.date_display }}</time></p>
+        <p{% if release.description_ko %} data-ko="{{ release.description_ko | escape }}"{% endif %}>{{ release.description }}</p>
+      </li>
+      {%- endfor %}
+    </ol>
+  </div>
+</section>
+
+<section class="closing" aria-labelledby="cta-title">
+  <div class="wrap">
+    <div class="cta-panel">
+      <img class="cta-icon" src="/assets/icon.png" alt="" width="88" height="88">
+      <div class="cta-copy">
+        <h2 id="cta-title" data-i18n="cta.title">DeskBoard2 for macOS</h2>
+        <p data-i18n="cta.body">Draw, point, capture, and record with one tool that stays out of the way until you need it.</p>
+      </div>
+      <div class="cta-actions">
+        <a class="appstore" href="{{ site.app_store_url }}" target="_blank" rel="noopener">
+          <img src="/assets/app-store-badge.svg" alt="Download on the Mac App Store" width="156" height="40" data-i18n-attr="alt:cta.badge">
+        </a>
+        <span class="cta-req" data-i18n="cta.req">Requires macOS 12.3 Monterey or later</span>
+      </div>
+    </div>
+    <p class="cta-note" data-i18n="cta.note">The effects on this page are web ports of the app's effects for preview. In DeskBoard2 they draw over every app on your screen.</p>
+  </div>
+</section>
+
+<dialog class="video-dialog" id="video-dialog" aria-label="Video">
+  <div class="video-frame" id="video-frame"></div>
+  <form method="dialog"><button class="video-close" type="submit" aria-label="Close" data-i18n-attr="aria-label:video.close">×</button></form>
+</dialog>
