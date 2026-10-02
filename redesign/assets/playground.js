@@ -25,6 +25,8 @@
   /* ================================================================ copy */
   const I18N = {
     en: {
+      'group.type': 'Trail effect',
+      'trail.line': 'Line', 'trail.snow': 'Snow',
       'group.appearance': 'Appearance',
       'focus.shape': 'Shape', 'focus.size': 'Size', 'focus.borderWeight': 'Border weight', 'focus.borderStyle': 'Border style',
       'focus.glow': 'Glow', 'focus.accent': 'Accent color', 'focus.animateClicks': 'Animate clicks',
@@ -144,6 +146,8 @@
       'swatch.strawberry': 'Strawberry', 'swatch.white': 'White',
     },
     ko: {
+      'group.type': '잔상 효과',
+      'trail.line': '선', 'trail.snow': '눈',
       'group.appearance': '외형',
       'focus.shape': '도형', 'focus.size': '크기', 'focus.borderWeight': '테두리 굵기', 'focus.borderStyle': '테두리 스타일',
       'focus.glow': '글로우', 'focus.accent': '강조 색상', 'focus.animateClicks': '클릭 애니메이션',
@@ -982,6 +986,21 @@
         resetContinuity();
         updateTabDots();
       }),
+      h('div', { class: 'group' },
+        segmentedField({
+          id: 'trail-type', label: t('group.type'), value: tr.type,
+          options: [{ value: 'line', text: t('trail.line') }, { value: 'snow', text: t('trail.snow') }],
+          onChange: (type) => {
+            tr.type = type;
+            resetContinuity();
+            if (!tr.enabled) {
+              tr.enabled = true;
+              const toggle = $('#trail-enabled');
+              if (toggle) toggle.setAttribute('aria-checked', 'true');
+              updateTabDots();
+            }
+          },
+        })),
     );
   }
 
