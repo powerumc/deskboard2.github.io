@@ -67,9 +67,8 @@
       'desk.fine': 'Prices in USD, billed monthly. Annual plans save 20%. Hold the magnifier key to read this line.',
       'bar.demo': 'Auto demo',
       'bar.live': 'Your turn',
-      'bar.hold': 'Hold to magnify',
       'bar.replay': 'Replay demo',
-      'bar.hint.mouse': 'Hold {key} to magnify · Right-click to recolor',
+      'bar.hint.mouse': 'Click or right-click on the desktop',
       'bar.hint.touch': 'Tap or drag on the desktop',
       'insp.label': 'Effect settings',
       'insp.tabs': 'Effects',
@@ -188,9 +187,8 @@
       'desk.fine': '가격은 USD 기준이며 매월 청구됩니다. 연간 요금제는 20% 저렴합니다. 확대 키를 누른 채 이 줄을 읽어 보세요.',
       'bar.demo': '자동 데모',
       'bar.live': '직접 체험 중',
-      'bar.hold': '눌러서 확대',
       'bar.replay': '데모 다시 보기',
-      'bar.hint.mouse': '{key} 키를 누르고 있으면 확대 · 우클릭하면 색 변경',
+      'bar.hint.mouse': '데스크톱에서 클릭하거나 우클릭해 보세요',
       'bar.hint.touch': '데스크톱을 탭하거나 드래그해 보세요',
       'insp.label': '효과 설정',
       'insp.tabs': '효과 종류',
@@ -311,7 +309,7 @@
     line: { duration: 0.15, lineWidth: 6, opacity: 0.9 }, // AppDefaults.CursorTrail / CursorTrailLine
     snow: { spacing: 20, lifetime: 0.5, color: '#ffffff' }, // CursorTrailSnow
   };
-  const focusDefaults = () => ({ ...clone(FX.FOCUS.defaults), key: isMac ? 'meta' : 'ctrl' });
+  const focusDefaults = () => ({ ...clone(FX.FOCUS.defaults), key: isMac ? 'meta' : 'ctrl', magnifier: false });
 
   const state = {
     click: { enabled: true, type: 'pulse', userPicked: false, configs: clickDefaults() },
@@ -611,7 +609,7 @@
   }
 
   function updateHint() {
-    sbHint.textContent = coarsePointer.matches ? t('bar.hint.touch') : t('bar.hint.mouse', { key: keyLabel() });
+    sbHint.textContent = coarsePointer.matches ? t('bar.hint.touch') : t('bar.hint.mouse');
   }
 
   function showCoords(point) {
@@ -1083,6 +1081,13 @@
         holdButton,
         h('p', { class: 'field-note', text: t('focus.holdNote', { key: keyLabel() }) })),
     );
+    // Only the shape is open in the web preview; every other focus control is shown but disabled.
+    $$('button, input', paneFocus).forEach((control) => {
+      if (control.closest('#focus-shape') || control.id === 'focus-enabled') return;
+      control.disabled = true;
+      const field = control.closest('.field');
+      if (field) field.classList.add('is-disabled');
+    });
   }
 
   /* ---------------------------------------------------------------- tabs */
@@ -1184,7 +1189,6 @@
     stopTour();
     startTour();
   });
-  bindHold($('#sb-hold'));
 
   /* ========================================================== lifecycle */
   const visibility = new IntersectionObserver((entries) => {
