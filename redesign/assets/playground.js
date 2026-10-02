@@ -20,7 +20,6 @@
   const clamp = FX.clamp;
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const coarsePointer = window.matchMedia('(pointer: coarse)');
-  const isMac = /Mac|iPhone|iPad|iPod/i.test(navigator.platform || navigator.userAgent || '');
 
   /* ================================================================ copy */
   const I18N = {
@@ -64,7 +63,7 @@
       'desk.item4': 'Record a 30-second clip',
       'desk.plan': 'Plan', 'desk.seats': 'Seats', 'desk.price': 'Price',
       'desk.starter': 'Starter', 'desk.team': 'Team', 'desk.business': 'Business',
-      'desk.fine': 'Prices in USD, billed monthly. Annual plans save 20%. Hold the magnifier key to read this line.',
+      'desk.fine': 'Prices in USD, billed monthly. Annual plans save 20%.',
       'bar.demo': 'Auto demo',
       'bar.live': 'Your turn',
       'bar.replay': 'Replay demo',
@@ -136,8 +135,6 @@
       'f.confettiBlast.particleCount': 'Blast particle count', 'f.confettiBlast.speedScale': 'Blast speed scale',
       'f.fire.intensity': 'Fire intensity', 'f.fire.turbulence': 'Fire turbulence chance',
       'focus.hold': 'Hold to magnify',
-      'opt.meta': 'Command', 'opt.alt': 'Option', 'opt.ctrl': 'Control', 'opt.shift': 'Shift',
-      'unit.seconds': '{n} s',
       'swatch.rainbow': 'Rainbow', 'swatch.cherry': 'Cherry', 'swatch.russet': 'Russet', 'swatch.lemon': 'Lemon',
       'swatch.lime': 'Lime', 'swatch.sprout': 'Sprout', 'swatch.seafoam': 'Sea Foam', 'swatch.seagreen': 'Sea Green',
       'swatch.aqua': 'Aqua', 'swatch.blueberry': 'Blueberry', 'swatch.grape': 'Grape', 'swatch.magenta': 'Magenta',
@@ -183,7 +180,7 @@
       'desk.item4': '30초 클립 녹화하기',
       'desk.plan': '요금제', 'desk.seats': '좌석', 'desk.price': '가격',
       'desk.starter': '스타터', 'desk.team': '팀', 'desk.business': '비즈니스',
-      'desk.fine': '가격은 USD 기준이며 매월 청구됩니다. 연간 요금제는 20% 저렴합니다. 확대 키를 누른 채 이 줄을 읽어 보세요.',
+      'desk.fine': '가격은 USD 기준이며 매월 청구됩니다. 연간 요금제는 20% 저렴합니다.',
       'bar.demo': '자동 데모',
       'bar.live': '직접 체험 중',
       'bar.replay': '데모 다시 보기',
@@ -255,8 +252,6 @@
       'f.confettiBlast.particleCount': '폭발 입자 수', 'f.confettiBlast.speedScale': '폭발 속도 배율',
       'f.fire.intensity': '불꽃 세기', 'f.fire.turbulence': '불꽃 난류 확률',
       'focus.hold': '눌러서 확대',
-      'opt.meta': 'Command', 'opt.alt': 'Option', 'opt.ctrl': 'Control', 'opt.shift': 'Shift',
-      'unit.seconds': '{n}초',
       'swatch.rainbow': '무지개', 'swatch.cherry': '체리', 'swatch.russet': '적갈색', 'swatch.lemon': '레몬',
       'swatch.lime': '라임', 'swatch.sprout': '새싹', 'swatch.seafoam': '물거품', 'swatch.seagreen': '바다 녹색',
       'swatch.aqua': '아쿠아', 'swatch.blueberry': '블루베리', 'swatch.grape': '포도', 'swatch.magenta': '마젠타',
@@ -294,26 +289,10 @@
   }
 
   /* =============================================================== state */
-  const KEYS = {
-    meta: { symbol: '⌘', name: 'command', names: ['Meta', 'OS'], prop: 'metaKey' },
-    alt: { symbol: '⌥', name: 'option', names: ['Alt', 'AltGraph'], prop: 'altKey' },
-    ctrl: { symbol: '⌃', name: 'control', names: ['Control'], prop: 'ctrlKey' },
-    shift: { symbol: '⇧', name: 'shift', names: ['Shift'], prop: 'shiftKey' },
-  };
-
-  const clone = (value) => JSON.parse(JSON.stringify(value));
-  const clickDefaults = () => Object.fromEntries(FX.CLICK_EFFECTS.map((e) => [e.id, clone(e.defaults)]));
-  const TRAIL_DEFAULTS = {
-    line: { duration: 0.15, lineWidth: 6, opacity: 0.9 }, // AppDefaults.CursorTrail / CursorTrailLine
-    snow: { spacing: 20, lifetime: 0.5, color: '#ffffff' }, // CursorTrailSnow
-  };
-  const focusDefaults = () => ({ ...clone(FX.FOCUS.defaults), key: isMac ? 'meta' : 'ctrl', magnifier: false });
-
   const state = {
-    click: { enabled: true, type: 'pulse', userPicked: false, configs: clickDefaults() },
-    trail: { enabled: true, type: 'line', line: clone(TRAIL_DEFAULTS.line), snow: clone(TRAIL_DEFAULTS.snow) },
-    color: 'rainbow',
-    focus: { enabled: true, ...focusDefaults() },
+    click: { enabled: true, type: 'pulse', userPicked: false },
+    trail: { enabled: true, type: 'line' },
+    focus: { enabled: true, shape: 'squircle' },
   };
 
   /* =============================================================== stage */
@@ -323,7 +302,6 @@
   const canvas = $('#fx');
   const ctx = canvas.getContext('2d');
   const ghost = $('#ghost');
-  const keycap = $('#keycap-hud');
   const stageBar = $('.stage-bar');
   const sbState = $('#sb-state');
   const sbEffect = $('#sb-effect');
@@ -337,17 +315,8 @@
   let scale = 1;
   let dpr = 1;
 
-  const focus = new FX.FocusEffect($('#focus'), {
-    cloneContent: () => {
-      const copy = content.cloneNode(true);
-      copy.removeAttribute('id');
-      copy.querySelectorAll('[id]').forEach((node) => node.removeAttribute('id'));
-      copy.setAttribute('aria-hidden', 'true');
-      return copy;
-    },
-    screenSize: () => screen,
-    reducedMotion: () => reduceMotion.matches,
-  });
+  const focus = new FX.FocusEffect($('#focus'), { reducedMotion: () => reduceMotion.matches });
+
 
   function layout() {
     const width = stage.clientWidth;
@@ -366,7 +335,6 @@
     canvas.width = Math.max(1, Math.round(screen.w * scale * dpr));
     canvas.height = Math.max(1, Math.round(screen.h * scale * dpr));
     env.px = scale * dpr;
-    focus.refreshLens();
     kick();
   }
 
@@ -393,7 +361,6 @@
   /* ============================================================== render */
   let raf = 0;
   let paused = false;
-  let wakeTimer = 0;
 
   function kick() {
     if (!raf && !paused) raf = requestAnimationFrame(frame);
@@ -408,12 +375,7 @@
     ctx.setTransform(scale * dpr, 0, 0, scale * dpr, 0, 0);
     scene.render(ctx, time, env);
     const focusBusy = state.focus.enabled && focus.tick(time);
-    if (scene.busy || focusBusy || tour.moving) {
-      kick();
-    } else {
-      clearTimeout(wakeTimer);
-      if (focus.inactiveAt !== null) wakeTimer = setTimeout(kick, Math.max(0, (focus.inactiveAt - time) * 1000) + 20);
-    }
+    if (scene.busy || focusBusy || tour.moving) kick();
   }
 
   /* ============================================================= effects */
@@ -421,26 +383,16 @@
     if (!state.click.enabled) return null;
     const type = override || state.click.type;
     const def = FX.CLICK_BY_ID[type];
-    const cfg = state.click.configs[type];
-    scene.add(def.play({ x: point.x, y: point.y }, {
-      t: now(),
-      size: cfg.size,
-      duration: def.fixedDuration ? 0.5 : cfg.duration,
-      stroke: stroke.clickColor(),
-      cfg,
-    }));
+    if (!def || !def.play) return null;
+    scene.add(def.play({ x: point.x, y: point.y }, { t: now(), stroke: stroke.clickColor() }));
     kick();
     return type;
   }
 
   function trailMove(point, last) {
     if (!state.trail.enabled) return;
-    if (state.trail.type === 'line') {
-      scene.trails.line.move(point, last, now(), state.trail.line, stroke);
-    } else {
-      const cfg = state.trail.snow;
-      scene.trails.snow.move(point, last, now(), { spacing: cfg.spacing, lifetime: cfg.lifetime, color: FX.color.hex(cfg.color) });
-    }
+    if (state.trail.type === 'line') scene.trails.line.move(point, last, now(), stroke);
+    else scene.trails.snow.move(point, last, now());
   }
 
   function resetContinuity() {
@@ -454,8 +406,6 @@
     last: null,
     pos: { x: 640, y: 400 },
     buttons: new Set(),
-    magnifierSources: new Set(),
-    magnifierOn: false,
 
     enter(point) {
       this.inside = true;
@@ -467,7 +417,7 @@
       this.pos = point;
       if (this.inside && !options.noTrail) trailMove(point, this.last);
       this.last = point;
-      if (state.focus.enabled) focus.pointer(point.x, point.y, true, now());
+      if (state.focus.enabled) focus.pointer(point.x, point.y);
       showCoords(point);
       kick();
     },
@@ -489,27 +439,12 @@
       if (state.focus.enabled) focus.button(button, false, now());
       kick();
     },
-    setMagnifier(source, down) {
-      if (down) this.magnifierSources.add(source);
-      else this.magnifierSources.delete(source);
-      const on = this.magnifierSources.size > 0;
-      if (on === this.magnifierOn) return;
-      this.magnifierOn = on;
-      if (state.focus.enabled) focus.magnifierKey(on, now());
-      kick();
-    },
     releaseAll() {
       [...this.buttons].forEach((b) => this.up(b));
-      this.magnifierSources.clear();
-      if (this.magnifierOn) {
-        this.magnifierOn = false;
-        if (state.focus.enabled) focus.magnifierKey(false, now());
-      }
     },
   };
 
   let interacted = false;
-  let holding = false;
 
   stage.addEventListener('pointerenter', (event) => {
     if (event.pointerType === 'mouse') takeOver();
@@ -520,13 +455,11 @@
     if (tour.running) takeOver();
     const point = toLogical(event);
     if (!input.inside) input.enter(point);
-    syncModifier(event);
     const rightOnly = (event.buttons & 2) && !(event.buttons & 1);
     input.move(point, { noTrail: rightOnly });
   });
 
   stage.addEventListener('pointerleave', () => {
-    if (holding) return;
     input.leave();
     scheduleResume();
   });
@@ -544,50 +477,6 @@
   window.addEventListener('pointercancel', () => input.releaseAll());
   stage.addEventListener('contextmenu', (event) => event.preventDefault());
 
-  function syncModifier(event) {
-    if (!input.inside || tour.running) return;
-    input.setMagnifier('key', Boolean(event[KEYS[state.focus.key].prop]));
-  }
-
-  window.addEventListener('keydown', (event) => {
-    if (!KEYS[state.focus.key].names.includes(event.key)) return;
-    if (!input.inside || tour.running) return;
-    input.setMagnifier('key', true);
-  });
-  window.addEventListener('keyup', (event) => {
-    if (KEYS[state.focus.key].names.includes(event.key)) input.setMagnifier('key', false);
-  });
-  window.addEventListener('blur', () => input.setMagnifier('key', false));
-
-  // Press-and-hold magnifier for touch screens and for anyone without a modifier key.
-  function bindHold(button) {
-    const start = (event) => {
-      event.preventDefault();
-      if (button.classList.contains('is-pressed')) return;
-      takeOver();
-      holding = true;
-      button.classList.add('is-pressed');
-      if (!state.focus.enabled) setFocusEnabled(true);
-      if (!state.focus.magnifier) updateFocus({ magnifier: true });
-      input.setMagnifier('hold', true);
-    };
-    const end = () => {
-      if (!button.classList.contains('is-pressed')) return;
-      button.classList.remove('is-pressed');
-      holding = false;
-      input.setMagnifier('hold', false);
-    };
-    button.addEventListener('pointerdown', start);
-    ['pointerup', 'pointerleave', 'pointercancel'].forEach((type) => button.addEventListener(type, end));
-    button.addEventListener('keydown', (event) => {
-      if ((event.key === ' ' || event.key === 'Enter') && !event.repeat) start(event);
-    });
-    button.addEventListener('keyup', (event) => {
-      if (event.key === ' ' || event.key === 'Enter') end();
-    });
-    button.addEventListener('contextmenu', (event) => event.preventDefault());
-  }
-
   /* ========================================================== status bar */
   let barMode = 'demo';
 
@@ -601,11 +490,6 @@
     sbEffect.textContent = effect ? ` · ${effect}` : '';
   }
 
-  function keyLabel() {
-    const key = KEYS[state.focus.key];
-    return `${key.symbol} ${t(`opt.${state.focus.key}`)}`;
-  }
-
   function updateHint() {
     sbHint.textContent = coarsePointer.matches ? t('bar.hint.touch') : t('bar.hint.mouse');
   }
@@ -616,8 +500,6 @@
   }
 
   /* ================================================================ tour */
-  // Only these click effects are open in the web preview; the rest are shown as unavailable.
-  const PREVIEW_EFFECTS = ['pulse', 'spark', 'check', 'catPaw'];
   const SHOWCASE = ['spark', 'check', 'catPaw', 'pulse'];
   const easeMove = FX.cubicBezier(0.45, 0, 0.25, 1);
   let resumeTimer = 0;
@@ -678,21 +560,6 @@
     if (gen === tour.gen) input.up(button);
   }
 
-  async function tourMagnify(gen, inner) {
-    const canMagnify = state.focus.enabled && state.focus.magnifier;
-    if (canMagnify) {
-      const key = KEYS[state.focus.key];
-      $('#keycap-key').textContent = key.symbol;
-      $('#keycap-name').textContent = key.name;
-      keycap.hidden = false;
-      input.setMagnifier('tour', true);
-    }
-    await inner();
-    if (gen !== tour.gen) return;
-    keycap.hidden = true;
-    input.setMagnifier('tour', false);
-  }
-
   async function runTour(gen) {
     const live = () => gen === tour.gen;
     await sleep(650);
@@ -707,13 +574,9 @@
       await tourClick(gen, 'left');
       await sleep(950);
       if (!live()) return;
-      await moveTo(target('pricing', 0.2, 0.45), 1050);
+      await moveTo(target('pricing', 0.5, 0.45), 1050);
       if (!live()) return;
-      await tourMagnify(gen, async () => {
-        await sleep(450);
-        if (live()) await moveTo(target('pricing', 0.85, 0.75), 1300, 0.05);
-        if (live()) await sleep(500);
-      });
+      await sleep(500);
       if (!live()) return;
       await moveTo(target('title', 0.25, 0.5), 950);
       if (!live()) return;
@@ -758,7 +621,6 @@
       tour.motion = null;
     }
     ghost.toggleAttribute('hidden', true);
-    keycap.hidden = true;
     input.leave();
   }
 
@@ -776,7 +638,7 @@
     if (reduceMotion.matches) return;
     resumeTimer = setTimeout(() => {
       if (performance.now() - lastSettingsUse < 7000) scheduleResume();
-      else if (!input.inside && !holding && !paused) startTour();
+      else if (!input.inside && !paused) startTour();
     }, 7000);
   }
   ['pointerdown', 'keydown', 'input'].forEach((type) =>
@@ -901,7 +763,7 @@
     FX.CLICK_EFFECTS.forEach((def) => {
       if (def.separator) grid.append(h('span', { class: 'fx-sep', 'aria-hidden': 'true' }));
       const selected = c.type === def.id;
-      const available = PREVIEW_EFFECTS.includes(def.id);
+      const available = !def.locked;
       const chip = h('button', {
         type: 'button', role: 'radio', class: 'fx-chip', id: `fx-${def.id}`,
         'aria-checked': String(selected), tabindex: selected ? '0' : '-1', 'data-effect': def.id,
@@ -916,7 +778,7 @@
       const step = { ArrowRight: 1, ArrowDown: 3, ArrowLeft: -1, ArrowUp: -3 }[event.key];
       if (!step) return;
       event.preventDefault();
-      const list = FX.CLICK_EFFECTS.filter((e) => PREVIEW_EFFECTS.includes(e.id));
+      const list = FX.CLICK_EFFECTS.filter((e) => !e.locked);
       const index = list.findIndex((e) => e.id === c.type);
       const next = list[(index + step + list.length) % list.length].id;
       selectClick(next);
@@ -986,25 +848,16 @@
   }
 
   /* ---------------------------------------------------------- focus pane */
-  function updateFocus(patch) {
-    Object.assign(state.focus, patch);
-    focus.setConfig(focusConfig(), now());
+  function setFocusShape(shape) {
+    state.focus.shape = shape;
+    focus.setShape(shape);
     kick();
-  }
-
-  function focusConfig() {
-    const { enabled, ...cfg } = state.focus;
-    return cfg;
   }
 
   function setFocusEnabled(on) {
     state.focus.enabled = on;
-    const time = now();
-    focus.setActive(on, time);
-    if (on) {
-      focus.setConfig(focusConfig(), time);
-      focus.pointer(input.pos.x, input.pos.y, true, time);
-    }
+    focus.setActive(on);
+    if (on) focus.pointer(input.pos.x, input.pos.y);
     const toggle = $('#focus-enabled');
     if (toggle) toggle.setAttribute('aria-checked', String(on));
     updateTabDots();
@@ -1014,9 +867,9 @@
   function renderFocusPane() {
     const f = state.focus;
     const option = (key) => ({ value: key, text: t(`opt.${key}`) });
-    const holdButton = h('button', { type: 'button', class: 'hold-btn', id: 'focus-hold' },
-      h('kbd', { text: KEYS[f.key].symbol }), t('focus.hold'));
-    bindHold(holdButton);
+    // Locked controls are labels only: they show what the app offers but do nothing here.
+    const locked = () => {};
+    const holdButton = h('button', { type: 'button', class: 'hold-btn', id: 'focus-hold' }, h('kbd', { text: '⌘' }), t('focus.hold'));
 
     paneFocus.replaceChildren(
       paneHead('focus', f.enabled, (on) => setFocusEnabled(on)),
@@ -1026,23 +879,23 @@
           id: 'focus-shape', label: t('focus.shape'), value: f.shape,
           readout: (v) => t(`opt.${v}`),
           options: ['circle', 'rhombus', 'squircle', 'rectangle'].map((s) => ({ value: s, icon: SHAPE_ICONS[s], aria: t(`opt.${s}`) })),
-          onChange: (v) => updateFocus({ shape: v }),
+          onChange: setFocusShape,
         }),
         segmentedField({
-          id: 'focus-size', label: t('focus.size'), value: f.size,
-          readout: (v) => `${FX.FOCUS.sizes[v]} pt`,
+          id: 'focus-size', label: t('focus.size'), value: 'regular',
+          readout: () => `${FX.FOCUS.size} pt`,
           options: ['small', 'regular', 'large', 'extraLarge'].map(option),
-          onChange: (v) => updateFocus({ size: v }),
+          onChange: locked,
         }),
         segmentedField({
-          id: 'focus-style', label: t('focus.borderStyle'), value: f.borderStyle,
+          id: 'focus-style', label: t('focus.borderStyle'), value: 'solid',
           options: ['solid', 'dashed'].map(option),
-          onChange: (v) => updateFocus({ borderStyle: v }),
+          onChange: locked,
         }),
         segmentedField({
-          id: 'focus-glow', label: t('focus.glow'), value: f.glow,
+          id: 'focus-glow', label: t('focus.glow'), value: 'soft',
           options: ['hidden', 'soft', 'shiny'].map(option),
-          onChange: (v) => updateFocus({ glow: v }),
+          onChange: locked,
         })),
       h('div', { class: 'group' },
         h('p', { class: 'group-label', text: t('group.magnifier') }),
@@ -1125,7 +978,6 @@
     updateClock();
     updateHint();
     setBar(barMode);
-    focus.refreshLens();
   }
 
   $$('.lang-switch button').forEach((button) => button.addEventListener('click', () => setLang(button.dataset.lang)));
@@ -1146,7 +998,6 @@
       button.tabIndex = on ? 0 : -1;
       if (on && moveFocus) button.focus();
     });
-    focus.refreshLens();
   }
   themeButtons.forEach((button, index) => {
     button.addEventListener('click', () => setTheme(button.dataset.themeChoice));
@@ -1234,9 +1085,8 @@
   input.pos = start;
   placeGhost(start);
   ghost.toggleAttribute('hidden', false);
-  focus.setActive(true, now());
-  focus.setConfig(focusConfig(), now());
-  focus.pointer(start.x, start.y, true, now());
+  focus.setActive(true);
+  focus.pointer(start.x, start.y);
   showCoords(start);
   setBar('demo');
   visibility.observe(stage);

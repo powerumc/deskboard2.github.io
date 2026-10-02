@@ -728,33 +728,11 @@ input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px 
 .fx-canvas { position: absolute; left: 0; top: 0; z-index: 3; width: 1280px; height: 800px; pointer-events: none; }
 
 .focus { position: absolute; left: 0; top: 0; z-index: 4; width: 140px; height: 140px; pointer-events: none; will-change: transform; }
-.focus.is-hidden { opacity: 0; }
-.focus.is-blink { animation: focus-blink 0.65s ease-in-out infinite alternate; }
 .focus-inner { position: absolute; inset: 0; transform-origin: 50% 50%; }
-.focus-lens { position: absolute; inset: 0; overflow: hidden; background: rgba(0, 0, 0, 0.12); }
-.focus-lens-content { position: absolute; left: 0; top: 0; }
-.focus-lens-content > .desk-content { transform-origin: 0 0; }
 .focus-ring { position: absolute; inset: 0; overflow: visible; max-width: none; }
 .focus-ring path { fill: none; stroke: var(--focus-color); stroke-width: var(--focus-width); stroke-linejoin: round; stroke-linecap: round; }
 .focus-ring.has-glow { filter: drop-shadow(0 0 var(--focus-glow-r) var(--focus-glow-a)); }
-.focus.is-attract .focus-ring path { animation: focus-width 0.6s ease-in-out infinite alternate; }
-.focus.is-attract .focus-ring.has-glow { animation: focus-glow 0.6s ease-in-out infinite alternate; }
-@keyframes focus-width { to { stroke-width: calc(var(--focus-width) * 1.8); } }
-@keyframes focus-glow { to { filter: drop-shadow(0 0 var(--focus-glow-r) var(--focus-glow-b)); } }
-@keyframes focus-blink { from { opacity: 0; } to { opacity: 1; } }
 
-.keycap-hud {
-  position: absolute; left: 50%; bottom: 96px; z-index: 5;
-  display: flex; flex-direction: column; align-items: center; gap: 6px;
-  transform: translateX(-50%); pointer-events: none;
-}
-.keycap-hud kbd {
-  display: grid; place-items: center; min-width: 66px; height: 66px; padding: 0 14px;
-  border-radius: 16px; background: #141414; color: #ffffff;
-  font: 500 34px/1 var(--font-ui);
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.38), inset 0 -3px 0 rgba(255, 255, 255, 0.08), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
-}
-.keycap-hud span { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; color: #ffffff; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); }
 
 .ghost {
   position: absolute; left: 0; top: 0; z-index: 6;
