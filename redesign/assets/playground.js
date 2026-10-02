@@ -1,0 +1,1504 @@
+/*!
+ * DeskBoard2 site playground
+ * ---------------------------------------------------------------------------
+ * Drives the live macOS desktop on the landing page:
+ *   - scales a 1280 x 800 pt "screen" (640 x 800 on phones) into the hero
+ *   - routes mouse, touch and modifier keys into the effects engine
+ *   - runs an auto demo with a ghost cursor until the visitor takes over
+ *   - renders the settings inspector from the app's preference schema
+ *   - switches the page copy between English and Korean
+ */
+(function () {
+  'use strict';
+
+  const FX = window.DeskFX;
+  if (!FX) return;
+
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+  const now = () => performance.now() / 1000;
+  const clamp = FX.clamp;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const coarsePointer = window.matchMedia('(pointer: coarse)');
+  const isMac = /Mac|iPhone|iPad|iPod/i.test(navigator.platform || navigator.userAgent || '');
+
+  /* ================================================================ copy */
+  const I18N = {
+    en: {
+      'nav.skip': 'Skip to the live demo',
+      'nav.label': 'Primary',
+      'nav.try': 'Try it',
+      'nav.features': 'Features',
+      'nav.new': "What's new",
+      'nav.download': 'Download',
+      'hero.eyebrow': 'Screen explanation toolkit for macOS',
+      'hero.title': 'Explain <em class="ink">anything</em> on your Mac screen.',
+      'hero.lede': 'DeskBoard2 adds click effects, cursor trails, and a focus highlight to your whole screen, so every demo is easy to follow. Try them on the desktop below. They are ported from the app and run right in your browser.',
+      'hero.watch': 'Watch the product video',
+      'hero.req': 'macOS 12.3 or later',
+      'hero.price': 'Free download, Pro is a one-time purchase',
+      'cta.badge': 'Download on the Mac App Store',
+      'stage.label': 'Interactive desktop. Move the pointer and click to try the effects.',
+      'desk.app': 'Slides', 'desk.file': 'File', 'desk.edit': 'Edit', 'desk.insert': 'Insert', 'desk.format': 'Format',
+      'desk.view': 'View', 'desk.play': 'Play', 'desk.window': 'Window', 'desk.help': 'Help',
+      'desk.screenshot': 'Screenshot 2026-10-02 at 9.41.12 AM.png',
+      'desk.slidesTitle': 'Q3 Launch Review',
+      'desk.kicker': 'Launch week',
+      'desk.chartTitle': 'Daily active users',
+      'desk.mon': 'Mon', 'desk.tue': 'Tue', 'desk.wed': 'Wed', 'desk.thu': 'Thu', 'desk.fri': 'Fri', 'desk.sat': 'Sat', 'desk.sun': 'Sun',
+      'desk.callout': '<strong>+118%</strong> on launch day',
+      'desk.source': 'Source: product analytics, week of Sep 22',
+      'desk.notesTitle': 'Demo script',
+      'desk.item1': 'Open the new onboarding flow',
+      'desk.item2': 'Show the shortcut',
+      'desk.item3': 'Zoom into the pricing table',
+      'desk.item4': 'Record a 30-second clip',
+      'desk.plan': 'Plan', 'desk.seats': 'Seats', 'desk.price': 'Price',
+      'desk.starter': 'Starter', 'desk.team': 'Team', 'desk.business': 'Business',
+      'desk.fine': 'Prices in USD, billed monthly. Annual plans save 20%. Hold the magnifier key to read this line.',
+      'bar.demo': 'Auto demo',
+      'bar.live': 'Your turn',
+      'bar.hold': 'Hold to magnify',
+      'bar.replay': 'Replay demo',
+      'bar.hint.mouse': 'Hold {key} to magnify · Right-click to recolor',
+      'bar.hint.touch': 'Tap or drag on the desktop',
+      'insp.label': 'Effect settings',
+      'insp.tabs': 'Effects',
+      'tab.click': 'Click Effect',
+      'tab.trail': 'Cursor Trail',
+      'tab.focus': 'Focus Effect',
+      'features.eyebrow': 'The rest of the toolkit',
+      'features.title': 'Draw, capture, record, and show every shortcut.',
+      'features.lede': 'Every tool lives in one light layer above your apps. Open it from the menu bar or the screen edge, explain, and get back to work.',
+      'f1.title': 'Drawing',
+      'f1.body': 'Pens, shapes, text, markers, and blur, drawn right where the explanation happens. Undo, select, and duplicate like any editor.',
+      'f2.title': 'Edge Toolbar',
+      'f2.body': 'Pull the toolbar from the screen edge, switch between drawing and pointing, and tuck it away without covering your content.',
+      'f3.title': 'Capture',
+      'f3.body': 'Grab a region or a window, pin it, edit it, turn the text into Markdown, or translate it live.',
+      'f4.title': 'Recording',
+      'f4.body': 'Record an area with microphone and system audio, control it from a floating bar, then trim the clip and reuse it.',
+      'f5.title': 'Key Stroke',
+      'f5.body': 'Show shortcuts as keycaps while you work. Pick the shape, size, and position, and block patterns you never want on screen.',
+      'f6.title': 'Camera Overlay',
+      'f6.body': 'Stay on screen with subject masking and a blurred, solid, pixelated, or transparent background.',
+      'f6.note': 'Video coming soon',
+      'watch': 'Watch video',
+      'new.eyebrow': 'Changelog',
+      'new.title': 'Recent releases',
+      'new.all': 'Full changelog',
+      'new.r271': 'Fills in missing Japanese, Simplified Chinese, and Traditional Chinese strings.',
+      'new.r27': 'Focus Effect clicks can play their press animation fully, with a new click perspective slider.',
+      'new.r26': 'Focus Effect redesigned with shapes, borders, glow, click colors, and a magnifier.',
+      'new.r25': 'Focus Effect, Key Stroke, Click Effects, and Cursor Trails now work in Full Screen.',
+      'cta.title': 'DeskBoard2 for macOS',
+      'cta.body': 'Draw, point, capture, and record with one tool that stays out of the way until you need it.',
+      'cta.req': 'Requires macOS 12.3 Monterey or later',
+      'cta.note': "The effects on this page are web ports of the app's effects for preview. In DeskBoard2 they draw over every app on your screen.",
+      'footer.tag': 'Screen explanation tools for Mac.',
+      'footer.label': 'Footer',
+      'footer.changelog': 'Changelog',
+      'footer.privacy': 'Privacy Policy',
+      'footer.contact': 'Contact',
+      'video.close': 'Close',
+
+      'pane.click.desc': 'Plays at every click, so viewers never lose the pointer.',
+      'pane.trail.desc': 'Leaves a short trail behind the pointer as it moves.',
+      'pane.focus.desc': 'Keeps a highlight around the pointer, reacts to clicks, and magnifies on demand.',
+      'enable.click': 'Use click effect',
+      'enable.trail': 'Use cursor trail',
+      'enable.focus': 'Use focus effect',
+      'group.effect': 'Effect',
+      'group.options': 'Options',
+      'group.color': 'Drawing color',
+      'group.type': 'Trail effect',
+      'group.appearance': 'Appearance',
+      'group.clicks': 'Clicks',
+      'group.magnifier': 'Magnifier',
+      'group.behavior': 'Behavior',
+      'color.note': 'Click effects and line trails use the current drawing color, as in the app. Rainbow shifts a little with every click and stroke.',
+      'fixed.duration': 'Confetti effects play for a fixed time.',
+      'reset': 'Reset',
+      'pro.click': 'Pulse is free. The other click effects are part of DeskBoard2 Pro.',
+      'pro.trail': 'Cursor trails are part of DeskBoard2 Pro.',
+      'pro.focus': 'The focus effect is part of DeskBoard2 Pro. On a Mac, the magnifier needs Screen Recording permission.',
+      'badge.pro': 'PRO',
+      'badge.free': 'FREE',
+      'fx.pulse': 'Pulse', 'fx.ripple': 'Ripple', 'fx.radar': 'Radar Wave', 'fx.spark': 'Spark Burst',
+      'fx.check': 'Check Mark', 'fx.catPaw': 'Cat Paw', 'fx.emoji': 'Emoji', 'fx.lightning': 'Lightning',
+      'fx.confetti': 'Confetti', 'fx.confettiBlast': 'Confetti Blast', 'fx.fire': 'Fire',
+      'f.size': 'Size', 'f.duration': 'Duration',
+      'f.pulse.lineWidth': 'Pulse line width',
+      'f.ripple.ringCount': 'Ripple ring count', 'f.ripple.ringDelay': 'Ripple ring delay',
+      'f.radar.waveCount': 'Radar wave count', 'f.radar.gap': 'Radar gap', 'f.radar.lineWidth': 'Radar line width',
+      'f.spark.particleCount': 'Spark particle count', 'f.spark.segmentLength': 'Spark segment length',
+      'f.spark.segmentThickness': 'Spark segment thickness',
+      'f.check.thickness': 'Check thickness', 'f.check.jitterRange': 'Check jitter range',
+      'f.catPaw.spreadRadius': 'Cat paw spread radius', 'f.catPaw.rotationRange': 'Cat paw rotation range',
+      'f.emoji.value': 'Emoji', 'f.emoji.opacity': 'Emoji opacity', 'f.emoji.spreadRadius': 'Emoji spread radius',
+      'f.emoji.rotationRange': 'Emoji rotation range',
+      'f.lightning.branchCount': 'Lightning branch count', 'f.lightning.detailLevel': 'Lightning detail level',
+      'f.confetti.paletteCount': 'Palette count', 'f.confetti.density': 'Confetti density',
+      'f.confettiBlast.particleCount': 'Blast particle count', 'f.confettiBlast.speedScale': 'Blast speed scale',
+      'f.fire.intensity': 'Fire intensity', 'f.fire.turbulence': 'Fire turbulence chance',
+      'trail.line': 'Line', 'trail.snow': 'Snow',
+      'f.line.duration': 'Line duration', 'f.line.width': 'Line width', 'f.line.opacity': 'Line opacity',
+      'f.snow.spacing': 'Snow spacing', 'f.snow.lifetime': 'Snow lifetime', 'f.snow.color': 'Snow color',
+      'focus.shape': 'Shape', 'focus.size': 'Size', 'focus.borderWeight': 'Border weight', 'focus.borderStyle': 'Border style',
+      'focus.glow': 'Glow', 'focus.accent': 'Accent color', 'focus.animateClicks': 'Animate clicks',
+      'focus.completeShort': 'Play animation fully', 'focus.perspective': 'Click perspective',
+      'focus.left': 'Left-click color', 'focus.right': 'Right-click color',
+      'focus.magnifier': 'Enable magnifier', 'focus.zoom': 'Zoom factor', 'focus.key': 'Magnifying key',
+      'focus.autoHide': 'Automatically hide', 'focus.attract': 'Beg for attention', 'focus.delay': 'Delay',
+      'focus.hold': 'Hold to magnify',
+      'focus.holdNote': 'Or hold {key} while pointing at the desktop.',
+      'focus.idleNote': 'Stop moving for the delay to see these.',
+      'opt.circle': 'Circle', 'opt.rhombus': 'Rhombus', 'opt.squircle': 'Rounded Rectangle', 'opt.rectangle': 'Rectangle',
+      'opt.small': 'Small', 'opt.regular': 'Regular', 'opt.large': 'Large', 'opt.extraLarge': 'Extra large',
+      'opt.light': 'Light', 'opt.bold': 'Bold', 'opt.heavy': 'Heavy',
+      'opt.solid': 'Solid', 'opt.dashed': 'Dashed', 'opt.hidden': 'Hidden', 'opt.soft': 'Soft', 'opt.shiny': 'Shiny',
+      'opt.meta': 'Command', 'opt.alt': 'Option', 'opt.ctrl': 'Control', 'opt.shift': 'Shift',
+      'unit.seconds': '{n} s',
+      'swatch.rainbow': 'Rainbow', 'swatch.cherry': 'Cherry', 'swatch.russet': 'Russet', 'swatch.lemon': 'Lemon',
+      'swatch.lime': 'Lime', 'swatch.sprout': 'Sprout', 'swatch.seafoam': 'Sea Foam', 'swatch.seagreen': 'Sea Green',
+      'swatch.aqua': 'Aqua', 'swatch.blueberry': 'Blueberry', 'swatch.grape': 'Grape', 'swatch.magenta': 'Magenta',
+      'swatch.strawberry': 'Strawberry', 'swatch.white': 'White',
+    },
+    ko: {
+      'nav.skip': '라이브 데모로 건너뛰기',
+      'nav.label': '주요 메뉴',
+      'nav.try': '체험하기',
+      'nav.features': '기능',
+      'nav.new': '새로운 기능',
+      'nav.download': '다운로드',
+      'hero.eyebrow': 'macOS용 화면 설명 도구',
+      'hero.title': 'Mac 화면 위에서 <em class="ink">무엇이든</em> 설명하세요.',
+      'hero.lede': 'DeskBoard2는 클릭 효과, 커서 잔상, 집중 효과를 화면 전체에 더해 어떤 데모든 따라오기 쉽게 만듭니다. 아래 데스크톱에서 직접 써 보세요. 앱의 효과를 그대로 옮겨 브라우저에서 실행합니다.',
+      'hero.watch': '제품 영상 보기',
+      'hero.req': 'macOS 12.3 이상',
+      'hero.price': '무료 다운로드, Pro는 한 번만 구매',
+      'cta.badge': 'Mac App Store에서 다운로드',
+      'stage.label': '체험용 데스크톱입니다. 포인터를 움직이고 클릭해 효과를 확인하세요.',
+      'desk.app': '슬라이드', 'desk.file': '파일', 'desk.edit': '편집', 'desk.insert': '삽입', 'desk.format': '포맷',
+      'desk.view': '보기', 'desk.play': '재생', 'desk.window': '윈도우', 'desk.help': '도움말',
+      'desk.screenshot': '스크린샷 2026-10-02 오전 9.41.12.png',
+      'desk.slidesTitle': '3분기 출시 리뷰',
+      'desk.kicker': '출시 주간',
+      'desk.chartTitle': '일간 활성 사용자',
+      'desk.mon': '월', 'desk.tue': '화', 'desk.wed': '수', 'desk.thu': '목', 'desk.fri': '금', 'desk.sat': '토', 'desk.sun': '일',
+      'desk.callout': '출시 당일 <strong>+118%</strong>',
+      'desk.source': '출처: 제품 분석, 9월 22일 주간',
+      'desk.notesTitle': '데모 대본',
+      'desk.item1': '새 온보딩 화면 열기',
+      'desk.item2': '단축키 보여주기',
+      'desk.item3': '가격표 확대해서 보여주기',
+      'desk.item4': '30초 클립 녹화하기',
+      'desk.plan': '요금제', 'desk.seats': '좌석', 'desk.price': '가격',
+      'desk.starter': '스타터', 'desk.team': '팀', 'desk.business': '비즈니스',
+      'desk.fine': '가격은 USD 기준이며 매월 청구됩니다. 연간 요금제는 20% 저렴합니다. 확대 키를 누른 채 이 줄을 읽어 보세요.',
+      'bar.demo': '자동 데모',
+      'bar.live': '직접 체험 중',
+      'bar.hold': '눌러서 확대',
+      'bar.replay': '데모 다시 보기',
+      'bar.hint.mouse': '{key} 키를 누르고 있으면 확대 · 우클릭하면 색 변경',
+      'bar.hint.touch': '데스크톱을 탭하거나 드래그해 보세요',
+      'insp.label': '효과 설정',
+      'insp.tabs': '효과 종류',
+      'tab.click': '클릭 효과',
+      'tab.trail': '커서 잔상',
+      'tab.focus': '집중 효과',
+      'features.eyebrow': '더 많은 도구',
+      'features.title': '그리고, 캡처하고, 녹화하고, 단축키까지 보여주세요.',
+      'features.lede': '모든 도구가 앱 위의 가벼운 레이어 하나에 있습니다. 메뉴 막대나 화면 가장자리에서 열어 설명하고, 바로 하던 일로 돌아가세요.',
+      'f1.title': '드로잉',
+      'f1.body': '펜, 도형, 텍스트, 마커, 블러를 설명하는 바로 그 자리에 그립니다. 실행 취소, 선택, 복제도 편집기처럼 됩니다.',
+      'f2.title': '엣지 툴바',
+      'f2.body': '화면 가장자리에서 툴바를 꺼내 그리기와 포인팅을 오가고, 화면을 가리지 않게 다시 넣어 두세요.',
+      'f3.title': '캡처',
+      'f3.body': '영역이나 창을 캡처해 고정하고 편집하며, 텍스트를 마크다운으로 추출하거나 실시간으로 번역합니다.',
+      'f4.title': '화면 녹화',
+      'f4.body': '마이크와 시스템 오디오를 함께 녹화하고, 플로팅 바로 제어한 뒤 클립을 다듬어 바로 활용하세요.',
+      'f5.title': '키 입력',
+      'f5.body': '작업 중 누르는 단축키를 키캡으로 보여줍니다. 모양, 크기, 위치를 고르고 화면에 나오면 안 되는 입력은 차단하세요.',
+      'f6.title': '카메라 오버레이',
+      'f6.body': '피사체를 분리하고 배경을 흐림, 단색, 픽셀, 투명으로 바꿔 화면 위에 내 모습을 띄웁니다.',
+      'f6.note': '영상 준비 중',
+      'watch': '영상 보기',
+      'new.eyebrow': '업데이트 내역',
+      'new.title': '최근 릴리즈',
+      'new.all': '전체 업데이트 내역',
+      'new.r271': '일본어, 중국어 간체와 번체에서 빠진 문구를 채웠습니다.',
+      'new.r27': '집중 효과의 클릭 애니메이션을 끝까지 재생할 수 있고, 클릭 원근감 슬라이더가 추가되었습니다.',
+      'new.r26': '집중 효과를 새로 디자인했습니다. 도형, 테두리, 글로우, 클릭 색상, 확대경을 지원합니다.',
+      'new.r25': '집중 효과, 키 입력, 클릭 효과, 커서 잔상이 전체 화면에서도 동작합니다.',
+      'cta.title': 'macOS용 DeskBoard2',
+      'cta.body': '필요할 때만 나타나는 도구 하나로 그리고, 가리키고, 캡처하고, 녹화하세요.',
+      'cta.req': 'macOS 12.3 Monterey 이상 필요',
+      'cta.note': '이 페이지의 효과는 미리보기를 위해 앱의 효과를 웹으로 옮긴 것입니다. DeskBoard2에서는 화면의 모든 앱 위에 그려집니다.',
+      'footer.tag': 'Mac을 위한 화면 설명 도구.',
+      'footer.label': '하단 메뉴',
+      'footer.changelog': '업데이트 내역',
+      'footer.privacy': '개인정보 처리방침',
+      'footer.contact': '문의',
+      'video.close': '닫기',
+
+      'pane.click.desc': '클릭할 때마다 효과를 재생해 시청자가 포인터를 놓치지 않습니다.',
+      'pane.trail.desc': '포인터가 지나간 자리에 짧은 잔상을 남깁니다.',
+      'pane.focus.desc': '포인터 주변을 강조하고, 클릭에 반응하며, 원할 때 확대해 보여줍니다.',
+      'enable.click': '클릭 효과 사용',
+      'enable.trail': '커서 잔상 사용',
+      'enable.focus': '집중 효과 사용',
+      'group.effect': '효과',
+      'group.options': '옵션',
+      'group.color': '그리기 색상',
+      'group.type': '잔상 효과',
+      'group.appearance': '외형',
+      'group.clicks': '클릭',
+      'group.magnifier': '확대경',
+      'group.behavior': '동작',
+      'color.note': '앱과 마찬가지로 클릭 효과와 선 잔상은 현재 그리기 색상을 사용합니다. 무지개는 클릭하고 움직일 때마다 색이 조금씩 바뀝니다.',
+      'fixed.duration': '색종이 효과는 재생 시간이 고정되어 있습니다.',
+      'reset': '초기화',
+      'pro.click': '펄스는 무료입니다. 나머지 클릭 효과는 DeskBoard2 Pro 기능입니다.',
+      'pro.trail': '커서 잔상은 DeskBoard2 Pro 기능입니다.',
+      'pro.focus': '집중 효과는 DeskBoard2 Pro 기능입니다. Mac에서 확대경을 쓰려면 화면 녹화 권한이 필요합니다.',
+      'badge.pro': 'PRO',
+      'badge.free': 'FREE',
+      'fx.pulse': '펄스', 'fx.ripple': '립플', 'fx.radar': '레이더 파형', 'fx.spark': '스파크',
+      'fx.check': '체크 표시', 'fx.catPaw': '고양이 발자국', 'fx.emoji': '이모지', 'fx.lightning': '번개',
+      'fx.confetti': '색종이 날림', 'fx.confettiBlast': '색종이 폭발', 'fx.fire': '불꽃',
+      'f.size': '크기', 'f.duration': '재생 시간',
+      'f.pulse.lineWidth': '펄스 선 두께',
+      'f.ripple.ringCount': '립플 링 개수', 'f.ripple.ringDelay': '립플 링 지연',
+      'f.radar.waveCount': '레이더 파동 수', 'f.radar.gap': '레이더 간격', 'f.radar.lineWidth': '레이더 선 두께',
+      'f.spark.particleCount': '스파크 입자 수', 'f.spark.segmentLength': '스파크 선 길이',
+      'f.spark.segmentThickness': '스파크 선 두께',
+      'f.check.thickness': '체크 두께', 'f.check.jitterRange': '체크 흔들림 범위',
+      'f.catPaw.spreadRadius': '고양이 발자국 퍼짐 반경', 'f.catPaw.rotationRange': '고양이 발자국 회전 범위',
+      'f.emoji.value': '이모지', 'f.emoji.opacity': '이모지 투명도', 'f.emoji.spreadRadius': '이모지 퍼짐 반경',
+      'f.emoji.rotationRange': '이모지 회전 범위',
+      'f.lightning.branchCount': '번개 가지 수', 'f.lightning.detailLevel': '번개 디테일 수준',
+      'f.confetti.paletteCount': '팔레트 개수', 'f.confetti.density': '색종이 밀도',
+      'f.confettiBlast.particleCount': '폭발 입자 수', 'f.confettiBlast.speedScale': '폭발 속도 배율',
+      'f.fire.intensity': '불꽃 세기', 'f.fire.turbulence': '불꽃 난류 확률',
+      'trail.line': '선', 'trail.snow': '눈',
+      'f.line.duration': '선 지속 시간', 'f.line.width': '선 두께', 'f.line.opacity': '선 투명도',
+      'f.snow.spacing': '눈 간격', 'f.snow.lifetime': '눈 지속 시간', 'f.snow.color': '눈 색상',
+      'focus.shape': '도형', 'focus.size': '크기', 'focus.borderWeight': '테두리 굵기', 'focus.borderStyle': '테두리 스타일',
+      'focus.glow': '글로우', 'focus.accent': '강조 색상', 'focus.animateClicks': '클릭 애니메이션',
+      'focus.completeShort': '애니메이션 끝까지 재생', 'focus.perspective': '클릭 원근감',
+      'focus.left': '좌클릭 색상', 'focus.right': '우클릭 색상',
+      'focus.magnifier': '확대경 사용', 'focus.zoom': '확대 배율', 'focus.key': '확대 키',
+      'focus.autoHide': '자동 숨김', 'focus.attract': '주의 끌기', 'focus.delay': '대기시간',
+      'focus.hold': '눌러서 확대',
+      'focus.holdNote': '또는 데스크톱을 가리킨 채 {key} 키를 누르고 있으세요.',
+      'focus.idleNote': '대기시간 동안 움직이지 않으면 확인할 수 있습니다.',
+      'opt.circle': '원', 'opt.rhombus': '마름모', 'opt.squircle': '둥근 사각형', 'opt.rectangle': '사각형',
+      'opt.small': '작게', 'opt.regular': '보통', 'opt.large': '크게', 'opt.extraLarge': '매우 크게',
+      'opt.light': '얇게', 'opt.bold': '굵게', 'opt.heavy': '매우 굵게',
+      'opt.solid': '실선', 'opt.dashed': '점선', 'opt.hidden': '없음', 'opt.soft': '부드럽게', 'opt.shiny': '선명하게',
+      'opt.meta': 'Command', 'opt.alt': 'Option', 'opt.ctrl': 'Control', 'opt.shift': 'Shift',
+      'unit.seconds': '{n}초',
+      'swatch.rainbow': '무지개', 'swatch.cherry': '체리', 'swatch.russet': '적갈색', 'swatch.lemon': '레몬',
+      'swatch.lime': '라임', 'swatch.sprout': '새싹', 'swatch.seafoam': '물거품', 'swatch.seagreen': '바다 녹색',
+      'swatch.aqua': '아쿠아', 'swatch.blueberry': '블루베리', 'swatch.grape': '포도', 'swatch.magenta': '마젠타',
+      'swatch.strawberry': '딸기', 'swatch.white': '흰색',
+    },
+  };
+
+  let lang = initialLang();
+
+  function initialLang() {
+    try {
+      const saved = localStorage.getItem('deskboard2.lang');
+      if (saved === 'en' || saved === 'ko') return saved;
+    } catch (error) { /* storage unavailable */ }
+    return /^ko\b/i.test(navigator.language || '') ? 'ko' : 'en';
+  }
+
+  function t(key, vars) {
+    let text = (I18N[lang] && I18N[lang][key]) ?? I18N.en[key] ?? key;
+    if (vars) for (const [name, value] of Object.entries(vars)) text = text.replace(`{${name}}`, value);
+    return text;
+  }
+
+  function applyCopy() {
+    document.documentElement.lang = lang;
+    $$('[data-i18n]').forEach((el) => { el.textContent = t(el.dataset.i18n); });
+    $$('[data-i18n-html]').forEach((el) => { el.innerHTML = t(el.dataset.i18nHtml); });
+    $$('[data-i18n-attr]').forEach((el) => {
+      el.dataset.i18nAttr.split(';').forEach((pair) => {
+        const [attr, key] = pair.split(':');
+        if (attr && key) el.setAttribute(attr.trim(), t(key.trim()));
+      });
+    });
+    $$('.lang-switch button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
+  }
+
+  /* =============================================================== state */
+  const KEYS = {
+    meta: { symbol: '⌘', name: 'command', names: ['Meta', 'OS'], prop: 'metaKey' },
+    alt: { symbol: '⌥', name: 'option', names: ['Alt', 'AltGraph'], prop: 'altKey' },
+    ctrl: { symbol: '⌃', name: 'control', names: ['Control'], prop: 'ctrlKey' },
+    shift: { symbol: '⇧', name: 'shift', names: ['Shift'], prop: 'shiftKey' },
+  };
+
+  const clone = (value) => JSON.parse(JSON.stringify(value));
+  const clickDefaults = () => Object.fromEntries(FX.CLICK_EFFECTS.map((e) => [e.id, clone(e.defaults)]));
+  const TRAIL_DEFAULTS = {
+    line: { duration: 0.15, lineWidth: 6, opacity: 0.9 }, // AppDefaults.CursorTrail / CursorTrailLine
+    snow: { spacing: 20, lifetime: 0.5, color: '#ffffff' }, // CursorTrailSnow
+  };
+  const focusDefaults = () => ({ ...clone(FX.FOCUS.defaults), key: isMac ? 'meta' : 'ctrl' });
+
+  const state = {
+    click: { enabled: true, type: 'pulse', userPicked: false, configs: clickDefaults() },
+    trail: { enabled: true, type: 'line', line: clone(TRAIL_DEFAULTS.line), snow: clone(TRAIL_DEFAULTS.snow) },
+    color: 'rainbow',
+    focus: { enabled: true, ...focusDefaults() },
+  };
+
+  /* =============================================================== stage */
+  const stage = $('#stage');
+  const desktop = $('#desktop');
+  const content = $('#desk-content');
+  const canvas = $('#fx');
+  const ctx = canvas.getContext('2d');
+  const ghost = $('#ghost');
+  const keycap = $('#keycap-hud');
+  const stageBar = $('.stage-bar');
+  const sbState = $('#sb-state');
+  const sbEffect = $('#sb-effect');
+  const sbHint = $('#sb-hint');
+  const sbCoords = $('#sb-coords');
+
+  const scene = new FX.FxScene();
+  const stroke = new FX.StrokeStyle();
+  const env = { px: 1 };
+  let screen = { w: 1280, h: 800 };
+  let scale = 1;
+  let dpr = 1;
+
+  const focus = new FX.FocusEffect($('#focus'), {
+    cloneContent: () => {
+      const copy = content.cloneNode(true);
+      copy.removeAttribute('id');
+      copy.querySelectorAll('[id]').forEach((node) => node.removeAttribute('id'));
+      copy.setAttribute('aria-hidden', 'true');
+      return copy;
+    },
+    screenSize: () => screen,
+    reducedMotion: () => reduceMotion.matches,
+  });
+
+  function layout() {
+    const width = stage.clientWidth;
+    if (!width) return;
+    const compact = width < 560;
+    screen = compact ? { w: 640, h: 800 } : { w: 1280, h: 800 };
+    stage.classList.toggle('is-compact', compact);
+    desktop.classList.toggle('is-compact', compact);
+    scale = width / screen.w;
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    desktop.style.width = `${screen.w}px`;
+    desktop.style.height = `${screen.h}px`;
+    desktop.style.transform = `scale(${scale})`;
+    canvas.style.width = `${screen.w}px`;
+    canvas.style.height = `${screen.h}px`;
+    canvas.width = Math.max(1, Math.round(screen.w * scale * dpr));
+    canvas.height = Math.max(1, Math.round(screen.h * scale * dpr));
+    env.px = scale * dpr;
+    focus.refreshLens();
+    kick();
+  }
+
+  function toLogical(event) {
+    const rect = stage.getBoundingClientRect();
+    return {
+      x: clamp((event.clientX - rect.left) / scale, 0, screen.w),
+      y: clamp((event.clientY - rect.top) / scale, 0, screen.h),
+    };
+  }
+
+  // Logical point inside a [data-tour] element of the live desktop.
+  function target(name, fx = 0.5, fy = 0.5) {
+    const el = $(`[data-tour="${name}"]`, content);
+    if (!el) return { x: screen.w / 2, y: screen.h / 2 };
+    const box = el.getBoundingClientRect();
+    const base = stage.getBoundingClientRect();
+    return {
+      x: clamp((box.left - base.left + box.width * fx) / scale, 8, screen.w - 8),
+      y: clamp((box.top - base.top + box.height * fy) / scale, 30, screen.h - 8),
+    };
+  }
+
+  /* ============================================================== render */
+  let raf = 0;
+  let paused = false;
+  let wakeTimer = 0;
+
+  function kick() {
+    if (!raf && !paused) raf = requestAnimationFrame(frame);
+  }
+
+  function frame() {
+    raf = 0;
+    const time = now();
+    tour.update(time);
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.setTransform(scale * dpr, 0, 0, scale * dpr, 0, 0);
+    scene.render(ctx, time, env);
+    const focusBusy = state.focus.enabled && focus.tick(time);
+    if (scene.busy || focusBusy || tour.moving) {
+      kick();
+    } else {
+      clearTimeout(wakeTimer);
+      if (focus.inactiveAt !== null) wakeTimer = setTimeout(kick, Math.max(0, (focus.inactiveAt - time) * 1000) + 20);
+    }
+  }
+
+  /* ============================================================= effects */
+  function playClick(point, override) {
+    if (!state.click.enabled) return null;
+    const type = override || state.click.type;
+    const def = FX.CLICK_BY_ID[type];
+    const cfg = state.click.configs[type];
+    scene.add(def.play({ x: point.x, y: point.y }, {
+      t: now(),
+      size: cfg.size,
+      duration: def.fixedDuration ? 0.5 : cfg.duration,
+      stroke: stroke.clickColor(),
+      cfg,
+    }));
+    kick();
+    return type;
+  }
+
+  function trailMove(point, last) {
+    if (!state.trail.enabled) return;
+    if (state.trail.type === 'line') {
+      scene.trails.line.move(point, last, now(), state.trail.line, stroke);
+    } else {
+      const cfg = state.trail.snow;
+      scene.trails.snow.move(point, last, now(), { spacing: cfg.spacing, lifetime: cfg.lifetime, color: FX.color.hex(cfg.color) });
+    }
+  }
+
+  function resetContinuity() {
+    scene.trails.line.resetContinuity();
+    scene.trails.snow.resetContinuity();
+  }
+
+  /* =============================================================== input */
+  const input = {
+    inside: false,
+    last: null,
+    pos: { x: 640, y: 400 },
+    buttons: new Set(),
+    magnifierSources: new Set(),
+    magnifierOn: false,
+
+    enter(point) {
+      this.inside = true;
+      this.last = null;
+      resetContinuity();
+      this.move(point);
+    },
+    move(point, options = {}) {
+      this.pos = point;
+      if (this.inside && !options.noTrail) trailMove(point, this.last);
+      this.last = point;
+      if (state.focus.enabled) focus.pointer(point.x, point.y, true, now());
+      showCoords(point);
+      kick();
+    },
+    // The focus highlight stays parked where the pointer left, so settings changes stay visible.
+    leave() {
+      this.inside = false;
+      this.last = null;
+      resetContinuity();
+      this.releaseAll();
+    },
+    down(button) {
+      this.buttons.add(button);
+      if (button === 'left') playClick(this.pos, tour.running && !state.click.userPicked ? tour.effect : null);
+      if (state.focus.enabled) focus.button(button, true, now());
+      kick();
+    },
+    up(button) {
+      if (!this.buttons.delete(button)) return;
+      if (state.focus.enabled) focus.button(button, false, now());
+      kick();
+    },
+    setMagnifier(source, down) {
+      if (down) this.magnifierSources.add(source);
+      else this.magnifierSources.delete(source);
+      const on = this.magnifierSources.size > 0;
+      if (on === this.magnifierOn) return;
+      this.magnifierOn = on;
+      if (state.focus.enabled) focus.magnifierKey(on, now());
+      kick();
+    },
+    releaseAll() {
+      [...this.buttons].forEach((b) => this.up(b));
+      this.magnifierSources.clear();
+      if (this.magnifierOn) {
+        this.magnifierOn = false;
+        if (state.focus.enabled) focus.magnifierKey(false, now());
+      }
+    },
+  };
+
+  let interacted = false;
+  let holding = false;
+
+  stage.addEventListener('pointerenter', (event) => {
+    if (event.pointerType === 'mouse') takeOver();
+    input.enter(toLogical(event));
+  });
+
+  stage.addEventListener('pointermove', (event) => {
+    if (tour.running) takeOver();
+    const point = toLogical(event);
+    if (!input.inside) input.enter(point);
+    syncModifier(event);
+    const rightOnly = (event.buttons & 2) && !(event.buttons & 1);
+    input.move(point, { noTrail: rightOnly });
+  });
+
+  stage.addEventListener('pointerleave', () => {
+    if (holding) return;
+    input.leave();
+    scheduleResume();
+  });
+
+  stage.addEventListener('pointerdown', (event) => {
+    takeOver();
+    const point = toLogical(event);
+    if (!input.inside) input.enter(point);
+    else input.move(point);
+    input.down(event.button === 2 ? 'right' : 'left');
+    if (document.activeElement !== stage) stage.focus({ preventScroll: true });
+  });
+
+  window.addEventListener('pointerup', (event) => input.up(event.button === 2 ? 'right' : 'left'));
+  window.addEventListener('pointercancel', () => input.releaseAll());
+  stage.addEventListener('contextmenu', (event) => event.preventDefault());
+
+  function syncModifier(event) {
+    if (!input.inside || tour.running) return;
+    input.setMagnifier('key', Boolean(event[KEYS[state.focus.key].prop]));
+  }
+
+  window.addEventListener('keydown', (event) => {
+    if (!KEYS[state.focus.key].names.includes(event.key)) return;
+    if (!input.inside || tour.running) return;
+    input.setMagnifier('key', true);
+  });
+  window.addEventListener('keyup', (event) => {
+    if (KEYS[state.focus.key].names.includes(event.key)) input.setMagnifier('key', false);
+  });
+  window.addEventListener('blur', () => input.setMagnifier('key', false));
+
+  // Press-and-hold magnifier for touch screens and for anyone without a modifier key.
+  function bindHold(button) {
+    const start = (event) => {
+      event.preventDefault();
+      if (button.classList.contains('is-pressed')) return;
+      takeOver();
+      holding = true;
+      button.classList.add('is-pressed');
+      if (!state.focus.enabled) setFocusEnabled(true);
+      if (!state.focus.magnifier) updateFocus({ magnifier: true }, true);
+      input.setMagnifier('hold', true);
+    };
+    const end = () => {
+      if (!button.classList.contains('is-pressed')) return;
+      button.classList.remove('is-pressed');
+      holding = false;
+      input.setMagnifier('hold', false);
+    };
+    button.addEventListener('pointerdown', start);
+    ['pointerup', 'pointerleave', 'pointercancel'].forEach((type) => button.addEventListener(type, end));
+    button.addEventListener('keydown', (event) => {
+      if ((event.key === ' ' || event.key === 'Enter') && !event.repeat) start(event);
+    });
+    button.addEventListener('keyup', (event) => {
+      if (event.key === ' ' || event.key === 'Enter') end();
+    });
+    button.addEventListener('contextmenu', (event) => event.preventDefault());
+  }
+
+  /* ========================================================== status bar */
+  let barMode = 'demo';
+
+  function setBar(mode) {
+    barMode = mode;
+    stageBar.classList.toggle('is-live', mode === 'live');
+    sbState.textContent = t(mode === 'live' ? 'bar.live' : 'bar.demo');
+    let effect = '';
+    if (mode === 'demo' && tour.effect && state.click.enabled) effect = t(`fx.${tour.effect}`);
+    else if (mode === 'live' && state.click.enabled) effect = t(`fx.${state.click.type}`);
+    sbEffect.textContent = effect ? ` · ${effect}` : '';
+  }
+
+  function keyLabel() {
+    const key = KEYS[state.focus.key];
+    return `${key.symbol} ${t(`opt.${state.focus.key}`)}`;
+  }
+
+  function updateHint() {
+    sbHint.textContent = coarsePointer.matches ? t('bar.hint.touch') : t('bar.hint.mouse', { key: keyLabel() });
+  }
+
+  function showCoords(point) {
+    const pad = (n) => String(Math.round(n)).padStart(4, ' ');
+    sbCoords.textContent = `x ${pad(point.x)} · y ${pad(point.y)} pt`;
+  }
+
+  /* ================================================================ tour */
+  const SHOWCASE = ['ripple', 'spark', 'check', 'lightning', 'confetti', 'catPaw', 'fire', 'radar', 'emoji', 'confettiBlast', 'pulse'];
+  const easeMove = FX.cubicBezier(0.45, 0, 0.25, 1);
+  let resumeTimer = 0;
+
+  const tour = {
+    gen: 0,
+    running: false,
+    motion: null,
+    effect: null,
+    showcase: 0,
+    get moving() { return this.motion !== null; },
+    update(time) {
+      const m = this.motion;
+      if (!m) return;
+      if (m.start === null) m.start = time;
+      const u = clamp((time - m.start) / m.duration, 0, 1);
+      const k = easeMove(u);
+      const a = 1 - k;
+      const point = {
+        x: a * a * m.from.x + 2 * a * k * m.ctrl.x + k * k * m.to.x,
+        y: a * a * m.from.y + 2 * a * k * m.ctrl.y + k * k * m.to.y,
+      };
+      placeGhost(point);
+      input.move(point);
+      if (u >= 1) {
+        this.motion = null;
+        m.resolve();
+      }
+    },
+  };
+
+  function placeGhost(point) {
+    ghost.style.transform = `translate(${(point.x - 2.2).toFixed(1)}px, ${(point.y - 2.2).toFixed(1)}px)`;
+  }
+
+  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  function moveTo(to, duration, bend) {
+    return new Promise((resolve) => {
+      const from = { ...input.pos };
+      const dx = to.x - from.x, dy = to.y - from.y;
+      const len = Math.hypot(dx, dy) || 1;
+      const curve = (bend ?? 0.16) * (Math.random() < 0.5 ? -1 : 1);
+      const ctrl = { x: (from.x + to.x) / 2 - (dy / len) * len * curve, y: (from.y + to.y) / 2 + (dx / len) * len * curve };
+      tour.motion = { from, to, ctrl, duration: duration / 1000, start: null, resolve };
+      kick();
+    });
+  }
+
+  async function tourClick(gen, button, hold = 110) {
+    if (button === 'left') {
+      tour.effect = SHOWCASE[tour.showcase++ % SHOWCASE.length];
+      if (state.click.userPicked) tour.effect = state.click.type;
+      setBar('demo');
+    }
+    input.down(button);
+    await sleep(hold);
+    if (gen === tour.gen) input.up(button);
+  }
+
+  async function tourMagnify(gen, inner) {
+    const canMagnify = state.focus.enabled && state.focus.magnifier;
+    if (canMagnify) {
+      const key = KEYS[state.focus.key];
+      $('#keycap-key').textContent = key.symbol;
+      $('#keycap-name').textContent = key.name;
+      keycap.hidden = false;
+      input.setMagnifier('tour', true);
+    }
+    await inner();
+    if (gen !== tour.gen) return;
+    keycap.hidden = true;
+    input.setMagnifier('tour', false);
+  }
+
+  async function runTour(gen) {
+    const live = () => gen === tour.gen;
+    await sleep(650);
+    while (live()) {
+      await moveTo(target('peak', 0.5, 0.22), 950);
+      if (!live()) return;
+      await tourClick(gen, 'left');
+      await sleep(950);
+      if (!live()) return;
+      await moveTo(target('callout', 0.3, 0.5), 750);
+      if (!live()) return;
+      await tourClick(gen, 'left');
+      await sleep(950);
+      if (!live()) return;
+      await moveTo(target('pricing', 0.2, 0.45), 1050);
+      if (!live()) return;
+      await tourMagnify(gen, async () => {
+        await sleep(450);
+        if (live()) await moveTo(target('pricing', 0.85, 0.75), 1300, 0.05);
+        if (live()) await sleep(500);
+      });
+      if (!live()) return;
+      await moveTo(target('title', 0.25, 0.5), 950);
+      if (!live()) return;
+      await tourClick(gen, 'right', 420);
+      await sleep(700);
+      if (!live()) return;
+      await moveTo(target('mon', 0.5, -1.4), 1250, 0.32);
+      if (!live()) return;
+      await tourClick(gen, 'left');
+      await sleep(1050);
+      if (!live()) return;
+      await moveTo(target('dock', 0.5, 0.45), 1000);
+      if (!live()) return;
+      await tourClick(gen, 'left');
+      await sleep(1250);
+      if (!live()) return;
+      await moveTo(target('done', 0.06, 0.5), 950);
+      if (!live()) return;
+      await tourClick(gen, 'left');
+      await sleep(1400);
+    }
+  }
+
+  function startTour() {
+    clearTimeout(resumeTimer);
+    if (tour.running || paused) return;
+    tour.gen++;
+    tour.running = true;
+    ghost.hidden = false;
+    placeGhost(input.pos);
+    input.enter(input.pos);
+    setBar('demo');
+    runTour(tour.gen);
+  }
+
+  function stopTour() {
+    if (!tour.running) return;
+    tour.gen++;
+    tour.running = false;
+    if (tour.motion) {
+      tour.motion.resolve();
+      tour.motion = null;
+    }
+    ghost.hidden = true;
+    keycap.hidden = true;
+    input.leave();
+  }
+
+  function takeOver() {
+    clearTimeout(resumeTimer);
+    interacted = true;
+    stopTour();
+    if (barMode !== 'live') setBar('live');
+  }
+
+  // The demo comes back after a quiet spell, but never while someone is adjusting settings.
+  let lastSettingsUse = 0;
+  function scheduleResume() {
+    clearTimeout(resumeTimer);
+    if (reduceMotion.matches) return;
+    resumeTimer = setTimeout(() => {
+      if (performance.now() - lastSettingsUse < 7000) scheduleResume();
+      else if (!input.inside && !holding && !paused) startTour();
+    }, 7000);
+  }
+  ['pointerdown', 'keydown', 'input'].forEach((type) =>
+    $('.inspector').addEventListener(type, () => { lastSettingsUse = performance.now(); }, true));
+
+  // Keyboard users can press Enter or Space on the focused desktop to click at the current spot.
+  stage.addEventListener('keydown', (event) => {
+    if ((event.key !== 'Enter' && event.key !== ' ') || event.repeat) return;
+    event.preventDefault();
+    takeOver();
+    input.down('left');
+    setTimeout(() => input.up('left'), 110);
+  });
+
+  /* =========================================================== inspector */
+  function h(tag, attrs = {}, ...children) {
+    const el = document.createElement(tag);
+    for (const [key, value] of Object.entries(attrs)) {
+      if (value === undefined || value === null || value === false) continue;
+      if (key === 'class') el.className = value;
+      else if (key === 'text') el.textContent = value;
+      else if (key === 'html') el.innerHTML = value;
+      else if (key.startsWith('on') && typeof value === 'function') el.addEventListener(key.slice(2), value);
+      else el.setAttribute(key, value === true ? '' : String(value));
+    }
+    for (const child of children.flat()) {
+      if (child === null || child === undefined || child === false) continue;
+      el.append(child.nodeType ? child : document.createTextNode(String(child)));
+    }
+    return el;
+  }
+
+  const decimals = (step) => {
+    const s = String(step);
+    return s.includes('.') ? s.split('.')[1].length : 0;
+  };
+
+  function formatValue(value, unit, step) {
+    if (unit === '%') return `${Math.round(value * 100)}%`;
+    const n = Number(value).toFixed(decimals(step));
+    if (!unit) return n;
+    if (unit === '°' || unit === '×') return `${n}${unit}`;
+    return `${n} ${unit}`;
+  }
+
+  function sliderField({ id, label, value, min, max, step, unit, onInput, onCommit }) {
+    const input = h('input', { type: 'range', id, min, max, step, value });
+    const output = h('output', { for: id });
+    const sync = () => {
+      const v = Number(input.value);
+      output.textContent = formatValue(v, unit, step);
+      input.style.setProperty('--fill', `${((v - min) / (max - min)) * 100}%`);
+    };
+    input.addEventListener('input', () => {
+      sync();
+      onInput(Number(input.value));
+    });
+    if (onCommit) input.addEventListener('change', () => onCommit(Number(input.value)));
+    sync();
+    return h('div', { class: 'field' }, h('div', { class: 'field-row' }, h('label', { for: id, text: label }), output), input);
+  }
+
+  function segmentedField({ id, label, options, value, onChange, readout }) {
+    const labelId = `${id}-label`;
+    const group = h('div', { class: 'seg', role: 'radiogroup', 'aria-labelledby': labelId, id });
+    const readoutEl = readout ? h('span', { class: 'value', text: readout(value) }) : null;
+    const buttons = options.map((option) => {
+      const selected = option.value === value;
+      const button = h('button', {
+        type: 'button', role: 'radio', id: `${id}-${option.value}`,
+        'aria-checked': String(selected), tabindex: selected ? '0' : '-1',
+        'aria-label': option.aria || null, title: option.aria || null,
+      });
+      if (option.icon) button.innerHTML = option.icon;
+      if (option.text) button.append(option.text);
+      button.addEventListener('click', () => select(option.value, false));
+      group.append(button);
+      return button;
+    });
+    function select(next, moveFocus) {
+      value = next;
+      buttons.forEach((button, i) => {
+        const on = options[i].value === next;
+        button.setAttribute('aria-checked', String(on));
+        button.tabIndex = on ? 0 : -1;
+        if (on && moveFocus) button.focus();
+      });
+      if (readoutEl) readoutEl.textContent = readout(next);
+      onChange(next);
+    }
+    group.addEventListener('keydown', (event) => {
+      const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[event.key];
+      if (!step) return;
+      event.preventDefault();
+      const index = options.findIndex((o) => o.value === value);
+      select(options[(index + step + options.length) % options.length].value, true);
+    });
+    return h('div', { class: 'field' }, h('div', { class: 'field-row' }, h('span', { class: 'field-label', id: labelId, text: label }), readoutEl), group);
+  }
+
+  function switchButton({ id, checked, labelledby, label, onChange, small = true }) {
+    const button = h('button', {
+      type: 'button', role: 'switch', id, class: small ? 'switch is-small' : 'switch',
+      'aria-checked': String(checked), 'aria-labelledby': labelledby || null, 'aria-label': label || null,
+    });
+    button.addEventListener('click', () => {
+      const next = button.getAttribute('aria-checked') !== 'true';
+      button.setAttribute('aria-checked', String(next));
+      onChange(next);
+    });
+    return button;
+  }
+
+  function switchField({ id, label, checked, onChange }) {
+    const labelId = `${id}-label`;
+    return h('div', { class: 'field is-inline' },
+      h('span', { class: 'field-label', id: labelId, text: label }),
+      switchButton({ id, checked, labelledby: labelId, onChange }));
+  }
+
+  function colorField({ id, label, value, enabled, onColor, onToggle }) {
+    const labelId = `${id}-label`;
+    const picker = h('input', { type: 'color', id, value, 'aria-labelledby': labelId });
+    picker.disabled = enabled === false;
+    picker.addEventListener('input', () => onColor(picker.value));
+    picker.addEventListener('change', () => onColor(picker.value, true));
+    const controls = h('div', { class: 'color-field' }, picker);
+    if (onToggle) {
+      controls.append(switchButton({
+        id: `${id}-on`, checked: enabled !== false, label,
+        onChange: (on) => {
+          picker.disabled = !on;
+          onToggle(on);
+        },
+      }));
+    }
+    return h('div', { class: 'field is-inline' }, h('span', { class: 'field-label', id: labelId, text: label }), controls);
+  }
+
+  function badge(pro) {
+    return h('span', { class: pro ? 'badge' : 'badge is-free', text: t(pro ? 'badge.pro' : 'badge.free') });
+  }
+
+  function paneHead(kind, enabled, pro, onToggle) {
+    const titleId = `pane-${kind}-title`;
+    return h('div', { class: 'pane-head' },
+      h('h2', { id: titleId }, t(`tab.${kind}`), pro === null ? null : badge(pro)),
+      switchButton({ id: `${kind}-enabled`, checked: enabled, label: t(`enable.${kind}`), small: false, onChange: onToggle }),
+      h('p', { text: t(`pane.${kind}.desc`) }));
+  }
+
+  const GLYPHS = {
+    pulse: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7.5"/></svg>',
+    ripple: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="6.5" opacity=".7"/><circle cx="12" cy="12" r="10" opacity=".4"/></svg>',
+    radar: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="9" stroke-dasharray="2.6 2.4" opacity=".7"/></svg>',
+    spark: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5v4.5M12 17v4.5M2.5 12H7M17 12h4.5M5.3 5.3l3 3M15.7 15.7l3 3M18.7 5.3l-3 3M8.3 15.7l-3 3"/></svg>',
+    check: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 12.5l4.8 4.8L19.5 6.5" stroke-width="2.2"/></svg>',
+    catPaw: '<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor" stroke="none"><ellipse cx="6.6" cy="10" rx="1.9" ry="2.4" transform="rotate(-24 6.6 10)"/><ellipse cx="10.2" cy="6.6" rx="2" ry="2.5" transform="rotate(-8 10.2 6.6)"/><ellipse cx="13.8" cy="6.6" rx="2" ry="2.5" transform="rotate(8 13.8 6.6)"/><ellipse cx="17.4" cy="10" rx="1.9" ry="2.4" transform="rotate(24 17.4 10)"/><path d="M12 11.3c2.7 0 5.1 3 5.1 5.3 0 1.8-1.4 2.7-2.9 2.5-1-.1-1.4-.5-2.2-.5s-1.2.4-2.2.5c-1.5.2-2.9-.7-2.9-2.5 0-2.3 2.4-5.3 5.1-5.3z"/></g></svg>',
+    emoji: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 3c.6 4.3 2.4 6.3 6.6 7.1-4.2.8-6 2.8-6.6 7.1-.6-4.3-2.4-6.3-6.6-7.1C8.6 9.3 10.4 7.3 11 3z"/><path d="M18.4 14.6c.3 1.6 1 2.3 2.6 2.6-1.6.3-2.3 1-2.6 2.6-.3-1.6-1-2.3-2.6-2.6 1.6-.3 2.3-1 2.6-2.6z"/></svg>',
+    lightning: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.2 2.5 5.5 13.6h5.6l-1.2 7.9 7.6-11.1H12z"/></svg>',
+    confetti: '<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor" stroke="none"><rect x="4" y="4.5" width="3" height="4.6" rx=".7" transform="rotate(-24 5.5 6.8)"/><rect x="15.5" y="3.5" width="3" height="4.6" rx=".7" transform="rotate(28 17 5.8)"/><circle cx="11.5" cy="11" r="1.7"/><rect x="5.5" y="14.5" width="3" height="4.6" rx=".7" transform="rotate(38 7 16.8)"/><path d="M16.8 13.6l2.4 2.4-2.4 2.4-2.4-2.4z"/></g></svg>',
+    confettiBlast: '<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor" stroke="none"><rect x="10.5" y="10.5" width="3" height="3"/><rect x="4" y="4" width="2.6" height="2.6"/><rect x="17.4" y="4" width="2.6" height="2.6"/><rect x="4" y="17.4" width="2.6" height="2.6"/><rect x="17.4" y="17.4" width="2.6" height="2.6"/><rect x="11" y="2.5" width="2" height="2"/><rect x="11" y="19.5" width="2" height="2"/><rect x="2.5" y="11" width="2" height="2"/><rect x="19.5" y="11" width="2" height="2"/></g></svg>',
+    fire: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.2c-3.6 0-6.1-2.4-6.1-5.7 0-3.6 2.8-5.3 3.7-8.6 1.9 1.3 2.7 3 2.7 4.7 1-.6 1.7-1.9 1.8-3.1 2.4 1.8 4 4.3 4 7 0 3.3-2.5 5.7-6.1 5.7z"/></svg>',
+  };
+
+  const SHAPE_ICONS = {
+    circle: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7.5"/></svg>',
+    rhombus: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${FX.focusShapePath('rhombus', 4, 4, 16, 16)}"/></svg>`,
+    squircle: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${FX.focusShapePath('squircle', 4.5, 4.5, 15, 15)}"/></svg>`,
+    rectangle: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="4.5" width="15" height="15"/></svg>',
+  };
+
+  function swatchGroup(prefix) {
+    const labelId = `${prefix}-color-label`;
+    const group = h('div', { class: 'swatches', role: 'radiogroup', 'aria-labelledby': labelId });
+    FX.SWATCHES.forEach((swatch) => {
+      const selected = state.color === swatch.id;
+      const button = h('button', {
+        type: 'button', role: 'radio', id: `${prefix}-swatch-${swatch.id}`,
+        class: swatch.gradient ? 'swatch is-rainbow' : 'swatch',
+        'aria-checked': String(selected), tabindex: selected ? '0' : '-1',
+        'aria-label': t(`swatch.${swatch.id}`), title: t(`swatch.${swatch.id}`),
+        'data-swatch': swatch.id,
+      });
+      if (!swatch.gradient) button.style.background = FX.color.css(swatch.color);
+      button.addEventListener('click', () => setColor(swatch.id));
+      group.append(button);
+    });
+    group.addEventListener('keydown', (event) => {
+      const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[event.key];
+      if (!step) return;
+      event.preventDefault();
+      const index = FX.SWATCHES.findIndex((s) => s.id === state.color);
+      const next = FX.SWATCHES[(index + step + FX.SWATCHES.length) % FX.SWATCHES.length].id;
+      setColor(next);
+      const button = $(`#${prefix}-swatch-${next}`);
+      if (button) button.focus();
+    });
+    return h('div', { class: 'group' },
+      h('p', { class: 'group-label', id: labelId, text: t('group.color') }),
+      group,
+      h('p', { class: 'field-note', text: t('color.note') }));
+  }
+
+  function setColor(id) {
+    state.color = id;
+    const swatch = FX.SWATCHES.find((s) => s.id === id);
+    if (!swatch || swatch.gradient) stroke.setRainbow();
+    else stroke.setSolid(swatch.color);
+    $$('[data-swatch]').forEach((button) => {
+      const on = button.dataset.swatch === id;
+      button.setAttribute('aria-checked', String(on));
+      button.tabIndex = on ? 0 : -1;
+    });
+  }
+
+  /* ---------------------------------------------------------- click pane */
+  const paneClick = $('#pane-click');
+  const paneTrail = $('#pane-trail');
+  const paneFocus = $('#pane-focus');
+
+  function renderClickPane() {
+    const c = state.click;
+    const grid = h('div', { class: 'fx-grid', role: 'radiogroup', 'aria-labelledby': 'click-effect-label' });
+    FX.CLICK_EFFECTS.forEach((def) => {
+      if (def.separator) grid.append(h('span', { class: 'fx-sep', 'aria-hidden': 'true' }));
+      const selected = c.type === def.id;
+      const chip = h('button', {
+        type: 'button', role: 'radio', class: 'fx-chip', id: `fx-${def.id}`,
+        'aria-checked': String(selected), tabindex: selected ? '0' : '-1', 'data-effect': def.id,
+      });
+      chip.innerHTML = GLYPHS[def.id] || '';
+      chip.append(h('span', { text: t(`fx.${def.id}`) }), badge(def.pro));
+      chip.addEventListener('click', () => selectClick(def.id));
+      grid.append(chip);
+    });
+    grid.addEventListener('keydown', (event) => {
+      const step = { ArrowRight: 1, ArrowDown: 3, ArrowLeft: -1, ArrowUp: -3 }[event.key];
+      if (!step) return;
+      event.preventDefault();
+      const list = FX.CLICK_EFFECTS;
+      const index = list.findIndex((e) => e.id === c.type);
+      const next = list[(index + step + list.length) % list.length].id;
+      selectClick(next);
+      const chip = $(`#fx-${next}`);
+      if (chip) chip.focus();
+    });
+
+    paneClick.replaceChildren(
+      paneHead('click', c.enabled, null, (on) => {
+        c.enabled = on;
+        updateTabDots();
+        setBar(barMode);
+      }),
+      h('div', { class: 'group' }, h('p', { class: 'group-label', id: 'click-effect-label', text: t('group.effect') }), grid),
+      h('div', { class: 'group', id: 'click-options' }),
+      swatchGroup('click'),
+      h('div', { class: 'pane-foot' },
+        h('button', { type: 'button', class: 'reset-btn', id: 'click-reset', text: t('reset'), onclick: () => {
+          const def = FX.CLICK_BY_ID[c.type];
+          c.configs[c.type] = clone(def.defaults);
+          renderClickOptions();
+          previewClick();
+        } }),
+        h('p', { text: t('pro.click') })),
+    );
+    renderClickOptions();
+  }
+
+  function renderClickOptions() {
+    const box = $('#click-options');
+    if (!box) return;
+    const c = state.click;
+    const def = FX.CLICK_BY_ID[c.type];
+    const cfg = c.configs[c.type];
+    const fields = def.fields.filter((f) => !(def.fixedDuration && f.key === 'duration')).map((field) => {
+      const id = `click-${def.id}-${field.key}`;
+      if (field.type === 'text') {
+        const text = h('input', { type: 'text', class: 'text-input', id, value: cfg[field.key], placeholder: field.placeholder, maxlength: '12', autocomplete: 'off' });
+        text.addEventListener('input', () => { cfg[field.key] = text.value; });
+        text.addEventListener('change', previewClick);
+        const presets = h('div', { class: 'presets' }, field.presets.map((value) => h('button', {
+          type: 'button', text: value, 'aria-label': value,
+          onclick: () => { text.value = value; cfg[field.key] = value; previewClick(); },
+        })));
+        return h('div', { class: 'field' }, h('div', { class: 'field-row' }, h('label', { for: id, text: t(`f.${field.label}`) })), text, presets);
+      }
+      return sliderField({
+        id, label: t(`f.${field.label}`), value: cfg[field.key],
+        min: field.min, max: field.max, step: field.step, unit: field.unit,
+        onInput: (v) => { cfg[field.key] = v; },
+        onCommit: previewClick,
+      });
+    });
+    box.replaceChildren(
+      h('p', { class: 'group-label', text: `${t('group.options')} · ${t(`fx.${def.id}`)}` }),
+      ...fields,
+      def.fixedDuration ? h('p', { class: 'field-note', text: t('fixed.duration') }) : null,
+    );
+  }
+
+  function selectClick(id) {
+    const c = state.click;
+    c.type = id;
+    c.userPicked = true;
+    if (!c.enabled) {
+      c.enabled = true;
+      const toggle = $('#click-enabled');
+      if (toggle) toggle.setAttribute('aria-checked', 'true');
+      updateTabDots();
+    }
+    $$('.fx-chip').forEach((chip) => {
+      const on = chip.dataset.effect === id;
+      chip.setAttribute('aria-checked', String(on));
+      chip.tabIndex = on ? 0 : -1;
+    });
+    renderClickOptions();
+    setBar(barMode);
+    previewClick();
+  }
+
+  function previewClick() {
+    const point = input.inside ? input.pos : target('peak', 0.5, 0.2);
+    playClick(point);
+  }
+
+  /* ---------------------------------------------------------- trail pane */
+  function renderTrailPane() {
+    const tr = state.trail;
+    paneTrail.replaceChildren(
+      paneHead('trail', tr.enabled, true, (on) => {
+        tr.enabled = on;
+        resetContinuity();
+        updateTabDots();
+      }),
+      h('div', { class: 'group' },
+        segmentedField({
+          id: 'trail-type', label: t('group.type'), value: tr.type,
+          options: [{ value: 'line', text: t('trail.line') }, { value: 'snow', text: t('trail.snow') }],
+          onChange: (type) => {
+            tr.type = type;
+            resetContinuity();
+            if (!tr.enabled) {
+              tr.enabled = true;
+              const toggle = $('#trail-enabled');
+              if (toggle) toggle.setAttribute('aria-checked', 'true');
+              updateTabDots();
+            }
+            renderTrailOptions();
+          },
+        })),
+      h('div', { class: 'group', id: 'trail-options' }),
+      h('div', { id: 'trail-colors' }),
+      h('div', { class: 'pane-foot' },
+        h('button', { type: 'button', class: 'reset-btn', id: 'trail-reset', text: t('reset'), onclick: () => {
+          tr[tr.type] = clone(TRAIL_DEFAULTS[tr.type]);
+          renderTrailOptions();
+        } }),
+        h('p', { text: t('pro.trail') })),
+    );
+    renderTrailOptions();
+  }
+
+  function renderTrailOptions() {
+    const tr = state.trail;
+    const box = $('#trail-options');
+    const colors = $('#trail-colors');
+    if (!box || !colors) return;
+    const label = h('p', { class: 'group-label', text: `${t('group.options')} · ${t(`trail.${tr.type}`)}` });
+    if (tr.type === 'line') {
+      const cfg = tr.line;
+      box.replaceChildren(label,
+        sliderField({ id: 'trail-line-duration', label: t('f.line.duration'), value: cfg.duration, min: 0.05, max: 1, step: 0.05, unit: 's', onInput: (v) => { cfg.duration = v; } }),
+        sliderField({ id: 'trail-line-width', label: t('f.line.width'), value: cfg.lineWidth, min: 1, max: 16, step: 0.5, unit: 'pt', onInput: (v) => { cfg.lineWidth = v; } }),
+        sliderField({ id: 'trail-line-opacity', label: t('f.line.opacity'), value: cfg.opacity, min: 0.1, max: 1, step: 0.05, unit: '%', onInput: (v) => { cfg.opacity = v; } }));
+      colors.replaceChildren(swatchGroup('trail'));
+    } else {
+      const cfg = tr.snow;
+      box.replaceChildren(label,
+        sliderField({ id: 'trail-snow-spacing', label: t('f.snow.spacing'), value: cfg.spacing, min: 8, max: 40, step: 1, unit: 'pt', onInput: (v) => { cfg.spacing = v; } }),
+        sliderField({ id: 'trail-snow-lifetime', label: t('f.snow.lifetime'), value: cfg.lifetime, min: 0.2, max: 2.5, step: 0.05, unit: 's', onInput: (v) => { cfg.lifetime = v; } }),
+        colorField({ id: 'trail-snow-color', label: t('f.snow.color'), value: cfg.color, onColor: (v) => { cfg.color = v; } }));
+      colors.replaceChildren();
+    }
+  }
+
+  /* ---------------------------------------------------------- focus pane */
+  function updateFocus(patch, rerender = false) {
+    Object.assign(state.focus, patch);
+    focus.setConfig(focusConfig(), now());
+    if ('key' in patch) updateHint();
+    if (rerender) renderFocusPane();
+    kick();
+  }
+
+  function focusConfig() {
+    const { enabled, ...cfg } = state.focus;
+    return cfg;
+  }
+
+  function setFocusEnabled(on) {
+    state.focus.enabled = on;
+    const time = now();
+    focus.setActive(on, time);
+    if (on) {
+      focus.setConfig(focusConfig(), time);
+      focus.pointer(input.pos.x, input.pos.y, true, time);
+    }
+    const toggle = $('#focus-enabled');
+    if (toggle) toggle.setAttribute('aria-checked', String(on));
+    updateTabDots();
+    kick();
+  }
+
+  function previewFocusClick(button) {
+    if (!state.focus.enabled || input.buttons.size) return;
+    const time = now();
+    focus.button(button, true, time);
+    setTimeout(() => {
+      focus.button(button, false, now());
+      kick();
+    }, 70);
+    kick();
+  }
+
+  function renderFocusPane() {
+    const f = state.focus;
+    const option = (key) => ({ value: key, text: t(`opt.${key}`) });
+    const holdButton = h('button', { type: 'button', class: 'hold-btn', id: 'focus-hold' },
+      h('kbd', { text: KEYS[f.key].symbol }), t('focus.hold'));
+    bindHold(holdButton);
+
+    paneFocus.replaceChildren(
+      paneHead('focus', f.enabled, true, (on) => setFocusEnabled(on)),
+      h('div', { class: 'group' },
+        h('p', { class: 'group-label', text: t('group.appearance') }),
+        segmentedField({
+          id: 'focus-shape', label: t('focus.shape'), value: f.shape,
+          readout: (v) => t(`opt.${v}`),
+          options: ['circle', 'rhombus', 'squircle', 'rectangle'].map((s) => ({ value: s, icon: SHAPE_ICONS[s], aria: t(`opt.${s}`) })),
+          onChange: (v) => updateFocus({ shape: v }),
+        }),
+        segmentedField({
+          id: 'focus-size', label: t('focus.size'), value: f.size,
+          readout: (v) => `${FX.FOCUS.sizes[v]} pt`,
+          options: ['small', 'regular', 'large', 'extraLarge'].map(option),
+          onChange: (v) => updateFocus({ size: v }),
+        }),
+        segmentedField({
+          id: 'focus-weight', label: t('focus.borderWeight'), value: f.borderWeight,
+          readout: (v) => `${FX.FOCUS.weights[v]} pt`,
+          options: ['light', 'regular', 'bold', 'heavy'].map(option),
+          onChange: (v) => updateFocus({ borderWeight: v }),
+        }),
+        segmentedField({
+          id: 'focus-style', label: t('focus.borderStyle'), value: f.borderStyle,
+          options: ['solid', 'dashed'].map(option),
+          onChange: (v) => updateFocus({ borderStyle: v }),
+        }),
+        segmentedField({
+          id: 'focus-glow', label: t('focus.glow'), value: f.glow,
+          options: ['hidden', 'soft', 'shiny'].map(option),
+          onChange: (v) => updateFocus({ glow: v }),
+        }),
+        colorField({
+          id: 'focus-accent', label: t('focus.accent'), value: f.accent, enabled: f.usesAccent,
+          onColor: (v) => updateFocus({ accent: v }),
+          onToggle: (on) => updateFocus({ usesAccent: on }),
+        })),
+      h('div', { class: 'group' },
+        h('p', { class: 'group-label', text: t('group.clicks') }),
+        switchField({ id: 'focus-animate', label: t('focus.animateClicks'), checked: f.clickAnimation, onChange: (on) => { updateFocus({ clickAnimation: on }); previewFocusClick('left'); } }),
+        switchField({ id: 'focus-complete', label: t('focus.completeShort'), checked: f.completeShortClick, onChange: (on) => updateFocus({ completeShortClick: on }) }),
+        sliderField({
+          id: 'focus-perspective', label: t('focus.perspective'), value: f.perspective,
+          min: 0, max: 1, step: 0.05, unit: '%',
+          onInput: (v) => updateFocus({ perspective: v }),
+          onCommit: () => previewFocusClick('left'),
+        }),
+        colorField({
+          id: 'focus-left', label: t('focus.left'), value: f.left, enabled: f.usesLeft,
+          onColor: (v, done) => { updateFocus({ left: v }); if (done) previewFocusClick('left'); },
+          onToggle: (on) => { updateFocus({ usesLeft: on }); previewFocusClick('left'); },
+        }),
+        colorField({
+          id: 'focus-right', label: t('focus.right'), value: f.right, enabled: f.usesRight,
+          onColor: (v, done) => { updateFocus({ right: v }); if (done) previewFocusClick('right'); },
+          onToggle: (on) => { updateFocus({ usesRight: on }); previewFocusClick('right'); },
+        })),
+      h('div', { class: 'group' },
+        h('p', { class: 'group-label', text: t('group.magnifier') }),
+        switchField({ id: 'focus-magnifier', label: t('focus.magnifier'), checked: f.magnifier, onChange: (on) => updateFocus({ magnifier: on }) }),
+        segmentedField({
+          id: 'focus-zoom', label: t('focus.zoom'), value: f.zoom,
+          options: FX.FOCUS.zooms.map((z) => ({ value: z, text: `${z}×` })),
+          onChange: (v) => updateFocus({ zoom: v }),
+        }),
+        segmentedField({
+          id: 'focus-key', label: t('focus.key'), value: f.key,
+          readout: (v) => t(`opt.${v}`),
+          options: Object.keys(KEYS).map((k) => ({ value: k, text: KEYS[k].symbol, aria: t(`opt.${k}`) })),
+          onChange: (v) => {
+            input.setMagnifier('key', false);
+            updateFocus({ key: v });
+            const kbd = $('#focus-hold kbd');
+            if (kbd) kbd.textContent = KEYS[v].symbol;
+            const note = $('#focus-hold-note');
+            if (note) note.textContent = t('focus.holdNote', { key: keyLabel() });
+          },
+        }),
+        holdButton,
+        h('p', { class: 'field-note', id: 'focus-hold-note', text: t('focus.holdNote', { key: keyLabel() }) })),
+      h('div', { class: 'group' },
+        h('p', { class: 'group-label', text: t('group.behavior') }),
+        switchField({ id: 'focus-autohide', label: t('focus.autoHide'), checked: f.autoHide, onChange: (on) => updateFocus({ autoHide: on }) }),
+        switchField({ id: 'focus-attract', label: t('focus.attract'), checked: f.attract, onChange: (on) => updateFocus({ attract: on }) }),
+        segmentedField({
+          id: 'focus-delay', label: t('focus.delay'), value: f.delay,
+          options: FX.FOCUS.delays.map((d) => ({ value: d, text: t('unit.seconds', { n: d }) })),
+          onChange: (v) => updateFocus({ delay: v }),
+        }),
+        h('p', { class: 'field-note', text: t('focus.idleNote') })),
+      h('div', { class: 'pane-foot' },
+        h('button', { type: 'button', class: 'reset-btn', id: 'focus-reset', text: t('reset'), onclick: () => {
+          input.setMagnifier('key', false);
+          Object.assign(state.focus, focusDefaults());
+          focus.setConfig(focusConfig(), now());
+          updateHint();
+          renderFocusPane();
+          kick();
+        } }),
+        h('p', { text: t('pro.focus') })),
+    );
+  }
+
+  /* ---------------------------------------------------------------- tabs */
+  const TABS = ['click', 'trail', 'focus'];
+
+  function selectTab(id, moveFocus) {
+    TABS.forEach((key) => {
+      const tab = $(`#tab-${key}`);
+      const pane = $(`#pane-${key}`);
+      const on = key === id;
+      tab.setAttribute('aria-selected', String(on));
+      tab.tabIndex = on ? 0 : -1;
+      pane.hidden = !on;
+      if (on && moveFocus) tab.focus();
+    });
+  }
+
+  function updateTabDots() {
+    const on = { click: state.click.enabled, trail: state.trail.enabled, focus: state.focus.enabled };
+    TABS.forEach((key) => {
+      const dot = $(`#tab-${key} .tab-dot`);
+      if (dot) dot.classList.toggle('is-on', on[key]);
+    });
+  }
+
+  TABS.forEach((key, index) => {
+    const tab = $(`#tab-${key}`);
+    tab.addEventListener('click', () => selectTab(key));
+    tab.addEventListener('keydown', (event) => {
+      const step = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
+      if (event.key === 'Home') selectTab(TABS[0], true);
+      else if (event.key === 'End') selectTab(TABS[TABS.length - 1], true);
+      else if (step) selectTab(TABS[(index + step + TABS.length) % TABS.length], true);
+      else return;
+      event.preventDefault();
+    });
+  });
+
+  function renderInspector() {
+    renderClickPane();
+    renderTrailPane();
+    renderFocusPane();
+    updateTabDots();
+  }
+
+  /* =============================================================== misc */
+  const clock = $('#mb-clock');
+  function updateClock() {
+    const date = new Date();
+    if (lang === 'ko') {
+      const day = new Intl.DateTimeFormat('ko-KR', { month: 'long', day: 'numeric', weekday: 'short' }).format(date);
+      const time = new Intl.DateTimeFormat('ko-KR', { hour: 'numeric', minute: '2-digit' }).format(date);
+      clock.textContent = `${day} ${time}`;
+    } else {
+      const weekday = new Intl.DateTimeFormat('en-US', { weekday: 'short' }).format(date);
+      const day = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric' }).format(date);
+      const time = new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit' }).format(date);
+      clock.textContent = `${weekday} ${day} ${time}`;
+    }
+  }
+
+  function setLang(next) {
+    if (next === lang) return;
+    lang = next;
+    try { localStorage.setItem('deskboard2.lang', next); } catch (error) { /* storage unavailable */ }
+    applyCopy();
+    renderInspector();
+    updateClock();
+    updateHint();
+    setBar(barMode);
+    focus.refreshLens();
+  }
+
+  $$('.lang-switch button').forEach((button) => button.addEventListener('click', () => setLang(button.dataset.lang)));
+
+  const header = $('.site-header');
+  const syncHeader = () => header.classList.toggle('is-scrolled', window.scrollY > 8);
+  window.addEventListener('scroll', syncHeader, { passive: true });
+
+  // Inline YouTube player on the real site; plain links elsewhere (for example inside sandboxed previews).
+  const dialog = $('#video-dialog');
+  const canEmbed = /(^|\.)deskboard2\.com$|(^|\.)github\.io$|^localhost$|^127\.0\.0\.1$/.test(location.hostname);
+  if (canEmbed && dialog && typeof dialog.showModal === 'function') {
+    $$('a.video-link[data-video]').forEach((link) => link.addEventListener('click', (event) => {
+      event.preventDefault();
+      const frame = $('#video-frame');
+      frame.replaceChildren(h('iframe', {
+        src: `https://www.youtube-nocookie.com/embed/${link.dataset.video}?autoplay=1&rel=0&playsinline=1`,
+        title: link.textContent.trim(),
+        allow: 'autoplay; encrypted-media; picture-in-picture; fullscreen',
+        allowfullscreen: true,
+      }));
+      dialog.showModal();
+    }));
+    dialog.addEventListener('close', () => $('#video-frame').replaceChildren());
+  }
+
+  $('#sb-replay').addEventListener('click', () => {
+    stopTour();
+    startTour();
+  });
+  bindHold($('#sb-hold'));
+
+  /* ========================================================== lifecycle */
+  const visibility = new IntersectionObserver((entries) => {
+    const visible = entries.some((entry) => entry.isIntersecting);
+    if (visible) {
+      paused = document.hidden;
+      kick();
+      if (!interacted && !tour.running && !reduceMotion.matches) startTour();
+    } else {
+      paused = true;
+      if (tour.running) {
+        stopTour();
+        setBar('demo');
+      }
+    }
+  }, { threshold: 0.12 });
+
+  document.addEventListener('visibilitychange', () => {
+    paused = document.hidden;
+    if (document.hidden) input.releaseAll();
+    else kick();
+  });
+
+  if ('ResizeObserver' in window) new ResizeObserver(() => layout()).observe(stage);
+  else window.addEventListener('resize', layout);
+
+  coarsePointer.addEventListener?.('change', updateHint);
+
+  // Boot
+  applyCopy();
+  renderInspector();
+  selectTab('click');
+  layout();
+  updateClock();
+  setInterval(updateClock, 20000);
+  updateHint();
+  syncHeader();
+
+  const start = target('peak', 0.5, 0.22);
+  input.pos = start;
+  placeGhost(start);
+  ghost.hidden = false;
+  focus.setActive(true, now());
+  focus.setConfig(focusConfig(), now());
+  focus.pointer(start.x, start.y, true, now());
+  showCoords(start);
+  setBar('demo');
+  visibility.observe(stage);
+  kick();
+})();
