@@ -818,6 +818,7 @@ html[lang="ko"] .section-head h2 { line-height: 1.2; letter-spacing: -0.03em; }
 .v-cam { fill: #3b6fe0; }
 .v-person { fill: #dfe9ff; }
 .v-cam-ring { fill: none; stroke: #ffffff; stroke-width: 3; }
+.v-cam-shadow { fill: #ffffff; filter: drop-shadow(0 6px 10px rgba(10, 20, 48, 0.28)); }
 
 .video-link {
   display: inline-flex; align-items: center; gap: 6px;

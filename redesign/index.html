@@ -329,13 +329,34 @@
                 <rect class="v-line" x="50" y="48" width="110" height="8" rx="4" />
                 <rect class="v-line" x="50" y="66" width="150" height="6" rx="3" />
                 <rect class="v-line" x="50" y="80" width="130" height="6" rx="3" />
-                <circle class="v-cam" cx="228" cy="128" r="40" />
-                <circle class="v-person" cx="228" cy="118" r="13" />
-                <path class="v-person" d="M201 160c4-14 14-21 27-21s23 7 27 21" />
-                <!-- Photo slot: add assets/camera-person.jpg and uncomment to show a photo inside the camera bubble.
-                <clipPath id="cam-clip"><circle cx="228" cy="128" r="40" /></clipPath>
-                <image href="assets/camera-person.jpg" x="188" y="88" width="80" height="80" preserveAspectRatio="xMidYMid slice" clip-path="url(#cam-clip)" />
-                -->
+                <defs>
+                  <clipPath id="cam-clip"><circle cx="228" cy="128" r="40" /></clipPath>
+                  <filter id="cam-blur" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.2" /></filter>
+                  <linearGradient id="cam-hair" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3d58e" /><stop offset="1" stop-color="#c99a4c" /></linearGradient>
+                  <linearGradient id="cam-skin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6d3bd" /><stop offset="1" stop-color="#e8b79b" /></linearGradient>
+                </defs>
+                <circle class="v-cam-shadow" cx="228" cy="128" r="40" />
+                <g clip-path="url(#cam-clip)">
+                  <rect x="186" y="86" width="84" height="84" fill="#dfe3e6" />
+                  <g filter="url(#cam-blur)">
+                    <rect x="236" y="86" width="40" height="84" fill="#c9b9a3" />
+                    <rect x="240" y="96" width="6" height="18" fill="#b8473f" /><rect x="248" y="98" width="5" height="16" fill="#3e6aa8" /><rect x="255" y="95" width="6" height="19" fill="#e5e0d4" /><rect x="263" y="99" width="5" height="15" fill="#c2833a" />
+                    <rect x="240" y="120" width="5" height="17" fill="#2f4f6f" /><rect x="247" y="118" width="7" height="19" fill="#c94b48" /><rect x="256" y="121" width="5" height="16" fill="#efe9dc" />
+                    <rect x="186" y="86" width="22" height="84" fill="#eef0f1" />
+                  </g>
+                  <path d="M206 116c-3 14-2 28 3 40h38c5-12 6-26 3-40-3-13-12-21-22-21s-19 8-22 21z" fill="url(#cam-hair)" />
+                  <path d="M190 172c2-17 14-25 38-25s36 8 38 25z" fill="#f8f8f6" />
+                  <path d="M217 148l11 13 11-13c-4-2-7-2.6-11-2.6s-7 .6-11 2.6z" fill="#e8b79b" />
+                  <path d="M190 172c2-15 9-22 21-24l12 24zM266 172c-2-15-9-22-21-24l-12 24z" fill="#ffffff" stroke="#d9dad6" stroke-width=".7" />
+                  <rect x="223" y="136" width="10" height="12" rx="4" fill="#e8b79b" />
+                  <ellipse cx="228" cy="124" rx="12.5" ry="15" fill="url(#cam-skin)" />
+                  <path d="M214 122c0-12 7-19 15-19 9 0 15 7 14 17-5-3-9-8-11-13-4 7-10 12-18 15z" fill="url(#cam-hair)" />
+                  <path d="M215 119c-3 9-3 20 1 30-5-3-8-12-7-21 1-4 3-7 6-9zM241 119c3 9 3 20-1 30 5-3 8-12 7-21-1-4-3-7-6-9z" fill="#e6c27a" />
+                  <ellipse cx="223" cy="125" rx="1.3" ry="1.5" fill="#3b2f2a" /><ellipse cx="233" cy="125" rx="1.3" ry="1.5" fill="#3b2f2a" />
+                  <path d="M220.6 121.6q2.4-1.2 4.8 0M230.6 121.6q2.4-1.2 4.8 0" fill="none" stroke="#9b7a4f" stroke-width=".8" stroke-linecap="round" />
+                  <path d="M224.5 132q3.5 2.6 7 0" fill="none" stroke="#c46a6a" stroke-width="1.2" stroke-linecap="round" />
+                  <circle cx="220" cy="129.5" r="2" fill="#f2a6a0" opacity=".35" /><circle cx="236" cy="129.5" r="2" fill="#f2a6a0" opacity=".35" />
+                </g>
                 <circle class="v-cam-ring" cx="228" cy="128" r="40" />
               </svg>
             </div>
