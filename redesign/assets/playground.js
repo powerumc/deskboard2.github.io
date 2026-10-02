@@ -25,6 +25,13 @@
   /* ================================================================ copy */
   const I18N = {
     en: {
+      'group.appearance': 'Appearance',
+      'focus.shape': 'Shape', 'focus.size': 'Size', 'focus.borderWeight': 'Border weight', 'focus.borderStyle': 'Border style',
+      'focus.glow': 'Glow', 'focus.accent': 'Accent color', 'focus.animateClicks': 'Animate clicks',
+      'opt.circle': 'Circle', 'opt.rhombus': 'Rhombus', 'opt.squircle': 'Rounded Rectangle', 'opt.rectangle': 'Rectangle',
+      'opt.small': 'Small', 'opt.regular': 'Regular', 'opt.large': 'Large', 'opt.extraLarge': 'Extra large',
+      'opt.light': 'Light', 'opt.bold': 'Bold', 'opt.heavy': 'Heavy',
+      'opt.solid': 'Solid', 'opt.dashed': 'Dashed', 'opt.hidden': 'Hidden', 'opt.soft': 'Soft', 'opt.shiny': 'Shiny',
       'nav.skip': 'Skip to the live demo',
       'nav.label': 'Primary',
       'nav.try': 'Try it',
@@ -137,6 +144,13 @@
       'swatch.strawberry': 'Strawberry', 'swatch.white': 'White',
     },
     ko: {
+      'group.appearance': '외형',
+      'focus.shape': '도형', 'focus.size': '크기', 'focus.borderWeight': '테두리 굵기', 'focus.borderStyle': '테두리 스타일',
+      'focus.glow': '글로우', 'focus.accent': '강조 색상', 'focus.animateClicks': '클릭 애니메이션',
+      'opt.circle': '원', 'opt.rhombus': '마름모', 'opt.squircle': '둥근 사각형', 'opt.rectangle': '사각형',
+      'opt.small': '작게', 'opt.regular': '보통', 'opt.large': '크게', 'opt.extraLarge': '매우 크게',
+      'opt.light': '얇게', 'opt.bold': '굵게', 'opt.heavy': '매우 굵게',
+      'opt.solid': '실선', 'opt.dashed': '점선', 'opt.hidden': '없음', 'opt.soft': '부드럽게', 'opt.shiny': '선명하게',
       'nav.skip': '라이브 데모로 건너뛰기',
       'nav.label': '주요 메뉴',
       'nav.try': '체험하기',
@@ -793,6 +807,44 @@
     return el;
   }
 
+  function segmentedField({ id, label, options, value, onChange, readout }) {
+    const labelId = `${id}-label`;
+    const group = h('div', { class: 'seg', role: 'radiogroup', 'aria-labelledby': labelId, id });
+    const readoutEl = readout ? h('span', { class: 'value', text: readout(value) }) : null;
+    const buttons = options.map((option) => {
+      const selected = option.value === value;
+      const button = h('button', {
+        type: 'button', role: 'radio', id: `${id}-${option.value}`,
+        'aria-checked': String(selected), tabindex: selected ? '0' : '-1',
+        'aria-label': option.aria || null, title: option.aria || null,
+      });
+      if (option.icon) button.innerHTML = option.icon;
+      if (option.text) button.append(option.text);
+      button.addEventListener('click', () => select(option.value, false));
+      group.append(button);
+      return button;
+    });
+    function select(next, moveFocus) {
+      value = next;
+      buttons.forEach((button, i) => {
+        const on = options[i].value === next;
+        button.setAttribute('aria-checked', String(on));
+        button.tabIndex = on ? 0 : -1;
+        if (on && moveFocus) button.focus();
+      });
+      if (readoutEl) readoutEl.textContent = readout(next);
+      onChange(next);
+    }
+    group.addEventListener('keydown', (event) => {
+      const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[event.key];
+      if (!step) return;
+      event.preventDefault();
+      const index = options.findIndex((o) => o.value === value);
+      select(options[(index + step + options.length) % options.length].value, true);
+    });
+    return h('div', { class: 'field' }, h('div', { class: 'field-row' }, h('span', { class: 'field-label', id: labelId, text: label }), readoutEl), group);
+  }
+
   function switchButton({ id, checked, labelledby, label, onChange, small = true }) {
     const button = h('button', {
       type: 'button', role: 'switch', id, class: small ? 'switch is-small' : 'switch',
@@ -804,6 +856,25 @@
       onChange(next);
     });
     return button;
+  }
+
+  function colorField({ id, label, value, enabled, onColor, onToggle }) {
+    const labelId = `${id}-label`;
+    const picker = h('input', { type: 'color', id, value, 'aria-labelledby': labelId });
+    picker.disabled = enabled === false;
+    picker.addEventListener('input', () => onColor(picker.value));
+    picker.addEventListener('change', () => onColor(picker.value, true));
+    const controls = h('div', { class: 'color-field' }, picker);
+    if (onToggle) {
+      controls.append(switchButton({
+        id: `${id}-on`, checked: enabled !== false, label,
+        onChange: (on) => {
+          picker.disabled = !on;
+          onToggle(on);
+        },
+      }));
+    }
+    return h('div', { class: 'field is-inline' }, h('span', { class: 'field-label', id: labelId, text: label }), controls);
   }
 
   function paneHead(kind, enabled, onToggle) {
@@ -826,6 +897,13 @@
     confetti: '<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor" stroke="none"><rect x="4" y="4.5" width="3" height="4.6" rx=".7" transform="rotate(-24 5.5 6.8)"/><rect x="15.5" y="3.5" width="3" height="4.6" rx=".7" transform="rotate(28 17 5.8)"/><circle cx="11.5" cy="11" r="1.7"/><rect x="5.5" y="14.5" width="3" height="4.6" rx=".7" transform="rotate(38 7 16.8)"/><path d="M16.8 13.6l2.4 2.4-2.4 2.4-2.4-2.4z"/></g></svg>',
     confettiBlast: '<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor" stroke="none"><rect x="10.5" y="10.5" width="3" height="3"/><rect x="4" y="4" width="2.6" height="2.6"/><rect x="17.4" y="4" width="2.6" height="2.6"/><rect x="4" y="17.4" width="2.6" height="2.6"/><rect x="17.4" y="17.4" width="2.6" height="2.6"/><rect x="11" y="2.5" width="2" height="2"/><rect x="11" y="19.5" width="2" height="2"/><rect x="2.5" y="11" width="2" height="2"/><rect x="19.5" y="11" width="2" height="2"/></g></svg>',
     fire: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.2c-3.6 0-6.1-2.4-6.1-5.7 0-3.6 2.8-5.3 3.7-8.6 1.9 1.3 2.7 3 2.7 4.7 1-.6 1.7-1.9 1.8-3.1 2.4 1.8 4 4.3 4 7 0 3.3-2.5 5.7-6.1 5.7z"/></svg>',
+  };
+
+  const SHAPE_ICONS = {
+    circle: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7.5"/></svg>',
+    rhombus: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${FX.focusShapePath('rhombus', 4, 4, 16, 16)}"/></svg>`,
+    squircle: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${FX.focusShapePath('squircle', 4.5, 4.5, 15, 15)}"/></svg>`,
+    rectangle: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="4.5" width="15" height="15"/></svg>',
   };
 
 
@@ -935,12 +1013,48 @@
 
   function renderFocusPane() {
     const f = state.focus;
+    const option = (key) => ({ value: key, text: t(`opt.${key}`) });
     const holdButton = h('button', { type: 'button', class: 'hold-btn', id: 'focus-hold' },
       h('kbd', { text: KEYS[f.key].symbol }), t('focus.hold'));
     bindHold(holdButton);
 
     paneFocus.replaceChildren(
       paneHead('focus', f.enabled, (on) => setFocusEnabled(on)),
+      h('div', { class: 'group' },
+        h('p', { class: 'group-label', text: t('group.appearance') }),
+        segmentedField({
+          id: 'focus-shape', label: t('focus.shape'), value: f.shape,
+          readout: (v) => t(`opt.${v}`),
+          options: ['circle', 'rhombus', 'squircle', 'rectangle'].map((s) => ({ value: s, icon: SHAPE_ICONS[s], aria: t(`opt.${s}`) })),
+          onChange: (v) => updateFocus({ shape: v }),
+        }),
+        segmentedField({
+          id: 'focus-size', label: t('focus.size'), value: f.size,
+          readout: (v) => `${FX.FOCUS.sizes[v]} pt`,
+          options: ['small', 'regular', 'large', 'extraLarge'].map(option),
+          onChange: (v) => updateFocus({ size: v }),
+        }),
+        segmentedField({
+          id: 'focus-weight', label: t('focus.borderWeight'), value: f.borderWeight,
+          readout: (v) => `${FX.FOCUS.weights[v]} pt`,
+          options: ['light', 'regular', 'bold', 'heavy'].map(option),
+          onChange: (v) => updateFocus({ borderWeight: v }),
+        }),
+        segmentedField({
+          id: 'focus-style', label: t('focus.borderStyle'), value: f.borderStyle,
+          options: ['solid', 'dashed'].map(option),
+          onChange: (v) => updateFocus({ borderStyle: v }),
+        }),
+        segmentedField({
+          id: 'focus-glow', label: t('focus.glow'), value: f.glow,
+          options: ['hidden', 'soft', 'shiny'].map(option),
+          onChange: (v) => updateFocus({ glow: v }),
+        }),
+        colorField({
+          id: 'focus-accent', label: t('focus.accent'), value: f.accent, enabled: f.usesAccent,
+          onColor: (v) => updateFocus({ accent: v }),
+          onToggle: (on) => updateFocus({ usesAccent: on }),
+        })),
       h('div', { class: 'group' },
         h('p', { class: 'group-label', text: t('group.magnifier') }),
         holdButton,
