@@ -32,7 +32,6 @@
       'focus.glow': 'Glow', 'focus.accent': 'Accent color', 'focus.animateClicks': 'Animate clicks',
       'opt.circle': 'Circle', 'opt.rhombus': 'Rhombus', 'opt.squircle': 'Rounded Rectangle', 'opt.rectangle': 'Rectangle',
       'opt.small': 'Small', 'opt.regular': 'Regular', 'opt.large': 'Large', 'opt.extraLarge': 'Extra large',
-      'opt.light': 'Light', 'opt.bold': 'Bold', 'opt.heavy': 'Heavy',
       'opt.solid': 'Solid', 'opt.dashed': 'Dashed', 'opt.hidden': 'Hidden', 'opt.soft': 'Soft', 'opt.shiny': 'Shiny',
       'nav.skip': 'Skip to the live demo',
       'nav.label': 'Primary',
@@ -136,7 +135,6 @@
       'f.confettiBlast.particleCount': 'Blast particle count', 'f.confettiBlast.speedScale': 'Blast speed scale',
       'f.fire.intensity': 'Fire intensity', 'f.fire.turbulence': 'Fire turbulence chance',
       'focus.hold': 'Hold to magnify',
-      'focus.holdNote': 'Or hold {key} while pointing at the desktop.',
       'opt.meta': 'Command', 'opt.alt': 'Option', 'opt.ctrl': 'Control', 'opt.shift': 'Shift',
       'unit.seconds': '{n} s',
       'swatch.rainbow': 'Rainbow', 'swatch.cherry': 'Cherry', 'swatch.russet': 'Russet', 'swatch.lemon': 'Lemon',
@@ -152,7 +150,6 @@
       'focus.glow': '글로우', 'focus.accent': '강조 색상', 'focus.animateClicks': '클릭 애니메이션',
       'opt.circle': '원', 'opt.rhombus': '마름모', 'opt.squircle': '둥근 사각형', 'opt.rectangle': '사각형',
       'opt.small': '작게', 'opt.regular': '보통', 'opt.large': '크게', 'opt.extraLarge': '매우 크게',
-      'opt.light': '얇게', 'opt.bold': '굵게', 'opt.heavy': '매우 굵게',
       'opt.solid': '실선', 'opt.dashed': '점선', 'opt.hidden': '없음', 'opt.soft': '부드럽게', 'opt.shiny': '선명하게',
       'nav.skip': '라이브 데모로 건너뛰기',
       'nav.label': '주요 메뉴',
@@ -256,7 +253,6 @@
       'f.confettiBlast.particleCount': '폭발 입자 수', 'f.confettiBlast.speedScale': '폭발 속도 배율',
       'f.fire.intensity': '불꽃 세기', 'f.fire.turbulence': '불꽃 난류 확률',
       'focus.hold': '눌러서 확대',
-      'focus.holdNote': '또는 데스크톱을 가리킨 채 {key} 키를 누르고 있으세요.',
       'opt.meta': 'Command', 'opt.alt': 'Option', 'opt.ctrl': 'Control', 'opt.shift': 'Shift',
       'unit.seconds': '{n}초',
       'swatch.rainbow': '무지개', 'swatch.cherry': '체리', 'swatch.russet': '적갈색', 'swatch.lemon': '레몬',
@@ -862,25 +858,6 @@
     return button;
   }
 
-  function colorField({ id, label, value, enabled, onColor, onToggle }) {
-    const labelId = `${id}-label`;
-    const picker = h('input', { type: 'color', id, value, 'aria-labelledby': labelId });
-    picker.disabled = enabled === false;
-    picker.addEventListener('input', () => onColor(picker.value));
-    picker.addEventListener('change', () => onColor(picker.value, true));
-    const controls = h('div', { class: 'color-field' }, picker);
-    if (onToggle) {
-      controls.append(switchButton({
-        id: `${id}-on`, checked: enabled !== false, label,
-        onChange: (on) => {
-          picker.disabled = !on;
-          onToggle(on);
-        },
-      }));
-    }
-    return h('div', { class: 'field is-inline' }, h('span', { class: 'field-label', id: labelId, text: label }), controls);
-  }
-
   function paneHead(kind, enabled, onToggle) {
     const titleId = `pane-${kind}-title`;
     return h('div', { class: 'pane-head' },
@@ -1056,12 +1033,6 @@
           onChange: (v) => updateFocus({ size: v }),
         }),
         segmentedField({
-          id: 'focus-weight', label: t('focus.borderWeight'), value: f.borderWeight,
-          readout: (v) => `${FX.FOCUS.weights[v]} pt`,
-          options: ['light', 'regular', 'bold', 'heavy'].map(option),
-          onChange: (v) => updateFocus({ borderWeight: v }),
-        }),
-        segmentedField({
           id: 'focus-style', label: t('focus.borderStyle'), value: f.borderStyle,
           options: ['solid', 'dashed'].map(option),
           onChange: (v) => updateFocus({ borderStyle: v }),
@@ -1070,16 +1041,10 @@
           id: 'focus-glow', label: t('focus.glow'), value: f.glow,
           options: ['hidden', 'soft', 'shiny'].map(option),
           onChange: (v) => updateFocus({ glow: v }),
-        }),
-        colorField({
-          id: 'focus-accent', label: t('focus.accent'), value: f.accent, enabled: f.usesAccent,
-          onColor: (v) => updateFocus({ accent: v }),
-          onToggle: (on) => updateFocus({ usesAccent: on }),
         })),
       h('div', { class: 'group' },
         h('p', { class: 'group-label', text: t('group.magnifier') }),
-        holdButton,
-        h('p', { class: 'field-note', text: t('focus.holdNote', { key: keyLabel() }) })),
+        holdButton),
     );
     // Only the shape is open in the web preview; every other focus control is shown but disabled.
     $$('button, input', paneFocus).forEach((control) => {
