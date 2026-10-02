@@ -264,11 +264,18 @@ html[lang="ko"] body { word-break: keep-all; }
 }
 .site-nav a:hover { color: var(--ink); background: var(--accent-soft); }
 .header-actions { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+.theme-switch { display: inline-flex; padding: 3px; border-radius: 999px; background: var(--bg-sunk); }
+.theme-switch button {
+  display: grid; place-items: center; width: 28px; height: 24px;
+  border: 0; border-radius: 999px; background: transparent; cursor: pointer; color: var(--ink-3);
+}
+.theme-switch button[aria-checked="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px var(--shadow-1); }
+.theme-switch svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .lang-switch { display: inline-flex; padding: 3px; border-radius: 999px; background: var(--bg-sunk); }
 .lang-switch button {
   border: 0; background: transparent; cursor: pointer;
   padding: 5px 10px; border-radius: 999px;
-  font: 600 0.75rem/1 var(--font-body); color: var(--ink-3);
+  font: 600 0.75rem/1 var(--font-body); color: var(--ink-3); white-space: nowrap;
 }
 .lang-switch button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px var(--shadow-1); }
 
@@ -896,6 +903,10 @@ html[lang="ko"] .section-head h2 { line-height: 1.2; letter-spacing: -0.03em; }
   .header-inner { gap: 12px; }
   .header-actions .btn span { display: none; }
   .header-actions .btn { padding: 0 11px; }
+  .header-actions { gap: 8px; }
+  .theme-switch button { width: 24px; }
+  .lang-switch button { padding: 5px 7px; }
+  .brand span { display: none; }
   .screen-frame { padding: 6px; border-radius: 16px; }
   .stage { border-radius: 10px; }
   .feature-grid, .releases { grid-template-columns: minmax(0, 1fr); }

@@ -39,6 +39,7 @@
       'nav.features': 'Features',
       'nav.new': "What's new",
       'nav.download': 'Download',
+      'theme.label': 'Appearance', 'theme.system': 'Match device', 'theme.light': 'Light', 'theme.dark': 'Dark',
       'hero.eyebrow': 'Screen explanation toolkit for macOS',
       'hero.title': 'Explain <em class="ink">anything</em> on your Mac screen.',
       'hero.lede': 'DeskBoard2 adds click effects, cursor trails, and a focus highlight to your whole screen, so every demo is easy to follow. Try them on the desktop below. They are ported from the app and run right in your browser.',
@@ -157,6 +158,7 @@
       'nav.features': '기능',
       'nav.new': '새로운 기능',
       'nav.download': '다운로드',
+      'theme.label': '화면 모드', 'theme.system': '기기 설정 따르기', 'theme.light': '라이트', 'theme.dark': '다크',
       'hero.eyebrow': 'macOS용 화면 설명 도구',
       'hero.title': 'Mac 화면 위에서 <em class="ink">무엇이든</em> 설명하세요.',
       'hero.lede': 'DeskBoard2는 클릭 효과, 커서 잔상, 집중 효과를 화면 전체에 더해 어떤 데모든 따라오기 쉽게 만듭니다. 아래 데스크톱에서 직접 써 보세요. 앱의 효과를 그대로 옮겨 브라우저에서 실행합니다.',
@@ -1127,6 +1129,42 @@
   }
 
   $$('.lang-switch button').forEach((button) => button.addEventListener('click', () => setLang(button.dataset.lang)));
+
+  // Appearance follows the device until the visitor picks light or dark; the choice is remembered.
+  const themeButtons = $$('.theme-switch button');
+  function setTheme(choice, moveFocus) {
+    const root = document.documentElement;
+    if (choice === 'system') delete root.dataset.theme;
+    else root.dataset.theme = choice;
+    try {
+      if (choice === 'system') localStorage.removeItem('deskboard2.theme');
+      else localStorage.setItem('deskboard2.theme', choice);
+    } catch (error) { /* storage unavailable */ }
+    themeButtons.forEach((button) => {
+      const on = button.dataset.themeChoice === choice;
+      button.setAttribute('aria-checked', String(on));
+      button.tabIndex = on ? 0 : -1;
+      if (on && moveFocus) button.focus();
+    });
+    focus.refreshLens();
+  }
+  themeButtons.forEach((button, index) => {
+    button.addEventListener('click', () => setTheme(button.dataset.themeChoice));
+    button.addEventListener('keydown', (event) => {
+      const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[event.key];
+      if (!step) return;
+      event.preventDefault();
+      setTheme(themeButtons[(index + step + themeButtons.length) % themeButtons.length].dataset.themeChoice, true);
+    });
+  });
+  let savedTheme = null;
+  try { savedTheme = localStorage.getItem('deskboard2.theme'); } catch (error) { /* storage unavailable */ }
+  if (savedTheme === 'light' || savedTheme === 'dark') setTheme(savedTheme);
+  else themeButtons.forEach((button) => {
+    const on = button.dataset.themeChoice === 'system';
+    button.setAttribute('aria-checked', String(on));
+    button.tabIndex = on ? 0 : -1;
+  });
 
   const header = $('.site-header');
   const syncHeader = () => header.classList.toggle('is-scrolled', window.scrollY > 8);

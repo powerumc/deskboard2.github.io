@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500..800&family=Geist+Mono:wght@400..600&display=swap">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
   <link rel="stylesheet" href="assets/site.css">
+  <script>try { var t = localStorage.getItem("deskboard2.theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}</script>
 </head>
 <body>
   <a class="skip-link" href="#playground" data-i18n="nav.skip">Skip to the live demo</a>
@@ -27,6 +28,11 @@
         <a href="#whats-new" data-i18n="nav.new">What's new</a>
       </nav>
       <div class="header-actions">
+        <div class="theme-switch" role="radiogroup" aria-label="Appearance" data-i18n-attr="aria-label:theme.label">
+          <button type="button" role="radio" id="theme-system" data-theme-choice="system" aria-checked="true" aria-label="Match device" title="Match device" data-i18n-attr="aria-label:theme.system;title:theme.system"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="3" y="4" width="14" height="10" rx="1.6" /><path d="M7.5 16.5h5M10 14v2.5" /></svg></button>
+          <button type="button" role="radio" id="theme-light" data-theme-choice="light" aria-checked="false" tabindex="-1" aria-label="Light" title="Light" data-i18n-attr="aria-label:theme.light;title:theme.light"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="3.4" /><path d="M10 2.5v1.8M10 15.7v1.8M2.5 10h1.8M15.7 10h1.8M4.7 4.7l1.3 1.3M14 14l1.3 1.3M15.3 4.7 14 6M6 14l-1.3 1.3" /></svg></button>
+          <button type="button" role="radio" id="theme-dark" data-theme-choice="dark" aria-checked="false" tabindex="-1" aria-label="Dark" title="Dark" data-i18n-attr="aria-label:theme.dark;title:theme.dark"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M15.8 12.6A6.5 6.5 0 0 1 7.4 4.2a6.5 6.5 0 1 0 8.4 8.4z" /></svg></button>
+        </div>
         <div class="lang-switch" role="group" aria-label="Language">
           <button type="button" id="lang-en" data-lang="en" aria-pressed="true">EN</button>
           <button type="button" id="lang-ko" data-lang="ko" aria-pressed="false">한국어</button>
